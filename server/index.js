@@ -1,50 +1,22 @@
 
 require("dotenv").config();
 
-const adminRoutes = require("./routes/adminRoutes");
-const authRoutes = require("./routes/authRoutes");
-const complaintRoutes = require("./routes/complaintRoutes");
-const express = require("express");
+const app = require("./app");
 const connectDB = require("./config/db");
 
-const app = express();
 const PORT = process.env.PORT || 5050;
 
-app.use(express.json());
-app.use("/api/admin", adminRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/complaints", complaintRoutes);
-
-// Root route
-app.get("/", (req, res) => {
-  res.status(200).json({
-    message: "Welcome to the Smart Traffic Complaint and Monitoring System API",
-  });
-});
-
-// Health check route
-app.get("/api/health", (req, res) => {
-  res.status(200).json({
-    status: "ok",
-    message: "Smart Traffic Complaint API is running",
-  });
-});
-
-// Handle unknown routes
-app.use((req, res) => {
-  res.status(404).json({
-    status: "error",
-    message: "Route not found",
-  });
-});
-
-// Connect to MongoDB, then start Express
 const startServer = async () => {
-  await connectDB();
+  try {
+    await connectDB();
 
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server startup failed:", error.message);
+    process.exit(1);
+  }
 };
 
 startServer();
