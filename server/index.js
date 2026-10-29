@@ -1,6 +1,7 @@
 
 require("dotenv").config();
 
+const adminRoutes = require("./routes/adminRoutes");
 const authRoutes = require("./routes/authRoutes");
 const complaintRoutes = require("./routes/complaintRoutes");
 const express = require("express");
@@ -10,6 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 5050;
 
 app.use(express.json());
+app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/complaints", complaintRoutes);
 

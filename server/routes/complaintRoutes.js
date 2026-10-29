@@ -1,15 +1,25 @@
 
 const express = require("express");
+const mongoose = require("mongoose");
 const Complaint = require("../models/Complaint");
+const { protect } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-// Create a complaint
-router.post("/", async (req, res) => {
+// POST /api/complaints
+// Create a complaint for the authenticated citizen.
+router.post("/", protect, async (req, res) => {
   try {
     const { category, description, location } = req.body;
 
-    if (!category || !description || !location) {
+    if (
+      typeof category !== "string" ||
+      typeof description !== "string" ||
+      typeof location !== "string" ||
+      !category.trim() ||
+      !description.trim() ||
+      !location.trim()
+    ) {
       return res.status(400).json({
         status: "error",
         message: "Category, description, and location are required",
@@ -17,9 +27,10 @@ router.post("/", async (req, res) => {
     }
 
     const complaint = await Complaint.create({
-      category,
-      description,
-      location,
+      user: req.user._id,
+      category: category.trim(),
+      description: description.trim(),
+      location: location.trim(),
     });
 
     return res.status(201).json({
@@ -44,10 +55,13 @@ router.post("/", async (req, res) => {
   }
 });
 
-// List complaints (temporary development endpoint)
-router.get("/", async (req, res) => {
+// GET /api/complaints
+// List only complaints belonging to the authenticated citizen.
+router.get("/", protect, async (req, res) => {
   try {
-    const complaints = await Complaint.find().sort({ createdAt: -1 });
+    const complaints = await Complaint.find({
+      user: req.user._id,
+    }).sort({ createdAt: -1 });
 
     return res.status(200).json({
       status: "success",
@@ -60,6 +74,45 @@ router.get("/", async (req, res) => {
     return res.status(500).json({
       status: "error",
       message: "Unable to fetch complaints",
+    });
+  }
+});
+
+// GET /api/complaints/:id
+// View a complaint only if it belongs to the authenticated citizen.
+router.get("/:id", protect, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({
+        status: "error",
+        message: "Invalid complaint ID",
+      });
+    }
+
+    const complaint = await Complaint.findOne({
+      _id: id,
+      user: req.user._id,
+    });
+
+    if (!complaint) {
+      return res.status(404).json({
+        status: "error",
+        message: "Complaint not found",
+      });
+    }
+
+    return res.status(200).json({
+      status: "success",
+      complaint,
+    });
+  } catch (error) {
+    console.error("Fetch complaint detail error:", error.message);
+
+    return res.status(500).json({
+      status: "error",
+      message: "Unable to fetch complaint",
     });
   }
 });
