@@ -2,13 +2,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Complaint = require("../models/Complaint");
-const { protect } = require("../middleware/authMiddleware");
+const authenticateToken = require("../middleware/auth");
 
 const router = express.Router();
 
-// POST /api/complaints
-// Create a complaint for the authenticated citizen.
-router.post("/", protect, async (req, res) => {
+// Submit a complaint for the logged-in citizen
+router.post("/", authenticateToken, async (req, res) => {
   try {
     const { category, description, location } = req.body;
 
@@ -27,7 +26,7 @@ router.post("/", protect, async (req, res) => {
     }
 
     const complaint = await Complaint.create({
-      user: req.user._id,
+      user: req.userId,
       category: category.trim(),
       description: description.trim(),
       location: location.trim(),
@@ -39,13 +38,6 @@ router.post("/", protect, async (req, res) => {
       complaint,
     });
   } catch (error) {
-    if (error.name === "ValidationError") {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid complaint data",
-      });
-    }
-
     console.error("Create complaint error:", error.message);
 
     return res.status(500).json({
@@ -55,12 +47,11 @@ router.post("/", protect, async (req, res) => {
   }
 });
 
-// GET /api/complaints
-// List only complaints belonging to the authenticated citizen.
-router.get("/", protect, async (req, res) => {
+// Fetch only the logged-in citizen's complaints
+router.get("/", authenticateToken, async (req, res) => {
   try {
     const complaints = await Complaint.find({
-      user: req.user._id,
+      user: req.userId,
     }).sort({ createdAt: -1 });
 
     return res.status(200).json({
