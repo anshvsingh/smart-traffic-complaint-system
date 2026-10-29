@@ -1,6 +1,7 @@
 
 require("dotenv").config();
 
+const complaintRoutes = require("./routes/complaintRoutes");
 const express = require("express");
 const connectDB = require("./config/db");
 
@@ -8,6 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 5050;
 
 app.use(express.json());
+app.use("/api/complaints", complaintRoutes);
 
 // Root route
 app.get("/", (req, res) => {
