@@ -1,12 +1,17 @@
 
-const express = require("express");
 require("dotenv").config();
+
+const authRoutes = require("./routes/authRoutes");
+const complaintRoutes = require("./routes/complaintRoutes");
+const express = require("express");
+const connectDB = require("./config/db");
 
 const app = express();
 const PORT = process.env.PORT || 5050;
 
-// Middleware
 app.use(express.json());
+app.use("/api/auth", authRoutes);
+app.use("/api/complaints", complaintRoutes);
 
 // Root route
 app.get("/", (req, res) => {
@@ -31,7 +36,13 @@ app.use((req, res) => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Connect to MongoDB, then start Express
+const startServer = async () => {
+  await connectDB();
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
+
+startServer();
