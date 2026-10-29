@@ -1,6 +1,6 @@
 
-require("dotenv").config();
-
+require("dotenv").config({ path: require("path").join(__dirname, ".env") });
+const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const complaintRoutes = require("./routes/complaintRoutes");
 const express = require("express");
@@ -10,6 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 5050;
 
 app.use(express.json());
+app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api/complaints", complaintRoutes);
 
