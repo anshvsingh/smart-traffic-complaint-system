@@ -1,0 +1,57 @@
+{
+  "accuracy": 0.4533333333333333,
+  "precision_macro": 0.5015864289641091,
+  "recall_macro": 0.4533333333333333,
+  "f1_macro": 0.41191178101795217,
+  "per_class": {
+    "Cracks": {
+      "precision": 0.34285714285714286,
+      "recall": 0.12,
+      "f1": 0.17777777777777778,
+      "support": 100
+    },
+    "Normal": {
+      "precision": 0.7647058823529411,
+      "recall": 0.39,
+      "f1": 0.5165562913907285,
+      "support": 100
+    },
+    "Pothole": {
+      "precision": 0.397196261682243,
+      "recall": 0.85,
+      "f1": 0.5414012738853503,
+      "support": 100
+    }
+  },
+  "confusion_matrix": [
+    [
+      12,
+      10,
+      78
+    ],
+    [
+      10,
+      39,
+      51
+    ],
+    [
+      13,
+      2,
+      85
+    ]
+  ],
+  "n_test": 300,
+  "train_time_s": 0.3313105199999882,
+  "inference_time_s": 0.02674219800019273,
+  "inference_ms_per_sample": 0.08914066000064243,
+  "model": "random_forest",
+  "setting": "reduced",
+  "n_input_features": 8,
+  "best_params": {
+    "max_depth": null,
+    "min_samples_leaf": 5,
+    "n_estimators": 200
+  },
+  "cv_f1_macro": 0.5643899413321408,
+  "n_train": 900
+}

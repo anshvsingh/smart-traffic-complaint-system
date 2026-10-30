@@ -1,0 +1,57 @@
+{
+  "accuracy": 0.48333333333333334,
+  "precision_macro": 0.6083866246872424,
+  "recall_macro": 0.48333333333333334,
+  "f1_macro": 0.46270169476833845,
+  "per_class": {
+    "Cracks": {
+      "precision": 0.5277777777777778,
+      "recall": 0.19,
+      "f1": 0.27941176470588236,
+      "support": 100
+    },
+    "Normal": {
+      "precision": 0.9148936170212766,
+      "recall": 0.43,
+      "f1": 0.5850340136054422,
+      "support": 100
+    },
+    "Pothole": {
+      "precision": 0.3824884792626728,
+      "recall": 0.83,
+      "f1": 0.5236593059936908,
+      "support": 100
+    }
+  },
+  "confusion_matrix": [
+    [
+      19,
+      2,
+      79
+    ],
+    [
+      2,
+      43,
+      55
+    ],
+    [
+      15,
+      2,
+      83
+    ]
+  ],
+  "n_test": 300,
+  "train_time_s": 0.050254576000043016,
+  "inference_time_s": 0.011642805000064982,
+  "inference_ms_per_sample": 0.038809350000216604,
+  "model": "qsvm_fidelity_kernel",
+  "n_qubits": 4,
+  "feature_map_reps": 2,
+  "best_params": {
+    "C": 10
+  },
+  "cv_f1_macro": 0.6155711420570446,
+  "n_input_features": 8,
+  "n_train": 900,
+  "note": "kernel computed by exact simulation; train time = train kernel matrix + SVC fit"
+}

@@ -1,0 +1,60 @@
+{
+  "accuracy": 0.5933333333333334,
+  "precision_macro": 0.6085711993030241,
+  "recall_macro": 0.5933333333333333,
+  "f1_macro": 0.5880590287473412,
+  "per_class": {
+    "Cracks": {
+      "precision": 0.5214285714285715,
+      "recall": 0.73,
+      "f1": 0.6083333333333333,
+      "support": 100
+    },
+    "Normal": {
+      "precision": 0.6774193548387096,
+      "recall": 0.63,
+      "f1": 0.6528497409326425,
+      "support": 100
+    },
+    "Pothole": {
+      "precision": 0.6268656716417911,
+      "recall": 0.42,
+      "f1": 0.5029940119760479,
+      "support": 100
+    }
+  },
+  "confusion_matrix": [
+    [
+      73,
+      16,
+      11
+    ],
+    [
+      23,
+      63,
+      14
+    ],
+    [
+      44,
+      14,
+      42
+    ]
+  ],
+  "n_test": 300,
+  "train_time_s": 128.7098094629996,
+  "inference_time_s": 0.0082992259999628,
+  "inference_ms_per_sample": 0.02766408666654267,
+  "model": "vqc",
+  "backend": "numpy",
+  "n_qubits": 4,
+  "n_layers": 3,
+  "epochs": 47,
+  "n_input_features": 8,
+  "n_trainable_params": 30,
+  "quantum_params": 24,
+  "learning_rate": 0.1,
+  "batch_size": 32,
+  "n_train": 900,
+  "validation_f1_used_for_selection": 0.6914361557016123,
+  "note": "classical state-vector simulation; times are simulator times, not quantum hardware times"
+}

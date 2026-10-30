@@ -1,0 +1,4 @@
+{
+  "full": "classical_random_forest_full",
+  "reduced": "classical_svm_rbf_reduced"
+}
