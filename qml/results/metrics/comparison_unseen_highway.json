@@ -1,0 +1,38 @@
+{
+  "classical_full": {
+    "accuracy": 0.6133333333333333,
+    "precision_macro": 0.6434506554698862,
+    "recall_macro": 0.6133333333333333,
+    "f1_macro": 0.5745368161071212,
+    "train_time_s": 0.3624666289999823,
+    "inference_ms_per_sample": 0.08049730666698451,
+    "label": "Classical: Random Forest, 16 features"
+  },
+  "classical_reduced": {
+    "accuracy": 0.49666666666666665,
+    "precision_macro": 0.5470849483204134,
+    "recall_macro": 0.4966666666666666,
+    "f1_macro": 0.4540662671483071,
+    "train_time_s": 0.016765109000061784,
+    "inference_ms_per_sample": 0.019244580000001104,
+    "label": "Classical: SVM (RBF), same 8 features as QML"
+  },
+  "vqc": {
+    "accuracy": 0.49666666666666665,
+    "precision_macro": 0.3832085454726964,
+    "recall_macro": 0.49666666666666665,
+    "f1_macro": 0.41467828146417823,
+    "train_time_s": 136.72350778100008,
+    "inference_ms_per_sample": 0.021652876666848897,
+    "label": "QML: VQC, 4 qubits, 3 layers"
+  },
+  "qsvm": {
+    "accuracy": 0.48333333333333334,
+    "precision_macro": 0.6083866246872424,
+    "recall_macro": 0.48333333333333334,
+    "f1_macro": 0.46270169476833845,
+    "train_time_s": 0.050254576000043016,
+    "inference_ms_per_sample": 0.038809350000216604,
+    "label": "QML: QSVM, quantum kernel, 4 qubits"
+  }
+}

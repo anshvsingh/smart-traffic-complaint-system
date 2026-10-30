@@ -1,0 +1,55 @@
+{
+  "accuracy": 0.65,
+  "precision_macro": 0.6509395837542938,
+  "recall_macro": 0.65,
+  "f1_macro": 0.6504346952108145,
+  "per_class": {
+    "Cracks": {
+      "precision": 0.594059405940594,
+      "recall": 0.6,
+      "f1": 0.5970149253731343,
+      "support": 100
+    },
+    "Normal": {
+      "precision": 0.7448979591836735,
+      "recall": 0.73,
+      "f1": 0.7373737373737373,
+      "support": 100
+    },
+    "Pothole": {
+      "precision": 0.6138613861386139,
+      "recall": 0.62,
+      "f1": 0.6169154228855721,
+      "support": 100
+    }
+  },
+  "confusion_matrix": [
+    [
+      60,
+      16,
+      24
+    ],
+    [
+      12,
+      73,
+      15
+    ],
+    [
+      29,
+      9,
+      62
+    ]
+  ],
+  "n_test": 300,
+  "train_time_s": 0.011114136999935909,
+  "inference_time_s": 0.0009407850000116014,
+  "inference_ms_per_sample": 0.003135950000038671,
+  "model": "logistic_regression",
+  "setting": "reduced",
+  "n_input_features": 8,
+  "best_params": {
+    "C": 100
+  },
+  "cv_f1_macro": 0.651286050810635,
+  "n_train": 900
+}

@@ -1,0 +1,15 @@
+# QML experiment (qml/). Python 3.10+.
+# Versions are the ones the committed results were produced with (minimums, newer should work).
+numpy>=2.0
+pandas>=2.2
+scikit-learn>=1.5
+scikit-image>=0.24
+pillow>=10.0
+matplotlib>=3.8
+
+# Quantum backend for `--backend pennylane` and `--check-pennylane`
+# (the default NumPy simulator needs nothing extra)
+pennylane>=0.38
+
+# Notebooks
+jupyter

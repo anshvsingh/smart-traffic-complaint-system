@@ -1,0 +1,10 @@
+# Raw image datasets stay local (see qml/README.md for how to get them).
+data/cprd
+data/cprd/
+data/patches/
+data/raw/
+
+# Notebook / Python caches
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
