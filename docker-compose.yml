@@ -1,0 +1,29 @@
+services:
+  backend:
+    build: ./server
+    container_name: trafficcare-backend
+    env_file:
+      - ./server/.env
+    environment:
+      PORT: 5050
+      DL_API_URL: http://dl:8000/predict
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./server/uploads:/app/uploads
+    depends_on:
+      - dl
+
+  dl:
+    build: ./dl
+    container_name: trafficcare-dl
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./client
+    container_name: trafficcare-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
