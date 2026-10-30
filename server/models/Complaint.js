@@ -29,6 +29,33 @@ const complaintSchema = new mongoose.Schema(
       trim: true,
     },
 
+    // Uploaded road image
+    imageUrl: {
+      type: String,
+      default: null,
+    },
+
+    // Deep learning prediction
+    aiPrediction: {
+      status: {
+        type: String,
+        enum: ["Not Requested", "Completed", "Failed"],
+        default: "Not Requested",
+      },
+      category: {
+        type: String,
+        default: null,
+      },
+      confidence: {
+        type: Number,
+        default: null,
+      },
+      probabilities: {
+        type: mongoose.Schema.Types.Mixed,
+        default: null,
+      },
+    },
+
     status: {
       type: String,
       enum: [

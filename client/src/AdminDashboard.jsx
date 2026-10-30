@@ -126,6 +126,11 @@ function AdminDashboard({ user, onLogout }) {
       ? complaints
       : complaints.filter((item) => item.status === filter);
 
+  const getImageUrl = (imageUrl) => {
+    if (!imageUrl) return null;
+    return `http://localhost:5050${imageUrl}`;
+  };
+
   return (
     <main className="admin-portal">
       <header className="admin-header">
@@ -231,7 +236,6 @@ function AdminDashboard({ user, onLogout }) {
 
           <div className="admin-filter">
             <label htmlFor="status-filter">Filter by status:</label>
-
             <select
               id="status-filter"
               value={filter}
@@ -269,73 +273,122 @@ function AdminDashboard({ user, onLogout }) {
                 </thead>
 
                 <tbody>
-                  {filteredComplaints.map((complaint) => (
-                    <tr key={complaint._id}>
-                      <td>
-                        <strong>{complaint.category}</strong>
-                        <small>
-                          #{complaint._id.slice(-6).toUpperCase()}
-                        </small>
-                        <p className="admin-description">
-                          {complaint.description}
-                        </p>
-                      </td>
+                  {filteredComplaints.map((complaint) => {
+                    const prediction = complaint.aiPrediction;
+                    const imageUrl = getImageUrl(complaint.imageUrl);
 
-                      <td>
-                        <strong>
-                          {complaint.user?.name || "Unknown"}
-                        </strong>
-                        <small>
-                          {complaint.user?.email || "N/A"}
-                        </small>
-                      </td>
+                    return (
+                      <tr key={complaint._id}>
+                        <td>
+                          <strong>{complaint.category}</strong>
 
-                      <td>{complaint.location}</td>
-                      <td>{formatDate(complaint.createdAt)}</td>
+                          <small>
+                            #{complaint._id.slice(-6).toUpperCase()}
+                          </small>
 
-                      <td>
-                        <select
-                          className="admin-select"
-                          value={complaint.status || "Submitted"}
-                          disabled={updating === complaint._id}
-                          onChange={(event) =>
-                            updateComplaint(
-                              complaint._id,
-                              "status",
-                              event.target.value
-                            )
-                          }
-                        >
-                          {STATUSES.map((status) => (
-                            <option key={status} value={status}>
-                              {status}
-                            </option>
-                          ))}
-                        </select>
-                      </td>
+                          <p className="admin-description">
+                            {complaint.description}
+                          </p>
 
-                      <td>
-                        <select
-                          className="admin-select"
-                          value={complaint.priority || "Medium"}
-                          disabled={updating === complaint._id}
-                          onChange={(event) =>
-                            updateComplaint(
-                              complaint._id,
-                              "priority",
-                              event.target.value
-                            )
-                          }
-                        >
-                          {PRIORITIES.map((priority) => (
-                            <option key={priority} value={priority}>
-                              {priority}
-                            </option>
-                          ))}
-                        </select>
-                      </td>
-                    </tr>
-                  ))}
+                          {imageUrl && (
+                            <div style={{ marginTop: "10px" }}>
+                              <img
+                                src={imageUrl}
+                                alt="Citizen's complaint"
+                                style={{
+                                  width: "130px",
+                                  height: "95px",
+                                  objectFit: "cover",
+                                  borderRadius: "8px",
+                                }}
+                              />
+                            </div>
+                          )}
+
+                          <div style={{ marginTop: "10px" }}>
+                            <strong>AI Analysis</strong>
+
+                            {prediction?.status === "Completed" ? (
+                              <>
+                                <p>
+                                  Prediction:{" "}
+                                  <strong>
+                                    {prediction.category || "N/A"}
+                                  </strong>
+                                </p>
+
+                                <p>
+                                  Confidence:{" "}
+                                  {typeof prediction.confidence === "number"
+                                    ? `${(prediction.confidence * 100).toFixed(2)}%`
+                                    : "N/A"}
+                                </p>
+                              </>
+                            ) : (
+                              <p>
+                                {prediction?.status || "Not Requested"}
+                              </p>
+                            )}
+                          </div>
+                        </td>
+
+                        <td>
+                          <strong>
+                            {complaint.user?.name || "Unknown"}
+                          </strong>
+                          <small>
+                            {complaint.user?.email || "N/A"}
+                          </small>
+                        </td>
+
+                        <td>{complaint.location}</td>
+
+                        <td>{formatDate(complaint.createdAt)}</td>
+
+                        <td>
+                          <select
+                            className="admin-select"
+                            value={complaint.status || "Submitted"}
+                            disabled={updating === complaint._id}
+                            onChange={(event) =>
+                              updateComplaint(
+                                complaint._id,
+                                "status",
+                                event.target.value
+                              )
+                            }
+                          >
+                            {STATUSES.map((status) => (
+                              <option key={status} value={status}>
+                                {status}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+
+                        <td>
+                          <select
+                            className="admin-select"
+                            value={complaint.priority || "Medium"}
+                            disabled={updating === complaint._id}
+                            onChange={(event) =>
+                              updateComplaint(
+                                complaint._id,
+                                "priority",
+                                event.target.value
+                              )
+                            }
+                          >
+                            {PRIORITIES.map((priority) => (
+                              <option key={priority} value={priority}>
+                                {priority}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -352,4 +405,3 @@ function AdminDashboard({ user, onLogout }) {
 }
 
 export default AdminDashboard;
-

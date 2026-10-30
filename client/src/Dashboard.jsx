@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const API = "http://localhost:5050/api/complaints";
+const SERVER_URL = "http://localhost:5050";
 
 function Dashboard({ user, onLogout }) {
   const [form, setForm] = useState({
@@ -11,6 +12,8 @@ function Dashboard({ user, onLogout }) {
     location: "",
   });
 
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
   const [complaints, setComplaints] = useState([]);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("success");
@@ -45,11 +48,43 @@ function Dashboard({ user, onLogout }) {
     loadComplaints();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
   const handleChange = (event) => {
     setForm((previous) => ({
       ...previous,
       [event.target.name]: event.target.value,
     }));
+  };
+
+  const handleImageChange = (event) => {
+    const selectedFile = event.target.files?.[0];
+
+    if (!selectedFile) return;
+
+    if (!["image/jpeg", "image/png"].includes(selectedFile.type)) {
+      setMessage("Please select a JPG or PNG image.");
+      setMessageType("error");
+      event.target.value = "";
+      return;
+    }
+
+    if (selectedFile.size > 10 * 1024 * 1024) {
+      setMessage("The image must be 10 MB or smaller.");
+      setMessageType("error");
+      event.target.value = "";
+      return;
+    }
+
+    setImage(selectedFile);
+    setImagePreview(URL.createObjectURL(selectedFile));
+    setMessage("");
   };
 
   const handleSubmit = async (event) => {
@@ -58,9 +93,37 @@ function Dashboard({ user, onLogout }) {
     setMessage("");
 
     try {
-      await axios.post(API, form, authConfig());
+      const formData = new FormData();
 
-      setMessage("Your complaint has been submitted successfully.");
+      formData.append("category", form.category);
+      formData.append("description", form.description);
+      formData.append("location", form.location);
+
+      if (image) {
+        formData.append("image", image);
+      }
+
+      const response = await axios.post(API, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const savedComplaint = response.data.complaint;
+      const prediction = savedComplaint?.aiPrediction;
+
+      if (prediction?.status === "Completed") {
+        setMessage(
+          `Complaint submitted! AI prediction: ${prediction.category} (${(prediction.confidence * 100).toFixed(1)}% confidence).`
+        );
+      } else if (prediction?.status === "Failed") {
+        setMessage(
+          "Complaint submitted, but AI prediction failed. You can still report the issue normally."
+        );
+      } else {
+        setMessage("Your complaint has been submitted successfully.");
+      }
+
       setMessageType("success");
 
       setForm({
@@ -68,6 +131,12 @@ function Dashboard({ user, onLogout }) {
         description: "",
         location: "",
       });
+
+      setImage(null);
+      setImagePreview("");
+
+      const fileInput = document.getElementById("complaint-image");
+      if (fileInput) fileInput.value = "";
 
       await loadComplaints();
     } catch (error) {
@@ -116,8 +185,7 @@ function Dashboard({ user, onLogout }) {
   ).length;
 
   const activeCount = complaints.filter(
-    (item) =>
-      item.status !== "Resolved" && item.status !== "Rejected"
+    (item) => item.status !== "Resolved" && item.status !== "Rejected"
   ).length;
 
   return (
@@ -153,8 +221,8 @@ function Dashboard({ user, onLogout }) {
             <span className="welcome-label">CITIZEN DASHBOARD</span>
             <h2>Your city. Your voice.</h2>
             <p>
-              Help make your streets safer by reporting traffic
-              issues and tracking their progress.
+              Help make your streets safer by reporting traffic issues and
+              tracking their progress.
             </p>
           </div>
           <div className="welcome-icon">🏙️</div>
@@ -244,6 +312,49 @@ function Dashboard({ user, onLogout }) {
                 <small>{form.description.length}/2000 characters</small>
               </label>
 
+              <label>
+                <span>Road image (optional)</span>
+                <input
+                  id="complaint-image"
+                  type="file"
+                  accept="image/jpeg,image/png"
+                  onChange={handleImageChange}
+                />
+                <small>
+                  Upload a JPG or PNG image, up to 10 MB. The AI model will
+                  analyse the image for potholes, road damage, or normal road
+                  conditions.
+                </small>
+              </label>
+
+              {imagePreview && (
+                <div style={{ marginTop: "12px" }}>
+                  <p>Image preview</p>
+                  <img
+                    src={imagePreview}
+                    alt="Selected road"
+                    style={{
+                      width: "100%",
+                      maxWidth: "360px",
+                      maxHeight: "240px",
+                      objectFit: "contain",
+                      borderRadius: "10px",
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setImage(null);
+                      setImagePreview("");
+                      const input = document.getElementById("complaint-image");
+                      if (input) input.value = "";
+                    }}
+                  >
+                    Remove image
+                  </button>
+                </div>
+              )}
+
               <button
                 className="modern-submit-button"
                 type="submit"
@@ -291,10 +402,7 @@ function Dashboard({ user, onLogout }) {
           ) : (
             <div className="modern-complaint-list">
               {complaints.map((complaint) => (
-                <article
-                  className="modern-complaint-card"
-                  key={complaint._id}
-                >
+                <article className="modern-complaint-card" key={complaint._id}>
                   <div className="complaint-card-top">
                     <div>
                       <span className="complaint-reference">
@@ -315,6 +423,50 @@ function Dashboard({ user, onLogout }) {
                   <p className="complaint-description">
                     {complaint.description}
                   </p>
+
+                  {complaint.imageUrl && (
+                    <div style={{ margin: "12px 0" }}>
+                      <img
+                        src={`${SERVER_URL}${complaint.imageUrl}`}
+                        alt="Road reported in complaint"
+                        loading="lazy"
+                        style={{
+                          width: "100%",
+                          maxWidth: "360px",
+                          maxHeight: "240px",
+                          objectFit: "contain",
+                          borderRadius: "10px",
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  {complaint.aiPrediction?.status === "Completed" && (
+                    <div
+                      style={{
+                        margin: "12px 0",
+                        padding: "12px",
+                        borderRadius: "8px",
+                        background: "#eef8f0",
+                      }}
+                    >
+                      <strong>AI road analysis</strong>
+                      <p>
+                        Prediction: {complaint.aiPrediction.category}
+                      </p>
+                      <p>
+                        Confidence:{" "}
+                        {(complaint.aiPrediction.confidence * 100).toFixed(1)}%
+                      </p>
+                      <small>
+                        AI assistance only; verify the road condition manually.
+                      </small>
+                    </div>
+                  )}
+
+                  {complaint.aiPrediction?.status === "Failed" && (
+                    <p>AI analysis was unavailable for this image.</p>
+                  )}
 
                   <div className="complaint-card-footer">
                     <span>📍 {complaint.location}</span>
