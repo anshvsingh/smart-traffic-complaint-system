@@ -1,0 +1,10 @@
+split,class,total,valid,corrupt,dimensions
+Training,Cracks,1481,1481,0,"[((256, 256), 1481)]"
+Training,Normal,1482,1482,0,"[((256, 256), 1482)]"
+Training,Pothole,1482,1482,0,"[((256, 256), 1482)]"
+Validation,Cracks,149,149,0,"[((256, 256), 149)]"
+Validation,Normal,148,148,0,"[((256, 256), 148)]"
+Validation,Pothole,148,148,0,"[((256, 256), 148)]"
+Testing,Cracks,370,370,0,"[((256, 256), 370)]"
+Testing,Normal,370,370,0,"[((256, 256), 370)]"
+Testing,Pothole,370,370,0,"[((256, 256), 370)]"

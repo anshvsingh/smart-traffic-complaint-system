@@ -11,3 +11,9 @@ __pycache__/
 dist/
 build/
 coverage/
+
+# Deep Learning project data
+dl/.venv/
+dl/datasets/
+dl/results/__pycache__/
+
