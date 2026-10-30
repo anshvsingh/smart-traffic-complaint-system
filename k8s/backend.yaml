@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: ansh6625/smart-traffic-complaint-system-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5050
+          envFrom:
+            - secretRef:
+                name: trafficcare-secrets
+          env:
+            - name: PORT
+              value: "5050"
+            - name: DL_API_URL
+              value: "http://dl:8000/predict"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 5050
+      targetPort: 5050
+  type: ClusterIP

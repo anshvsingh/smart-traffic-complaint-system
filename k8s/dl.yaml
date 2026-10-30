@@ -1,0 +1,39 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dl
+  template:
+    metadata:
+      labels:
+        app: dl
+    spec:
+      containers:
+        - name: dl
+          image: ansh6625/smart-traffic-complaint-system-dl:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dl
+spec:
+  selector:
+    app: dl
+  ports:
+    - port: 8000
+      targetPort: 8000
+  type: ClusterIP
