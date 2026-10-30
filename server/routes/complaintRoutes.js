@@ -72,6 +72,30 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
       });
     }
 
+    const allowedCategories = [
+      "Pothole",
+      "Traffic Signal",
+      "Illegal Parking",
+      "Road Blockage",
+      "Traffic Congestion",
+      "Street Lighting",
+      "Accident",
+      "Pedestrian Safety",
+      "Road Sign",
+      "Public Transport",
+      "Other",
+    ];
+
+    if (!allowedCategories.includes(category.trim())) {
+      await removeUploadedFile(req.file);
+
+      return res.status(400).json({
+        status: "error",
+        message: "Invalid complaint category",
+      });
+    }
+
+
     let aiPrediction = {
       status: "Not Requested",
       category: null,
