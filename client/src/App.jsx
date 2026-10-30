@@ -2,26 +2,32 @@
 import { useState } from "react";
 import axios from "axios";
 import Dashboard from "./Dashboard";
+import AdminDashboard from "./AdminDashboard";
 import "./App.css";
 
 const API_URL = "http://localhost:5050/api";
 
 function App() {
   const [mode, setMode] = useState("login");
+
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
   });
+
   const [user, setUser] = useState(() => {
     try {
       const savedToken = localStorage.getItem("token");
       const savedUser = localStorage.getItem("user");
-      return savedToken && savedUser ? JSON.parse(savedUser) : null;
+      return savedToken && savedUser
+        ? JSON.parse(savedUser)
+        : null;
     } catch {
       return null;
     }
   });
+
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -58,6 +64,7 @@ function App() {
       if (mode === "register") {
         setMessage("Registration successful! Please log in.");
         setMode("login");
+
         setForm((previous) => ({
           ...previous,
           password: "",
@@ -83,14 +90,30 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+
     setUser(null);
     setMode("login");
     setForm({ name: "", email: "", password: "" });
     setMessage("");
   };
 
+  // Role-based dashboard routing
   if (user) {
-    return <Dashboard user={user} onLogout={handleLogout} />;
+    if (user.role === "admin") {
+      return (
+        <AdminDashboard
+          user={user}
+          onLogout={handleLogout}
+        />
+      );
+    }
+
+    return (
+      <Dashboard
+        user={user}
+        onLogout={handleLogout}
+      />
+    );
   }
 
   return (
@@ -98,7 +121,9 @@ function App() {
       <section className="auth-card">
         <div className="brand-icon">↗</div>
 
-        <p className="eyebrow">SMART CITY · CONNECTED CITIZENS</p>
+        <p className="eyebrow">
+          SMART CITY · CONNECTED CITIZENS
+        </p>
 
         <h1>
           Traffic<span>Care</span>
@@ -133,7 +158,9 @@ function App() {
         </div>
 
         <h2>
-          {mode === "login" ? "Welcome back" : "Create your account"}
+          {mode === "login"
+            ? "Welcome back"
+            : "Create your account"}
         </h2>
 
         <p className="form-subtitle">
@@ -205,6 +232,7 @@ function App() {
           {mode === "login"
             ? "New to TrafficCare? "
             : "Already registered? "}
+
           <button
             type="button"
             onClick={() => {

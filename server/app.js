@@ -1,11 +1,13 @@
-
+const cors = require("cors");
 const express = require("express");
 const complaintRoutes = require("./routes/complaintRoutes");
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
-
+app.use(cors({
+  origin: "http://localhost:5173",
+}));
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);

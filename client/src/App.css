@@ -326,3 +326,576 @@ button {
     padding: 0 4px;
   }
 }
+
+/* FIX: Complaint form text visibility */
+
+:root {
+  color-scheme: light;
+}
+
+.dashboard input,
+.dashboard select,
+.dashboard textarea,
+.complaint-form input,
+.complaint-form select,
+.complaint-form textarea {
+  color: #202820 !important;
+  background-color: #ffffff !important;
+  caret-color: #07865f;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 1;
+}
+
+.dashboard input::placeholder,
+.dashboard textarea::placeholder,
+.complaint-form input::placeholder,
+.complaint-form textarea::placeholder {
+  color: #89958e !important;
+  opacity: 1;
+}
+
+.dashboard input:focus,
+.dashboard select:focus,
+.dashboard textarea:focus,
+.complaint-form input:focus,
+.complaint-form select:focus,
+.complaint-form textarea:focus {
+  outline: none;
+  border-color: #07865f;
+  box-shadow: 0 0 0 3px rgba(7, 134, 95, 0.13);
+}
+
+.dashboard textarea,
+.complaint-form textarea {
+  min-height: 130px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.dashboard select option,
+.complaint-form select option {
+  color: #202820;
+  background: #ffffff;
+}
+
+
+/* =================================
+   TRAFFICCARE CITIZEN DASHBOARD
+================================= */
+
+.portal {
+  min-height: 100vh;
+  background: #f3f7f4;
+  color: #20352b;
+}
+
+.portal-header {
+  min-height: 82px;
+  padding: 14px 7%;
+  background: #103e30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  color: white;
+}
+
+.portal-brand,
+.portal-user {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.portal-logo {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  background: #16865e;
+  border-radius: 12px;
+  font-size: 27px;
+  font-weight: 800;
+}
+
+.portal-brand h1 {
+  color: white;
+  font-size: 21px;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.portal-brand span {
+  color: #b7d5c8;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  background: #d5eee1;
+  color: #145b40;
+  border-radius: 50%;
+  font-weight: 800;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-details strong {
+  color: white;
+  font-size: 13px;
+}
+
+.user-details span {
+  color: #b7d5c8;
+  font-size: 11px;
+}
+
+.portal-header .logout-button {
+  padding: 10px 15px;
+  background: transparent;
+  border: 1px solid #6b9281;
+  color: white;
+  border-radius: 9px;
+  font-size: 12px;
+}
+
+.portal-header .logout-button:hover {
+  background: #245b47;
+}
+
+.portal-content {
+  width: min(1050px, 90%);
+  margin: 0 auto;
+  padding: 36px 0 20px;
+}
+
+.welcome-banner {
+  background: linear-gradient(115deg, #14553d, #21815b);
+  border-radius: 20px;
+  padding: 35px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  margin-bottom: 22px;
+  box-shadow: 0 12px 30px rgba(16, 62, 48, 0.12);
+}
+
+.welcome-label,
+.section-kicker {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.welcome-label {
+  color: #b8e4ce;
+}
+
+.welcome-banner h2 {
+  color: white;
+  font-size: clamp(27px, 4vw, 37px);
+  margin: 12px 0 8px;
+  letter-spacing: -1px;
+}
+
+.welcome-banner p {
+  color: #d6eae0;
+  max-width: 520px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.welcome-icon {
+  font-size: 60px;
+  padding: 18px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 38px;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid #e3ece5;
+  border-radius: 15px;
+  padding: 21px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 15px rgba(24, 60, 40, 0.03);
+}
+
+.stat-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  background: #e8f4ec;
+  border-radius: 12px;
+  font-size: 19px;
+}
+
+.stat-card div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.stat-card div span {
+  color: #75847a;
+  font-size: 12px;
+}
+
+.stat-card strong {
+  font-size: 25px;
+  color: #174b36;
+}
+
+.portal-section {
+  margin-bottom: 38px;
+}
+
+.section-heading {
+  margin-bottom: 17px;
+}
+
+.section-kicker {
+  color: #16815a;
+}
+
+.section-heading h2 {
+  color: #20392d;
+  margin: 7px 0 5px;
+  font-size: 24px;
+  font-weight: 750;
+}
+
+.section-heading p {
+  color: #78877d;
+  font-size: 13px;
+}
+
+.portal-card {
+  background: white;
+  border: 1px solid #e2ebe4;
+  border-radius: 17px;
+  padding: 30px;
+  box-shadow: 0 5px 20px rgba(24, 60, 40, 0.04);
+}
+
+.modern-complaint-form {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.modern-complaint-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  color: #354b3e;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.modern-complaint-form input,
+.modern-complaint-form select,
+.modern-complaint-form textarea {
+  width: 100%;
+  padding: 14px 15px;
+  background: #fbfdfb !important;
+  color: #20352b !important;
+  border: 1px solid #dce7df;
+  border-radius: 10px;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.modern-complaint-form input::placeholder,
+.modern-complaint-form textarea::placeholder {
+  color: #9aa79e !important;
+  opacity: 1;
+}
+
+.modern-complaint-form input:focus,
+.modern-complaint-form select:focus,
+.modern-complaint-form textarea:focus {
+  border-color: #16815a;
+  box-shadow: 0 0 0 3px rgba(22, 129, 90, 0.11);
+}
+
+.modern-complaint-form textarea {
+  min-height: 130px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.modern-complaint-form small {
+  align-self: flex-end;
+  color: #8b998f;
+  font-weight: 400;
+}
+
+.modern-submit-button {
+  width: fit-content;
+  min-width: 190px;
+  padding: 14px 23px;
+  border: none;
+  border-radius: 10px;
+  background: #14794f;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.modern-submit-button:hover {
+  background: #105e3d;
+  transform: translateY(-1px);
+}
+
+.modern-submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.portal-message {
+  padding: 13px 16px;
+  margin-top: 20px;
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+.portal-message.success {
+  background: #e8f6ec;
+  color: #17633c;
+}
+
+.portal-message.error {
+  background: #fff0ef;
+  color: #b42318;
+}
+
+.complaints-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.refresh-button {
+  background: white !important;
+  color: #176b49 !important;
+  border: 1px solid #dce9df !important;
+  font-size: 12px;
+}
+
+.refresh-button:hover {
+  background: #edf7f0 !important;
+}
+
+.modern-complaint-list {
+  display: grid;
+  gap: 13px;
+}
+
+.modern-complaint-card {
+  background: white;
+  border: 1px solid #e1eae3;
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 0 4px 15px rgba(24, 60, 40, 0.025);
+}
+
+.complaint-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.complaint-reference {
+  color: #8b998f;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.modern-complaint-card h3 {
+  color: #203b2d;
+  margin: 7px 0 0;
+  font-size: 17px;
+}
+
+.complaint-description {
+  color: #66766b;
+  font-size: 13px;
+  line-height: 1.7;
+  margin-top: 13px;
+}
+
+.modern-status {
+  padding: 7px 11px;
+  border-radius: 30px;
+  font-size: 10px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.modern-status.submitted {
+  background: #eaf1ff;
+  color: #315ca3;
+}
+
+.modern-status.under-review {
+  background: #fff5dd;
+  color: #94620a;
+}
+
+.modern-status.in-progress {
+  background: #e8f1ff;
+  color: #245b9b;
+}
+
+.modern-status.resolved {
+  background: #e4f5e9;
+  color: #187344;
+}
+
+.modern-status.rejected {
+  background: #ffebea;
+  color: #ae3630;
+}
+
+.complaint-card-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-top: 1px solid #edf1ed;
+  margin-top: 17px;
+  padding-top: 14px;
+  color: #849188;
+  font-size: 11px;
+}
+
+.empty-state {
+  text-align: center;
+  background: white;
+  padding: 45px 20px;
+  border: 1px dashed #d5e3d8;
+  border-radius: 15px;
+}
+
+.empty-state div {
+  font-size: 35px;
+  margin-bottom: 12px;
+}
+
+.empty-state h3 {
+  color: #294535;
+  margin: 0 0 7px;
+  font-size: 17px;
+}
+
+.empty-state p {
+  color: #829087;
+  font-size: 13px;
+}
+
+.portal-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 22px 0;
+  border-top: 1px solid #e1eae3;
+  color: #89968e;
+  font-size: 11px;
+}
+
+.portal-footer span:first-child {
+  color: #28704d;
+  font-weight: 800;
+}
+
+@media (max-width: 650px) {
+  .portal-header {
+    padding: 13px 5%;
+  }
+
+  .portal-brand span {
+    font-size: 8px;
+  }
+
+  .user-details {
+    display: none;
+  }
+
+  .portal-content {
+    width: 92%;
+    padding-top: 22px;
+  }
+
+  .welcome-banner {
+    padding: 25px 22px;
+  }
+
+  .welcome-icon {
+    display: none;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 15px;
+  }
+
+  .portal-card {
+    padding: 20px 16px;
+  }
+
+  .modern-submit-button {
+    width: 100%;
+  }
+
+  .complaints-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .modern-complaint-card {
+    padding: 18px;
+  }
+
+  .complaint-card-top {
+    flex-direction: column;
+  }
+
+  .portal-footer {
+    flex-direction: column;
+    gap: 7px;
+  }
+}
+

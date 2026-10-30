@@ -2,12 +2,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Complaint = require("../models/Complaint");
-const authenticateToken = require("../middleware/auth");
+const { protect } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 // Submit a complaint for the logged-in citizen
-router.post("/", authenticateToken, async (req, res) => {
+router.post("/", protect, async (req, res) => {
   try {
     const { category, description, location } = req.body;
 
@@ -26,7 +26,7 @@ router.post("/", authenticateToken, async (req, res) => {
     }
 
     const complaint = await Complaint.create({
-      user: req.userId,
+      user: req.user._id,
       category: category.trim(),
       description: description.trim(),
       location: location.trim(),
@@ -48,10 +48,10 @@ router.post("/", authenticateToken, async (req, res) => {
 });
 
 // Fetch only the logged-in citizen's complaints
-router.get("/", authenticateToken, async (req, res) => {
+router.get("/", protect, async (req, res) => {
   try {
     const complaints = await Complaint.find({
-      user: req.userId,
+      user: req.user._id,
     }).sort({ createdAt: -1 });
 
     return res.status(200).json({
