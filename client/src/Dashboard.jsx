@@ -367,7 +367,8 @@ function Dashboard({ user, onLogout }) {
             {message && (
               <div
                 className={`portal-message ${messageType}`}
-                role="status"
+                role={messageType === "error" ? "alert" : "status"}
+                aria-live={messageType === "error" ? "assertive" : "polite"}
               >
                 {message}
               </div>
@@ -488,3 +489,4 @@ function Dashboard({ user, onLogout }) {
 }
 
 export default Dashboard;
+
