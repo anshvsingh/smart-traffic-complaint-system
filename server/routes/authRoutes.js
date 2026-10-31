@@ -3,6 +3,10 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const { LIMITS } = require("../constants/complaint");
+
+// Simple, permissive email shape check: something@something.tld, no spaces.
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const router = express.Router();
 
@@ -26,6 +30,22 @@ router.post("/register", async (req, res) => {
     }
 
     const normalizedEmail = email.trim().toLowerCase();
+
+    // BUG-004: the message promised a valid email but the format was never checked
+    if (!EMAIL_PATTERN.test(normalizedEmail)) {
+      return res.status(400).json({
+        status: "error",
+        message: "Provide a valid email address",
+      });
+    }
+
+    // BUG-003: over-long names used to fail in Mongoose and come back as a 500
+    if (name.trim().length > LIMITS.nameMax) {
+      return res.status(400).json({
+        status: "error",
+        message: `Name must be ${LIMITS.nameMax} characters or fewer`,
+      });
+    }
 
     const existingUser = await User.findOne({ email: normalizedEmail });
 
@@ -59,6 +79,13 @@ router.post("/register", async (req, res) => {
       return res.status(409).json({
         status: "error",
         message: "An account with this email already exists",
+      });
+    }
+
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        status: "error",
+        message: "Invalid registration details",
       });
     }
 

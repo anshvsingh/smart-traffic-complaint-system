@@ -34,7 +34,7 @@ const protect = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Load the current user instead of trusting token claims alone.
-    const user = await User.findById(decoded.sub).select("_id name email role");
+    const user = await User.findById(decoded.sub).select("_id name email role").lean();
 
     if (!user) {
       return res.status(401).json({

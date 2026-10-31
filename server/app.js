@@ -34,4 +34,28 @@ app.use((req, res) => {
   });
 });
 
+// BUG-005: JSON error handler. Without it, a malformed or oversized JSON body
+// got Express's default HTML error page, including a stack trace outside production.
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  const status = err.status || err.statusCode || 500;
+
+  if (status === 400 && err.type === "entity.parse.failed") {
+    return res.status(400).json({ status: "error", message: "Invalid JSON body" });
+  }
+
+  if (status === 413) {
+    return res.status(413).json({ status: "error", message: "Request body too large" });
+  }
+
+  if (status >= 500) {
+    console.error("Unhandled error:", err.message);
+  }
+
+  return res.status(status).json({
+    status: "error",
+    message: status >= 500 ? "Internal server error" : "Bad request",
+  });
+});
+
 module.exports = app;

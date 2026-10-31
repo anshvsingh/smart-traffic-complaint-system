@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Complaint = require("../models/Complaint");
 const { protect, requireAdmin } = require("../middleware/authMiddleware");
+const { COMPLAINT_STATUSES, COMPLAINT_PRIORITIES } = require("../constants/complaint");
 
 const router = express.Router();
 
@@ -15,7 +16,8 @@ router.get("/complaints", async (req, res) => {
   try {
     const complaints = await Complaint.find()
       .populate("user", "name email")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean();
 
     return res.status(200).json({
       status: "success",
@@ -46,15 +48,8 @@ router.patch("/complaints/:id", async (req, res) => {
       });
     }
 
-    const allowedStatuses = [
-      "Submitted",
-      "Under Review",
-      "In Progress",
-      "Resolved",
-      "Rejected",
-    ];
-
-    const allowedPriorities = ["Low", "Medium", "High"];
+    const allowedStatuses = COMPLAINT_STATUSES;
+    const allowedPriorities = COMPLAINT_PRIORITIES;
 
     if (
       status === undefined &&
@@ -122,21 +117,21 @@ router.patch("/complaints/:id", async (req, res) => {
 // Summary counts for the administrator dashboard.
 router.get("/dashboard", async (req, res) => {
   try {
-    const [total, statusCounts] = await Promise.all([
-      Complaint.countDocuments(),
-      Complaint.aggregate([
-        {
-          $group: {
-            _id: "$status",
-            count: { $sum: 1 },
-          },
+    // One aggregation instead of countDocuments + aggregate: total is the sum
+    const statusCounts = await Complaint.aggregate([
+      {
+        $group: {
+          _id: "$status",
+          count: { $sum: 1 },
         },
-      ]),
+      },
     ]);
 
     const byStatus = {};
+    let total = 0;
     for (const item of statusCounts) {
       byStatus[item._id] = item.count;
+      total += item.count;
     }
 
     return res.status(200).json({

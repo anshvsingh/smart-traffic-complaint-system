@@ -1,6 +1,7 @@
 
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const { LIMITS } = require("../constants/complaint");
 
 const userSchema = new mongoose.Schema(
   {
@@ -8,7 +9,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      maxlength: 100,
+      maxlength: LIMITS.nameMax,
     },
 
     email: {
