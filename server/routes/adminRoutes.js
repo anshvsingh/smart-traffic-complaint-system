@@ -88,7 +88,7 @@ router.patch("/complaints/:id", async (req, res) => {
     const complaint = await Complaint.findByIdAndUpdate(
       id,
       { $set: updates },
-      { new: true, runValidators: true }
+      { returnDocument: "after", runValidators: true }
     ).populate("user", "name email");
 
     if (!complaint) {
