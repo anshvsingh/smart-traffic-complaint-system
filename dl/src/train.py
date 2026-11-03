@@ -33,21 +33,29 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "datasets" / "raw"
 MODEL_DIR = ROOT / "models"
 RESULTS_DIR = ROOT / "results"
-MLFLOW_DIR = ROOT / "mlruns"
 
-MODEL_DIR.mkdir(exist_ok=True)
-RESULTS_DIR.mkdir(exist_ok=True)
-MLFLOW_DIR.mkdir(exist_ok=True)
+TRACKING_DB = ROOT / "mlflow.db"
+ARTIFACT_DIR = ROOT / "mlflow_artifacts"
+
+MODEL_DIR.mkdir(parents=True, exist_ok=True)
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+ARTIFACT_DIR.mkdir(parents=True, exist_ok=True)
+
+
 
 
 # ==========================================
 # 3. MLFLOW CONFIGURATION
 # ==========================================
 
-mlflow.set_tracking_uri(MLFLOW_DIR.as_uri())
-mlflow.set_experiment("Smart-Traffic-DL")
+TRACKING_URI = f"sqlite:///{TRACKING_DB.as_posix()}"
+
+mlflow.set_tracking_uri(TRACKING_URI)
+
+mlflow.set_experiment("Smart-Traffic-DL-Training")
 
 print("MLflow Tracking URI:", mlflow.get_tracking_uri())
+print("MLflow Artifact Directory:", ARTIFACT_DIR)
 
 
 # ==========================================

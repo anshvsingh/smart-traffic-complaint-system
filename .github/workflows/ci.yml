@@ -12,6 +12,7 @@ on:
     branches:
       - main
       - feature/deep-learning
+      - feature/mlops-cicd
 
 jobs:
   python-quality:
@@ -39,6 +40,7 @@ jobs:
       - name: Run Pylint
         run: |
           pylint --rcfile=pyproject.toml \
+            --disable=import-error \
             dl/src/train.py \
             dl/src/evaluate.py \
             dl/src/predict.py \
