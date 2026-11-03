@@ -2,6 +2,8 @@
 name: Smart Traffic CI Pipeline
 
 on:
+  workflow_dispatch:
+
   push:
     branches:
       - main
