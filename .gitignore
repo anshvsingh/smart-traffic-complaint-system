@@ -1,20 +1,73 @@
+# ==========================================
+# NODE.JS
+# ==========================================
+
 node_modules/
+client/node_modules/
+server/node_modules/
+
+# ==========================================
+# ENVIRONMENT VARIABLES
+# ==========================================
+
 .env
 .env.*
 !.env.example
+
+# ==========================================
+# PYTHON ENVIRONMENTS AND CACHE
+# ==========================================
+
 venv/
 .venv/
+**/.venv/
 __pycache__/
 *.py[cod]
 .pytest_cache/
+
+# ==========================================
+# MACOS
+# ==========================================
+
 .DS_Store
+
+# ==========================================
+# BUILD OUTPUTS
+# ==========================================
+
 dist/
 build/
 coverage/
 server/uploads/
 
-# Deep Learning project data
-dl/.venv/
-dl/datasets/
-dl/results/__pycache__/
+# ==========================================
+# DEEP LEARNING DATASETS
+# ==========================================
 
+dl/datasets/*.zip
+dl/datasets/duplicates/
+
+# ==========================================
+# MLFLOW
+# ==========================================
+
+dl/mlflow.db
+dl/mlflow.db-shm
+dl/mlflow.db-wal
+dl/mlflow_artifacts/
+dl/mlartifacts/
+dl/mlruns/
+mlruns/
+mlartifacts/
+
+# ==========================================
+# DVC LOCAL CONFIGURATION
+# ==========================================
+
+.dvc/config.local
+
+# ==========================================
+# TEMPORARY VERIFICATION
+# ==========================================
+
+dl/verification.txt

@@ -1,0 +1,25 @@
+
+[tool.pylint.main]
+py-version = "3.12"
+recursive = true
+ignore-paths = [
+    "^dl/\\.venv/",
+    "^client/node_modules/",
+    "^server/node_modules/"
+]
+
+[tool.pylint.messages_control]
+disable = [
+    "C0114",
+    "C0115",
+    "C0116",
+    "R0903",
+    "R0801"
+]
+
+[tool.pylint.format]
+max-line-length = 100
+
+[tool.pylint.design]
+max-args = 8
+max-locals = 20
