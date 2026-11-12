@@ -6,6 +6,7 @@ const path = require("path");
 const complaintRoutes = require("./routes/complaintRoutes");
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const departmentRoutes = require("./routes/departmentRoutes");
 
 const app = express();
 
@@ -17,20 +18,21 @@ app.use(
 
 app.use(express.json());
 
-// Serve uploaded complaint images
+// Serve uploaded complaint images.
 app.use(
   "/uploads",
   express.static(path.join(__dirname, "uploads"), {
     setHeaders: (res) => {
-      // Stop browsers from sniffing an upload into HTML/script.
       res.setHeader("X-Content-Type-Options", "nosniff");
     },
   })
 );
 
+// API routes.
 app.use("/api/auth", authRoutes);
 app.use("/api/complaints", complaintRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/department", departmentRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -45,6 +47,7 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+// Handle unknown routes.
 app.use((req, res) => {
   res.status(404).json({
     status: "error",
@@ -52,8 +55,7 @@ app.use((req, res) => {
   });
 });
 
-// Final error handler: always answer in JSON and never leak stack traces.
-// eslint-disable-next-line no-unused-vars
+// Final error handler.
 app.use((error, req, res, next) => {
   if (error.type === "entity.parse.failed") {
     return res.status(400).json({

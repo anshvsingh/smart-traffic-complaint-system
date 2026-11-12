@@ -33,8 +33,8 @@ const protect = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Load the current user instead of trusting token claims alone.
-    const user = await User.findById(decoded.sub).select("_id name email role");
+    const user = await User.findById(decoded.sub)
+      .select("_id name email role department");
 
     if (!user) {
       return res.status(401).json({
@@ -45,6 +45,7 @@ const protect = async (req, res, next) => {
 
     req.user = user;
     next();
+
   } catch (error) {
     if (
       error.name === "JsonWebTokenError" ||
@@ -65,6 +66,7 @@ const protect = async (req, res, next) => {
   }
 };
 
+// Admin-only access
 const requireAdmin = (req, res, next) => {
   if (!req.user || req.user.role !== "admin") {
     return res.status(403).json({
@@ -76,4 +78,21 @@ const requireAdmin = (req, res, next) => {
   next();
 };
 
-module.exports = { protect, requireAdmin };
+// Department-only access
+const requireDepartment = (req, res, next) => {
+  if (!req.user || req.user.role !== "department") {
+    return res.status(403).json({
+      status: "error",
+      message: "Department access required",
+    });
+  }
+
+  next();
+};
+
+module.exports = {
+  protect,
+  requireAdmin,
+  requireDepartment,
+};
+

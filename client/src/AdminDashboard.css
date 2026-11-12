@@ -1,4 +1,5 @@
-/* Admin-only pieces. The shell, hero, stats and buttons live in App.css. */
+
+/* Admin dashboard */
 
 .admin-brand .wordmark {
   margin: 0;
@@ -13,6 +14,16 @@
   font-size: 14px;
 }
 
+.admin-message.success {
+  background: #e8f7ed;
+  color: #176b37;
+}
+
+.admin-message.error {
+  background: #fff0ef;
+  color: #a52c27;
+}
+
 .admin-filter {
   display: flex;
   align-items: center;
@@ -22,24 +33,14 @@
   color: var(--ink-soft);
 }
 
-.admin-filter select,
-.admin-select {
-  height: 38px;
-  padding: 0 32px 0 14px;
+.admin-filter select {
+  min-height: 40px;
+  padding: 0 34px 0 14px;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
-  background-color: rgba(255, 255, 255, 0.7);
-  appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%),
-    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
-  background-position: calc(100% - 16px) 52%, calc(100% - 11px) 52%;
-  background-size: 5px 5px;
-  background-repeat: no-repeat;
-  font-size: 13.5px;
-}
-
-.admin-select:disabled {
-  opacity: 0.5;
+  background-color: white;
+  color: var(--ink);
+  font-size: 13px;
 }
 
 .admin-empty {
@@ -49,88 +50,329 @@
   color: var(--muted);
 }
 
-.admin-table-wrapper {
-  margin-top: 24px;
-  overflow-x: auto;
-  border-top: 1px solid var(--line-strong);
+/* Complaint card list */
+
+.complaint-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 28px;
 }
 
-.admin-table {
-  width: 100%;
-  min-width: 860px;
-  border-collapse: collapse;
-  text-align: left;
+.complaint-card {
+  padding: 25px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 5px 22px rgba(30, 25, 50, 0.035);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
 }
 
-.admin-table th {
-  padding: 14px 16px 14px 0;
+.complaint-card:hover {
+  border-color: var(--line-strong);
+  box-shadow: 0 10px 30px rgba(30, 25, 50, 0.07);
+  transform: translateY(-2px);
+}
+
+.complaint-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--line);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+}
+
+.complaint-id,
+.complaint-label {
+  display: block;
+  margin-bottom: 7px;
   color: var(--muted);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.09em;
 }
 
-.admin-table td {
-  padding: 22px 16px 22px 0;
-  border-bottom: 1px solid var(--line);
-  vertical-align: top;
+.complaint-card-top h3 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.complaint-status-badge {
+  flex-shrink: 0;
+  padding: 8px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #f3f1fa;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.complaint-status-badge.resolved {
+  background: #e8f7ed;
+  border-color: #c9ead4;
+  color: #176b37;
+}
+
+.complaint-status-badge.rejected {
+  background: #fff0ef;
+  border-color: #f4d0cd;
+  color: #a52c27;
+}
+
+.complaint-status-badge.work-completed {
+  background: #e9f3ff;
+  color: #245a91;
+}
+
+.complaint-status-badge.work-in-progress,
+.complaint-status-badge.in-progress {
+  background: #fff5df;
+  color: #946200;
+}
+
+.complaint-card-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+  gap: 30px;
+  padding: 23px 0;
+}
+
+.complaint-report {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  min-width: 0;
+}
+
+.complaint-image {
+  width: 180px;
+  height: 145px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  object-fit: cover;
+  background: #f1eff5;
+}
+
+.complaint-report-details {
+  min-width: 0;
+}
+
+.complaint-report p {
+  margin: 0 0 17px;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.complaint-information {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 16px;
+  align-content: start;
+  padding-left: 25px;
+  border-left: 1px solid var(--line);
+}
+
+.complaint-info-item {
+  min-width: 0;
+}
+
+.complaint-info-item strong,
+.complaint-info-item small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.complaint-info-item strong {
+  color: var(--ink);
   font-size: 14px;
 }
 
-.admin-table tbody tr {
-  transition: background 160ms ease;
-}
-
-.admin-table tbody tr:hover {
-  background: rgba(138, 125, 255, 0.05);
-}
-
-.admin-table td > strong:first-child {
-  display: block;
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 26px;
-  line-height: 1.05;
-  letter-spacing: -0.015em;
-}
-
-.admin-table td small {
-  display: block;
-  margin-top: 2px;
-  font-size: 12px;
+.complaint-info-item small {
+  margin-top: 5px;
   color: var(--muted);
+  font-size: 12px;
 }
 
-.admin-description {
-  max-width: 44ch;
-  margin-top: 8px;
+/* Complaint controls */
+
+.complaint-card-controls {
+  display: grid;
+  grid-template-columns: 1fr 0.75fr 1.4fr;
+  gap: 18px;
+  padding: 21px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.complaint-control {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.complaint-control label {
   color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 600;
 }
 
-.admin-thumb[hidden] {
-  display: none;
-}
-
-.admin-thumb {
-  display: block;
-  width: 140px;
-  height: 96px;
-  margin-top: 12px;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.admin-ai {
-  margin-top: 12px;
-  padding: 10px 12px;
-  max-width: 300px;
-  border-radius: 12px;
-  background: linear-gradient(120deg, rgba(138, 125, 255, 0.12), rgba(255, 182, 227, 0.16));
+.complaint-control select {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 9px;
+  background: white;
+  color: var(--ink);
+  font: inherit;
   font-size: 13px;
 }
 
-.admin-ai > strong {
+.complaint-control select:focus {
+  outline: 2px solid rgba(138, 125, 255, 0.25);
+  border-color: #8a7dff;
+}
+
+.complaint-control select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.department-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 9px;
+}
+
+.department-control label {
+  grid-column: 1 / -1;
+}
+
+.department-control select {
+  min-width: 0;
+}
+
+.department-control .assign-button {
+  min-height: 42px;
+  margin: 0;
+  padding: 0 18px;
+  border: none;
+  border-radius: 9px;
+  background: #151319;
+  color: white;
+  font-size: 12px;
   font-weight: 600;
+  cursor: pointer;
+  transition: background 180ms ease;
+  white-space: nowrap;
+}
+
+.department-control .assign-button:hover {
+  background: #494254;
+}
+
+.department-control .assign-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Card footer */
+
+.complaint-card-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 17px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.complaint-card-footer strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Responsive layout */
+
+@media (max-width: 900px) {
+  .complaint-card-main {
+    grid-template-columns: 1fr;
+  }
+
+  .complaint-information {
+    padding: 20px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .complaint-card-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .department-control {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-filter {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .complaint-card {
+    padding: 17px;
+  }
+
+  .complaint-card-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .complaint-report {
+    flex-direction: column;
+  }
+
+  .complaint-image {
+    width: 100%;
+    height: 190px;
+  }
+
+  .complaint-information {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .complaint-card-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .department-control {
+    grid-column: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .department-control label {
+    grid-column: auto;
+  }
+
+  .department-control .assign-button {
+    width: 100%;
+  }
+
+  .complaint-card-footer {
+    flex-direction: column;
+  }
 }

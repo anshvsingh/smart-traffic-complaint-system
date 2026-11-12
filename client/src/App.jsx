@@ -1,9 +1,12 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import axios from "axios";
+
 import Dashboard from "./Dashboard";
 import AdminDashboard from "./AdminDashboard";
+import DepartmentDashboard from "./DepartmentDashboard";
 import Aura from "./Aura";
+
 import "./App.css";
 
 const API_URL = "http://localhost:5050/api";
@@ -21,6 +24,7 @@ function App() {
     try {
       const savedToken = localStorage.getItem("token");
       const savedUser = localStorage.getItem("user");
+
       return savedToken && savedUser
         ? JSON.parse(savedUser)
         : null;
@@ -36,21 +40,28 @@ function App() {
   const registerTabRef = useRef(null);
   const indicatorRef = useRef(null);
 
-  // Slide the tab underline under the active tab. Only `transform` changes,
-  // so the browser animates it on the compositor. Re-measured once web fonts
-  // load and on resize, because tab widths depend on the font.
+  // Animate the underline below the active authentication tab.
   useLayoutEffect(() => {
     const measure = () => {
-      const tab = (mode === "login" ? loginTabRef : registerTabRef).current;
+      const tab =
+        (mode === "login" ? loginTabRef : registerTabRef).current;
+
       const bar = indicatorRef.current;
+
       if (!tab || !bar) return;
+
       bar.style.transform = `translate3d(${tab.offsetLeft}px, 0, 0) scaleX(${tab.offsetWidth})`;
     };
 
     measure();
+
     document.fonts?.ready?.then(measure);
+
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+
+    return () => {
+      window.removeEventListener("resize", measure);
+    };
   }, [mode, user]);
 
   const switchMode = (next) => {
@@ -67,6 +78,7 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     setMessage("");
     setLoading(true);
 
@@ -90,6 +102,7 @@ function App() {
 
       if (mode === "register") {
         setMessage("Registration successful! Please log in.");
+
         setMode("login");
 
         setForm((previous) => ({
@@ -100,11 +113,13 @@ function App() {
         const loggedInUser = response.data.user;
 
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(loggedInUser));
+        localStorage.setItem(
+          "user",
+          JSON.stringify(loggedInUser)
+        );
 
         setUser(loggedInUser);
-        // The dashboard replaces the login form in place; start it at the top
-        // instead of inheriting the form's scroll position.
+
         window.scrollTo(0, 0);
       }
     } catch (error) {
@@ -123,16 +138,32 @@ function App() {
 
     setUser(null);
     setMode("login");
-    setForm({ name: "", email: "", password: "" });
+
+    setForm({
+      name: "",
+      email: "",
+      password: "",
+    });
+
     setMessage("");
+
     window.scrollTo(0, 0);
   };
 
-  // Role-based dashboard routing
+  // Role-based dashboard routing.
   if (user) {
     if (user.role === "admin") {
       return (
         <AdminDashboard
+          user={user}
+          onLogout={handleLogout}
+        />
+      );
+    }
+
+    if (user.role === "department") {
+      return (
+        <DepartmentDashboard
           user={user}
           onLogout={handleLogout}
         />
@@ -147,30 +178,47 @@ function App() {
     );
   }
 
+  // Login and registration page.
   return (
     <main className="auth-page">
       <Aura />
 
       <section className="auth-intro">
-        <h1 className="wordmark reveal" style={{ "--i": 0 }}>
+        <h1
+          className="wordmark reveal"
+          style={{ "--i": 0 }}
+        >
           Traffic<span>Care</span>
         </h1>
 
-        <p className="display reveal" style={{ "--i": 1 }}>
-          Reporting that turns <em>potholes</em>, <em>broken signals</em>,{" "}
-          <em>blocked roads</em> and <em>congestion</em> into safer streets.
+        <p
+          className="display reveal"
+          style={{ "--i": 1 }}
+        >
+          Reporting that turns <em>potholes</em>,{" "}
+          <em>broken signals</em>, <em>blocked roads</em> and{" "}
+          <em>congestion</em> into safer streets.
         </p>
 
-        <div className="auth-intro-foot reveal" style={{ "--i": 3 }}>
+        <div
+          className="auth-intro-foot reveal"
+          style={{ "--i": 3 }}
+        >
           <p>
-            Snap a photo, drop a location, and our road-damage model gives your
-            report a head start with the city team.
+            Snap a photo, drop a location, and our road-damage
+            model gives your report a head start with the city team.
           </p>
-          <span className="lavender-link">Smart Traffic Complaint System ↓</span>
+
+          <span className="lavender-link">
+            Smart Traffic Complaint System ↓
+          </span>
         </div>
       </section>
 
-      <section className="auth-card reveal" style={{ "--i": 2 }}>
+      <section
+        className="auth-card reveal"
+        style={{ "--i": 2 }}
+      >
         <div className="auth-tabs">
           <button
             type="button"
@@ -190,10 +238,13 @@ function App() {
             Register
           </button>
 
-          <span className="tab-indicator" aria-hidden="true" ref={indicatorRef} />
+          <span
+            className="tab-indicator"
+            aria-hidden="true"
+            ref={indicatorRef}
+          />
         </div>
 
-        {/* key={mode} remounts this block so it cross-fades on every switch */}
         <div className="swap" key={mode}>
           <h2>
             {mode === "login"
@@ -209,15 +260,16 @@ function App() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          {/* Always rendered so it can animate open/closed; disabled + inert
-              while collapsed so it is skipped by validation, focus and AT. */}
           <div
-            className={`collapse ${mode === "register" ? "open" : ""}`}
+            className={`collapse ${
+              mode === "register" ? "open" : ""
+            }`}
             inert={mode !== "register"}
           >
             <div>
               <label className="field">
                 <span>Full name</span>
+
                 <input
                   type="text"
                   name="name"
@@ -233,6 +285,7 @@ function App() {
 
           <label className="field">
             <span>Email address</span>
+
             <input
               type="email"
               name="email"
@@ -245,6 +298,7 @@ function App() {
 
           <label className="field">
             <span>Password</span>
+
             <input
               type="password"
               name="password"
@@ -271,12 +325,25 @@ function App() {
             type="submit"
             disabled={loading}
           >
-            <span className="swap" key={loading ? "loading" : mode}>
+            <span
+              className="swap"
+              key={loading ? "loading" : mode}
+            >
               {loading
                 ? "Please wait..."
                 : mode === "login"
-                  ? <>Sign in <span className="arrow" aria-hidden="true">→</span></>
-                  : <>Create account <span className="arrow" aria-hidden="true">→</span></>}
+                  ? <>
+                      Sign in{" "}
+                      <span className="arrow" aria-hidden="true">
+                        →
+                      </span>
+                    </>
+                  : <>
+                      Create account{" "}
+                      <span className="arrow" aria-hidden="true">
+                        →
+                      </span>
+                    </>}
             </span>
           </button>
         </form>
@@ -288,7 +355,11 @@ function App() {
 
           <button
             type="button"
-            onClick={() => switchMode(mode === "login" ? "register" : "login")}
+            onClick={() =>
+              switchMode(
+                mode === "login" ? "register" : "login"
+              )
+            }
           >
             {mode === "login" ? "Register here" : "Sign in"}
           </button>

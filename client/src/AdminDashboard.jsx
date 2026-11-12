@@ -9,12 +9,24 @@ const API = "http://localhost:5050/api";
 const STATUSES = [
   "Submitted",
   "Under Review",
+  "Assigned to Department",
+  "Accepted by Department",
   "In Progress",
+  "Work in Progress",
+  "Work Completed",
   "Resolved",
   "Rejected",
 ];
 
 const PRIORITIES = ["Low", "Medium", "High"];
+
+const DEPARTMENTS = [
+  "Roads & Maintenance",
+  "Traffic Signal Department",
+  "Traffic Police",
+  "Electrical Department",
+  "Transport Department",
+];
 
 function AdminDashboard({ user, onLogout }) {
   const [complaints, setComplaints] = useState([]);
@@ -22,13 +34,20 @@ function AdminDashboard({ user, onLogout }) {
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState("");
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("info");
   const [filter, setFilter] = useState("All");
+  const [assignments, setAssignments] = useState({});
 
   const authConfig = () => ({
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
+
+  const showMessage = (text, type = "info") => {
+    setMessage(text);
+    setMessageType(type);
+  };
 
   const loadData = async () => {
     setLoading(true);
@@ -49,16 +68,11 @@ function AdminDashboard({ user, onLogout }) {
         return;
       }
 
-      if (error.response?.status === 403) {
-        setMessage(
-          "Access denied. Your account does not have administrator permissions."
-        );
-      } else {
-        setMessage(
-          error.response?.data?.message ||
-            "Unable to load administrator data."
-        );
-      }
+      showMessage(
+        error.response?.data?.message ||
+          "Unable to load administrator data.",
+        "error"
+      );
     } finally {
       setLoading(false);
     }
@@ -67,6 +81,48 @@ function AdminDashboard({ user, onLogout }) {
   useEffect(() => {
     loadData();
   }, []);
+
+  const assignComplaint = async (complaintId) => {
+    const assignedDepartment = assignments[complaintId];
+
+    if (!assignedDepartment) {
+      showMessage("Please select a department first.", "error");
+      return;
+    }
+
+    setUpdating(complaintId);
+    setMessage("");
+
+    try {
+      const response = await axios.patch(
+        `${API}/admin/complaints/${complaintId}/assign`,
+        { assignedDepartment },
+        authConfig()
+      );
+
+      const updatedComplaint = response.data.complaint;
+
+      if (updatedComplaint) {
+        setComplaints((previous) =>
+          previous.map((item) =>
+            item._id === complaintId ? updatedComplaint : item
+          )
+        );
+      } else {
+        await loadData();
+      }
+
+      showMessage("Complaint assigned successfully.", "success");
+    } catch (error) {
+      showMessage(
+        error.response?.data?.message ||
+          "Unable to assign complaint. Make sure the department account exists.",
+        "error"
+      );
+    } finally {
+      setUpdating("");
+    }
+  };
 
   const updateComplaint = async (id, field, value) => {
     setUpdating(id);
@@ -93,16 +149,17 @@ function AdminDashboard({ user, onLogout }) {
       );
 
       setStats(dashboardResponse.data);
-      setMessage("Complaint updated successfully.");
+      showMessage("Complaint updated successfully.", "success");
     } catch (error) {
       if (error.response?.status === 401) {
         onLogout();
         return;
       }
 
-      setMessage(
+      showMessage(
         error.response?.data?.message ||
-          "Unable to update complaint."
+          "Unable to update complaint.",
+        "error"
       );
     } finally {
       setUpdating("");
@@ -122,7 +179,11 @@ function AdminDashboard({ user, onLogout }) {
   const activeCount =
     (stats.byStatus?.Submitted || 0) +
     (stats.byStatus?.["Under Review"] || 0) +
-    (stats.byStatus?.["In Progress"] || 0);
+    (stats.byStatus?.["Assigned to Department"] || 0) +
+    (stats.byStatus?.["Accepted by Department"] || 0) +
+    (stats.byStatus?.["In Progress"] || 0) +
+    (stats.byStatus?.["Work in Progress"] || 0) +
+    (stats.byStatus?.["Work Completed"] || 0);
 
   const resolvedCount = stats.byStatus?.Resolved || 0;
   const rejectedCount = stats.byStatus?.Rejected || 0;
@@ -134,7 +195,14 @@ function AdminDashboard({ user, onLogout }) {
 
   const getImageUrl = (imageUrl) => {
     if (!imageUrl) return null;
+    if (imageUrl.startsWith("http")) return imageUrl;
     return `http://localhost:5050${imageUrl}`;
+  };
+
+  const getStatusClass = (status) => {
+    return (status || "Submitted")
+      .toLowerCase()
+      .replaceAll(" ", "-");
   };
 
   return (
@@ -168,18 +236,26 @@ function AdminDashboard({ user, onLogout }) {
           <Aura />
 
           <div className="portal-hero-inner">
-            <span className="kicker reveal" style={{ "--i": 0 }}>Administrator dashboard</span>
+            <span className="kicker reveal" style={{ "--i": 0 }}>
+              Administrator dashboard
+            </span>
+
             <h2 className="display reveal" style={{ "--i": 1 }}>
               Manage your <em>city.</em>
             </h2>
+
             <p className="lede reveal" style={{ "--i": 2 }}>
-              Monitor citizen complaints, set priorities and move every report
-              towards resolved.
+              Monitor citizen complaints, set priorities and move every
+              report towards resolved.
             </p>
           </div>
         </section>
 
-        <section className="admin-stats reveal" style={{ "--i": 3 }} aria-label="Complaint summary">
+        <section
+          className="admin-stats reveal"
+          style={{ "--i": 3 }}
+          aria-label="Complaint summary"
+        >
           <article className="admin-stat-card">
             <p>Total complaints</p>
             <strong>{stats.total || 0}</strong>
@@ -201,14 +277,22 @@ function AdminDashboard({ user, onLogout }) {
           </article>
         </section>
 
+        {message && (
+          <div
+            className={`admin-message ${messageType}`}
+            role="status"
+          >
+            {message}
+          </div>
+        )}
+
         <section className="admin-section">
           <div className="admin-section-heading">
             <div>
               <span className="kicker">Citizen reports</span>
               <h2>Manage complaints</h2>
               <p>
-                Review reports submitted by citizens and
-                update their progress.
+                Review reports, assign departments and update their progress.
               </p>
             </div>
 
@@ -221,14 +305,9 @@ function AdminDashboard({ user, onLogout }) {
             </button>
           </div>
 
-          {message && (
-            <div className="admin-message" role="status">
-              {message}
-            </div>
-          )}
-
           <div className="admin-filter">
             <label htmlFor="status-filter">Filter by status:</label>
+
             <select
               id="status-filter"
               value={filter}
@@ -244,141 +323,250 @@ function AdminDashboard({ user, onLogout }) {
           </div>
 
           {loading ? (
-            <div className="admin-empty">Loading complaints...</div>
+            <div className="admin-empty">
+              Loading complaints...
+            </div>
           ) : filteredComplaints.length === 0 ? (
             <div className="empty-state">
               <h3>No complaints found</h3>
               <p>There are no complaints matching this filter.</p>
             </div>
           ) : (
-            <div className="admin-table-wrapper">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>Complaint</th>
-                    <th>Citizen</th>
-                    <th>Location</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Priority</th>
-                  </tr>
-                </thead>
+            <div className="complaint-card-list">
+              {filteredComplaints.map((complaint) => {
+                const prediction = complaint.aiPrediction;
+                const imageUrl = getImageUrl(complaint.imageUrl);
 
-                <tbody>
-                  {filteredComplaints.map((complaint) => {
-                    const prediction = complaint.aiPrediction;
-                    const imageUrl = getImageUrl(complaint.imageUrl);
+                return (
+                  <article
+                    className="complaint-card"
+                    key={complaint._id}
+                  >
+                    <div className="complaint-card-top">
+                      <div>
+                        <span className="complaint-id">
+                          COMPLAINT #
+                          {complaint._id.slice(-6).toUpperCase()}
+                        </span>
 
-                    return (
-                      <tr key={complaint._id}>
-                        <td>
-                          <strong>{complaint.category}</strong>
+                        <h3>{complaint.category}</h3>
+                      </div>
 
-                          <small>
-                            #{complaint._id.slice(-6).toUpperCase()}
-                          </small>
+                      <span
+                        className={`complaint-status-badge ${getStatusClass(
+                          complaint.status
+                        )}`}
+                      >
+                        {complaint.status || "Submitted"}
+                      </span>
+                    </div>
 
-                          <p className="admin-description">
-                            {complaint.description}
+                    <div className="complaint-card-main">
+                      <div className="complaint-report">
+                        {imageUrl && (
+                          <img
+                            className="complaint-image"
+                            src={imageUrl}
+                            alt="Complaint evidence"
+                            onError={(event) => {
+                              event.currentTarget.hidden = true;
+                            }}
+                          />
+                        )}
+
+                        <div className="complaint-report-details">
+                          <span className="complaint-label">
+                            DESCRIPTION
+                          </span>
+
+                          <p>
+                            {complaint.description ||
+                              "No description provided."}
                           </p>
 
-                          {imageUrl && (
-                            <img
-                              className="admin-thumb"
-                              src={imageUrl}
-                              alt="Citizen's complaint"
-                              onError={(event) => {
-                                event.currentTarget.hidden = true;
-                              }}
-                            />
-                          )}
+                          <span className="complaint-label">
+                            LOCATION
+                          </span>
 
-                          <div className="admin-ai">
-                            <strong>AI analysis</strong>
+                          <p>
+                            {complaint.location || "Not provided"}
+                          </p>
+                        </div>
+                      </div>
 
-                            {prediction?.status === "Completed" ? (
-                              <>
-                                <p>
-                                  Prediction:{" "}
-                                  <strong>
-                                    {prediction.category || "N/A"}
-                                  </strong>
-                                </p>
+                      <div className="complaint-information">
+                        <div className="complaint-info-item">
+                          <span className="complaint-label">
+                            REPORTED BY
+                          </span>
 
-                                <p>
-                                  Confidence:{" "}
-                                  {typeof prediction.confidence === "number"
-                                    ? `${(prediction.confidence * 100).toFixed(2)}%`
-                                    : "N/A"}
-                                </p>
-                              </>
-                            ) : (
-                              <p>
-                                {prediction?.status || "Not Requested"}
-                              </p>
-                            )}
-                          </div>
-                        </td>
-
-                        <td>
                           <strong>
                             {complaint.user?.name || "Unknown"}
                           </strong>
+
                           <small>
                             {complaint.user?.email || "N/A"}
                           </small>
-                        </td>
+                        </div>
 
-                        <td>{complaint.location}</td>
+                        <div className="complaint-info-item">
+                          <span className="complaint-label">
+                            DATE REPORTED
+                          </span>
 
-                        <td>{formatDate(complaint.createdAt)}</td>
+                          <strong>
+                            {formatDate(complaint.createdAt)}
+                          </strong>
+                        </div>
 
-                        <td>
-                          <select
-                            className="admin-select"
-                            value={complaint.status || "Submitted"}
-                            disabled={updating === complaint._id}
-                            onChange={(event) =>
-                              updateComplaint(
-                                complaint._id,
-                                "status",
-                                event.target.value
-                              )
-                            }
-                          >
-                            {STATUSES.map((status) => (
-                              <option key={status} value={status}>
-                                {status}
-                              </option>
-                            ))}
-                          </select>
-                        </td>
+                        <div className="complaint-info-item">
+                          <span className="complaint-label">
+                            AI IMAGE ANALYSIS
+                          </span>
 
-                        <td>
-                          <select
-                            className="admin-select"
-                            value={complaint.priority || "Medium"}
-                            disabled={updating === complaint._id}
-                            onChange={(event) =>
-                              updateComplaint(
-                                complaint._id,
-                                "priority",
-                                event.target.value
-                              )
-                            }
-                          >
-                            {PRIORITIES.map((priority) => (
-                              <option key={priority} value={priority}>
-                                {priority}
-                              </option>
-                            ))}
-                          </select>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                          {prediction?.status === "Completed" ? (
+                            <>
+                              <strong>
+                                {prediction.category || "N/A"}
+                              </strong>
+
+                              <small>
+                                Confidence:{" "}
+                                {typeof prediction.confidence === "number"
+                                  ? `${(
+                                      prediction.confidence * 100
+                                    ).toFixed(2)}%`
+                                  : "N/A"}
+                              </small>
+                            </>
+                          ) : (
+                            <strong>
+                              {prediction?.status || "Not Requested"}
+                            </strong>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="complaint-card-controls">
+                      <div className="complaint-control">
+                        <label htmlFor={`status-${complaint._id}`}>
+                          Complaint status
+                        </label>
+
+                        <select
+                          id={`status-${complaint._id}`}
+                          value={complaint.status || "Submitted"}
+                          disabled={updating === complaint._id}
+                          onChange={(event) =>
+                            updateComplaint(
+                              complaint._id,
+                              "status",
+                              event.target.value
+                            )
+                          }
+                        >
+                          {STATUSES.map((status) => (
+                            <option key={status} value={status}>
+                              {status}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="complaint-control">
+                        <label htmlFor={`priority-${complaint._id}`}>
+                          Priority
+                        </label>
+
+                        <select
+                          id={`priority-${complaint._id}`}
+                          value={complaint.priority || "Medium"}
+                          disabled={updating === complaint._id}
+                          onChange={(event) =>
+                            updateComplaint(
+                              complaint._id,
+                              "priority",
+                              event.target.value
+                            )
+                          }
+                        >
+                          {PRIORITIES.map((priority) => (
+                            <option key={priority} value={priority}>
+                              {priority}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="complaint-control department-control">
+                        <label htmlFor={`department-${complaint._id}`}>
+                          Assign department
+                        </label>
+
+                        <select
+                          id={`department-${complaint._id}`}
+                          value={
+                            assignments[complaint._id] ||
+                            complaint.assignedDepartment ||
+                            ""
+                          }
+                          disabled={updating === complaint._id}
+                          onChange={(event) =>
+                            setAssignments((previous) => ({
+                              ...previous,
+                              [complaint._id]: event.target.value,
+                            }))
+                          }
+                        >
+                          <option value="">
+                            Choose department
+                          </option>
+
+                          {DEPARTMENTS.map((department) => (
+                            <option
+                              key={department}
+                              value={department}
+                            >
+                              {department}
+                            </option>
+                          ))}
+                        </select>
+
+                        <button
+                          type="button"
+                          className="assign-button"
+                          disabled={updating === complaint._id}
+                          onClick={() =>
+                            assignComplaint(complaint._id)
+                          }
+                        >
+                          {updating === complaint._id
+                            ? "Saving..."
+                            : "Assign Department"}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="complaint-card-footer">
+                      <span>
+                        Assigned to:{" "}
+                        <strong>
+                          {complaint.assignedDepartment ||
+                            "Not assigned"}
+                        </strong>
+                      </span>
+
+                      <span>
+                        Priority:{" "}
+                        <strong>
+                          {complaint.priority || "Medium"}
+                        </strong>
+                      </span>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           )}
         </section>

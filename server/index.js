@@ -1,15 +1,20 @@
-require("dotenv").config({ path: require("path").join(__dirname, ".env") });
 
-// All middleware and routes are registered in app.js.
+require("dotenv").config({
+  path: require("path").join(__dirname, ".env"),
+});
+
 const app = require("./app");
 const connectDB = require("./config/db");
+const seedDepartments = require("./seedDepartments");
 
 const PORT = process.env.PORT || 5050;
 
-// Connect to MongoDB, then start Express
 const startServer = async () => {
   try {
     await connectDB();
+
+    // Automatically create missing department accounts.
+    await seedDepartments();
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);

@@ -1,0 +1,382 @@
+
+.department-page {
+  min-height: 100vh;
+  background: #f5f5fa;
+  color: #25243a;
+}
+
+.department-header {
+  padding: 22px 6%;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e9e8ef;
+}
+
+.department-header h1 {
+  margin: 0;
+  font-size: 27px;
+  font-weight: 800;
+}
+
+.department-header h1 span {
+  color: #8170c9;
+}
+
+.department-header p {
+  margin: 4px 0 0;
+  color: #858398;
+  font-size: 13px;
+}
+
+.department-user {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.department-user div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.department-user span {
+  font-size: 12px;
+  color: #858398;
+}
+
+.department-user button,
+.department-refresh {
+  padding: 10px 17px;
+  border: 1px solid #dedce9;
+  background: #fff;
+  border-radius: 9px;
+  cursor: pointer;
+  color: #4c456c;
+}
+
+.department-content {
+  width: min(1150px, 90%);
+  margin: 42px auto;
+}
+
+.department-welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.department-eyebrow {
+  color: #8977d0;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.department-welcome h2 {
+  margin: 8px 0;
+  font-size: 32px;
+}
+
+.department-welcome p {
+  color: #858398;
+  line-height: 1.6;
+}
+
+.department-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.department-stats article {
+  padding: 22px;
+  background: #fff;
+  border: 1px solid #ebe9f2;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.department-stats span {
+  color: #858398;
+  font-size: 13px;
+}
+
+.department-stats strong {
+  font-size: 30px;
+}
+
+.department-list {
+  display: grid;
+  gap: 20px;
+}
+
+.department-complaint {
+  background: #fff;
+  padding: 25px;
+  border: 1px solid #ebe9f2;
+  border-radius: 15px;
+}
+
+.department-complaint-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.department-category {
+  font-size: 12px;
+  font-weight: 700;
+  color: #8b78d1;
+}
+
+.department-complaint h3 {
+  margin: 8px 0;
+  font-size: 19px;
+}
+
+.department-status {
+  flex-shrink: 0;
+  padding: 7px 12px;
+  background: #f0edfa;
+  color: #705eb1;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.department-status.work-completed {
+  background: #e4f6eb;
+  color: #23834b;
+}
+
+.department-status.work-in-progress {
+  background: #fff3df;
+  color: #a46b13;
+}
+
+.department-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin: 17px 0;
+  color: #77758b;
+  font-size: 13px;
+}
+
+.department-meta strong {
+  color: #39364e;
+}
+
+.department-complaint-image {
+  display: block;
+  width: min(100%, 400px);
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 15px 0;
+}
+
+.department-actions,
+.department-progress-form > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.department-primary-button,
+.department-secondary-button {
+  padding: 11px 16px;
+  border-radius: 9px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.department-primary-button {
+  background: #7664bd;
+  color: white;
+}
+
+.department-secondary-button {
+  background: #f0eef7;
+  color: #5b4b94;
+}
+
+.department-primary-button:disabled,
+.department-secondary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.department-progress-form {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid #efedf4;
+}
+
+.department-progress-form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.department-progress-form textarea {
+  display: block;
+  width: 100%;
+  margin-top: 9px;
+  padding: 13px;
+  border: 1px solid #dedce9;
+  border-radius: 9px;
+  font: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.department-completed-note {
+  margin-top: 18px;
+  color: #23834b;
+  font-size: 13px;
+}
+
+.department-empty,
+.department-error {
+  padding: 45px 20px;
+  background: #fff;
+  border: 1px solid #ebe9f2;
+  border-radius: 14px;
+  text-align: center;
+  color: #77758b;
+}
+
+.department-error {
+  color: #b33e4c;
+}
+
+.department-error button {
+  display: block;
+  margin: 15px auto 0;
+}
+
+.department-notice {
+  margin-bottom: 18px;
+  padding: 13px 16px;
+  border-radius: 9px;
+  background: #eeebf9;
+  color: #5e4c9b;
+}
+
+.department-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(20, 18, 35, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.department-modal {
+  position: relative;
+  width: min(600px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 30px;
+  background: white;
+  border-radius: 16px;
+}
+
+.department-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 17px;
+  border: 0;
+  background: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.department-modal h2 {
+  margin-top: 8px;
+}
+
+.department-timeline {
+  margin-top: 20px;
+  border-left: 2px solid #e4dff3;
+  padding-left: 20px;
+}
+
+.department-timeline article {
+  position: relative;
+  margin-bottom: 22px;
+}
+
+.department-timeline article::before {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  background: #8875cf;
+  border-radius: 50%;
+}
+
+.department-timeline article p {
+  margin: 6px 0;
+}
+
+.department-timeline article span {
+  color: #89869a;
+  font-size: 12px;
+}
+
+@media (max-width: 750px) {
+  .department-header {
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
+  }
+
+  .department-welcome {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .department-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .department-complaint-top {
+    flex-direction: column;
+  }
+
+  .department-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .department-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .department-content {
+    width: 92%;
+  }
+
+  .department-complaint {
+    padding: 18px;
+  }
+}
