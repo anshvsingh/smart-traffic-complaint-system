@@ -27,6 +27,7 @@ const complaintSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      maxlength: 200,
     },
 
     // Uploaded road image

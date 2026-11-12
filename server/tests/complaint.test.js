@@ -99,6 +99,22 @@ describe("POST /api/complaints", () => {
 
     expect(response.status).toBe(400);
   });
+
+  it("rejects a location longer than 200 characters", async () => {
+    const response = await request(app)
+      .post("/api/complaints")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        category: "Traffic Signal",
+        description: "Test description",
+        location: "x".repeat(201),
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe(
+      "Location must be 200 characters or fewer"
+    );
+  });
 });
 
 describe("GET /api/complaints", () => {

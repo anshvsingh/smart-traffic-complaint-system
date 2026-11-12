@@ -1,0 +1,40 @@
+---
+title: "TrafficCare - States within each dashboard"
+---
+flowchart TB
+    subgraph S3["S3 · Citizen Dashboard"]
+        direction TB
+        c0["Loading my complaints"] --> c1["Hero + stats + my complaints"]
+        c0 -. "load fails" .-> cErr["Error notice"]
+        c1 -- "Report an issue ↓" --> c2["Complaint form"]
+        c2 -- "choose JPG/PNG ≤ 10 MB" --> c3["Image preview"]
+        c3 -- "Remove image" --> c2
+        c2 -. "wrong type / too big" .-> cBad["Inline error,<br/>image cleared"]
+        cBad --> c2
+        c2 -- "Submit" --> c4["Submitting…<br/>(button disabled)"]
+        c3 -- "Submit" --> c4
+        c4 -- "201 + AI result" --> c5["Success notice<br/>(AI prediction / AI unavailable)"]
+        c4 -. "400 validation" .-> c6["Error notice"]
+        c5 -- "list auto-refreshes" --> c1
+        c1 -- "Refresh" --> c0
+    end
+
+    subgraph S4["S4 · Admin Dashboard"]
+        direction TB
+        a0["Loading all complaints + stats"] --> a1["All complaints table"]
+        a0 -. "403 not admin" .-> aErr["Access denied notice"]
+        a1 -- "Filter by status" --> a2["Filtered table"]
+        a2 -- "no matches" --> a3["Empty state"]
+        a2 -. "reset filter" .-> a1
+        a1 -- "change Status / Priority" --> a4["Row updating<br/>(selects disabled)"]
+        a4 -- "200" --> a5["Row + stats updated,<br/>'Complaint updated'"]
+        a5 --> a1
+        a1 -- "Refresh" --> a0
+    end
+
+    classDef state fill:#f3f0ff,stroke:#7b2cff,color:#121116;
+    classDef bad fill:#fde9ec,stroke:#b42335,color:#121116;
+    classDef good fill:#e7f5ef,stroke:#13795b,color:#121116;
+    class c0,c1,c2,c3,c4,a0,a1,a2,a3,a4 state;
+    class cErr,cBad,c6,aErr bad;
+    class c5,a5 good;

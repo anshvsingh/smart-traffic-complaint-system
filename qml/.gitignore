@@ -8,3 +8,6 @@ data/raw/
 .ipynb_checkpoints/
 __pycache__/
 *.pyc
+
+# Fine-tuned hybrid QNN checkpoints (32 MB each; small head/quantum weights are in results/metrics/*.json)
+results/checkpoints/

@@ -1,0 +1,33 @@
+0: ──RY(M0)─╭StronglyEntanglingLayers(M4)──RY(M0)─╭StronglyEntanglingLayers(M5)──RY(M0) ···
+1: ──RY(M1)─├StronglyEntanglingLayers(M4)──RY(M1)─├StronglyEntanglingLayers(M5)──RY(M1) ···
+2: ──RY(M2)─├StronglyEntanglingLayers(M4)──RY(M2)─├StronglyEntanglingLayers(M5)──RY(M2) ···
+3: ──RY(M3)─╰StronglyEntanglingLayers(M4)──RY(M3)─╰StronglyEntanglingLayers(M5)──RY(M3) ···
+
+0: ··· ─╭StronglyEntanglingLayers(M6)─┤  <Z>
+1: ··· ─├StronglyEntanglingLayers(M6)─┤  <Z>
+2: ··· ─├StronglyEntanglingLayers(M6)─┤  <Z>
+3: ··· ─╰StronglyEntanglingLayers(M6)─┤  <Z>
+
+M0 = 
+tensor([2.6601])
+M1 = 
+tensor([2.6696])
+M2 = 
+tensor([0.1938])
+M3 = 
+tensor([0.1401])
+M4 = 
+tensor([[[4.4571, 0.5243, 0.9557],
+         [3.0169, 4.2024, 4.1836],
+         [1.5081, 0.0947, 3.1670],
+         [2.8820, 3.9693, 2.0430]]], device='cuda:0')
+M5 = 
+tensor([[[5.6357, 2.9638, 5.3896],
+         [0.9708, 4.3984, 3.5496],
+         [1.8859, 4.6939, 0.0453],
+         [5.6685, 3.2548, 3.3800]]], device='cuda:0')
+M6 = 
+tensor([[[3.9966, 3.8173, 4.4791],
+         [5.5812, 1.0812, 5.2100],
+         [2.9978, 2.3145, 3.7856],
+         [5.9586, 1.2266, 1.0375]]], device='cuda:0')

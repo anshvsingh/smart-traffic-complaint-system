@@ -1,0 +1,65 @@
+{
+  "accuracy": 0.41,
+  "precision_macro": 0.452991452991453,
+  "recall_macro": 0.41,
+  "f1_macro": 0.3534892958290597,
+  "per_class": {
+    "Cracks": {
+      "precision": 0.16666666666666666,
+      "recall": 0.04,
+      "f1": 0.06451612903225806,
+      "support": 100
+    },
+    "Normal": {
+      "precision": 0.8333333333333334,
+      "recall": 0.35,
+      "f1": 0.49295774647887325,
+      "support": 100
+    },
+    "Pothole": {
+      "precision": 0.358974358974359,
+      "recall": 0.84,
+      "f1": 0.5029940119760479,
+      "support": 100
+    }
+  },
+  "confusion_matrix": [
+    [
+      4,
+      3,
+      93
+    ],
+    [
+      8,
+      35,
+      57
+    ],
+    [
+      12,
+      4,
+      84
+    ]
+  ],
+  "n_test": 300,
+  "train_time_s": 13.688282300000083,
+  "inference_time_s": 0.009525800000119489,
+  "inference_ms_per_sample": 0.031752666667064965,
+  "model": "qnn_features",
+  "framework": "PennyLane 0.45.1 TorchLayer, default.qubit, backprop",
+  "n_qubits": 4,
+  "n_layers": 2,
+  "data_reuploading": false,
+  "ansatz": "StronglyEntanglingLayers",
+  "encoding": "dense angle RY(x2q) RZ(x2q+1)",
+  "readout": "<Z> on all 4 qubits -> Linear(4,3)",
+  "epochs": 22,
+  "learning_rate": 0.03,
+  "batch_size": 32,
+  "n_input_features": 8,
+  "n_trainable_params": 39,
+  "quantum_params": 24,
+  "n_train": 900,
+  "validation_f1_used_for_selection": 0.5456709956709956,
+  "selection": "layers=2,reupload=off,lr=0.03",
+  "note": "classical state-vector simulation; times are simulator times, not quantum hardware times"
+}

@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Aura from "./Aura";
 import "./AdminDashboard.css";
 
 const API = "http://localhost:5050/api";
@@ -94,6 +95,11 @@ function AdminDashboard({ user, onLogout }) {
       setStats(dashboardResponse.data);
       setMessage("Complaint updated successfully.");
     } catch (error) {
+      if (error.response?.status === 401) {
+        onLogout();
+        return;
+      }
+
       setMessage(
         error.response?.data?.message ||
           "Unable to update complaint."
@@ -135,15 +141,14 @@ function AdminDashboard({ user, onLogout }) {
     <main className="admin-portal">
       <header className="admin-header">
         <div className="admin-brand">
-          <div className="admin-logo">↗</div>
-          <div>
-            <h1>TrafficCare</h1>
-            <span>SMART CITY · ADMINISTRATION</span>
-          </div>
+          <h1 className="wordmark">
+            Traffic<span>Care</span>
+          </h1>
+          <span className="kicker">Administration</span>
         </div>
 
         <div className="admin-user">
-          <div className="admin-avatar">
+          <div className="admin-avatar" aria-hidden="true">
             {(user?.name || "A").charAt(0).toUpperCase()}
           </div>
 
@@ -152,66 +157,54 @@ function AdminDashboard({ user, onLogout }) {
             <span>Administrator account</span>
           </div>
 
-          <button onClick={onLogout} className="admin-logout">
+          <button onClick={onLogout} className="logout-button lift">
             Log out
           </button>
         </div>
       </header>
 
       <div className="admin-content">
-        <section className="admin-banner">
-          <div>
-            <span className="admin-kicker">
-              ADMINISTRATOR DASHBOARD
-            </span>
-            <h2>Manage your city.</h2>
-            <p>
-              Monitor citizen complaints, manage priorities
-              and help make your streets safer.
+        <section className="portal-hero">
+          <Aura />
+
+          <div className="portal-hero-inner">
+            <span className="kicker reveal" style={{ "--i": 0 }}>Administrator dashboard</span>
+            <h2 className="display reveal" style={{ "--i": 1 }}>
+              Manage your <em>city.</em>
+            </h2>
+            <p className="lede reveal" style={{ "--i": 2 }}>
+              Monitor citizen complaints, set priorities and move every report
+              towards resolved.
             </p>
           </div>
-
-          <div className="admin-banner-icon">🏙️</div>
         </section>
 
-        <section className="admin-stats">
+        <section className="admin-stats reveal" style={{ "--i": 3 }} aria-label="Complaint summary">
           <article className="admin-stat-card">
-            <span>📋</span>
-            <div>
-              <p>Total complaints</p>
-              <strong>{stats.total || 0}</strong>
-            </div>
+            <p>Total complaints</p>
+            <strong>{stats.total || 0}</strong>
           </article>
 
           <article className="admin-stat-card">
-            <span>⏳</span>
-            <div>
-              <p>Active complaints</p>
-              <strong>{activeCount}</strong>
-            </div>
+            <p>Active complaints</p>
+            <strong>{activeCount}</strong>
           </article>
 
           <article className="admin-stat-card">
-            <span>✓</span>
-            <div>
-              <p>Resolved complaints</p>
-              <strong>{resolvedCount}</strong>
-            </div>
+            <p>Resolved complaints</p>
+            <strong>{resolvedCount}</strong>
           </article>
 
           <article className="admin-stat-card">
-            <span>✕</span>
-            <div>
-              <p>Rejected complaints</p>
-              <strong>{rejectedCount}</strong>
-            </div>
+            <p>Rejected complaints</p>
+            <strong>{rejectedCount}</strong>
           </article>
         </section>
 
         <section className="admin-section">
           <div className="admin-section-heading">
             <div>
-              <span className="admin-kicker">CITIZEN REPORTS</span>
+              <span className="kicker">Citizen reports</span>
               <h2>Manage complaints</h2>
               <p>
                 Review reports submitted by citizens and
@@ -220,7 +213,7 @@ function AdminDashboard({ user, onLogout }) {
             </div>
 
             <button
-              className="admin-refresh"
+              className="refresh-button lift"
               onClick={loadData}
               disabled={loading}
             >
@@ -253,8 +246,7 @@ function AdminDashboard({ user, onLogout }) {
           {loading ? (
             <div className="admin-empty">Loading complaints...</div>
           ) : filteredComplaints.length === 0 ? (
-            <div className="admin-empty">
-              <div>📭</div>
+            <div className="empty-state">
               <h3>No complaints found</h3>
               <p>There are no complaints matching this filter.</p>
             </div>
@@ -291,22 +283,18 @@ function AdminDashboard({ user, onLogout }) {
                           </p>
 
                           {imageUrl && (
-                            <div style={{ marginTop: "10px" }}>
-                              <img
-                                src={imageUrl}
-                                alt="Citizen's complaint"
-                                style={{
-                                  width: "130px",
-                                  height: "95px",
-                                  objectFit: "cover",
-                                  borderRadius: "8px",
-                                }}
-                              />
-                            </div>
+                            <img
+                              className="admin-thumb"
+                              src={imageUrl}
+                              alt="Citizen's complaint"
+                              onError={(event) => {
+                                event.currentTarget.hidden = true;
+                              }}
+                            />
                           )}
 
-                          <div style={{ marginTop: "10px" }}>
-                            <strong>AI Analysis</strong>
+                          <div className="admin-ai">
+                            <strong>AI analysis</strong>
 
                             {prediction?.status === "Completed" ? (
                               <>

@@ -1,0 +1,10 @@
+  round 1/5: resnet18 47.8 ms, efficientnet_b0 47.3 ms, mobilenet_v3_large 30.5 ms
+  round 2/5: resnet18 50.0 ms, efficientnet_b0 45.5 ms, mobilenet_v3_large 33.0 ms
+  round 3/5: resnet18 49.0 ms, efficientnet_b0 43.1 ms, mobilenet_v3_large 29.6 ms
+  round 4/5: resnet18 55.5 ms, efficientnet_b0 52.1 ms, mobilenet_v3_large 33.9 ms
+  round 5/5: resnet18 19.5 ms, efficientnet_b0 18.6 ms, mobilenet_v3_large 12.2 ms
+  resnet18: cpu_ms_per_sample 49.04, cpu_ms_per_sample_batch64 37.65, gpu_ms_per_sample 5.28, gpu_ms_per_sample_batch64 0.90
+  efficientnet_b0: cpu_ms_per_sample 45.52, cpu_ms_per_sample_batch64 27.86, gpu_ms_per_sample 20.12, gpu_ms_per_sample_batch64 1.37
+  mobilenet_v3_large: cpu_ms_per_sample 30.49, cpu_ms_per_sample_batch64 14.81, gpu_ms_per_sample 14.72, gpu_ms_per_sample_batch64 0.86
+  report written: dl/results/comparison/comparison_cprd.md (+ figures)
+  report written: dl/results/comparison/comparison_cprd_unseen_highway.md (+ figures)

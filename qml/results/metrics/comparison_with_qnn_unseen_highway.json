@@ -1,0 +1,125 @@
+{
+  "hand-crafted features | Random Forest (16 features)": {
+    "accuracy": 0.6133333333333333,
+    "precision_macro": 0.6434506554698862,
+    "recall_macro": 0.6133333333333333,
+    "f1_macro": 0.5745368161071212,
+    "train_time_s": 0.3624666289999823,
+    "inference_ms_per_sample": 0.08049730666698451
+  },
+  "hand-crafted features | SVM (RBF) (same 8 angles)": {
+    "accuracy": 0.49666666666666665,
+    "precision_macro": 0.5470849483204134,
+    "recall_macro": 0.4966666666666666,
+    "f1_macro": 0.4540662671483071,
+    "train_time_s": 0.016765109000061784,
+    "inference_ms_per_sample": 0.019244580000001104
+  },
+  "hand-crafted features | VQC, 4 qubits": {
+    "accuracy": 0.49666666666666665,
+    "precision_macro": 0.3832085454726964,
+    "recall_macro": 0.49666666666666665,
+    "f1_macro": 0.41467828146417823,
+    "train_time_s": 136.72350778100008,
+    "inference_ms_per_sample": 0.021652876666848897
+  },
+  "hand-crafted features | QSVM, quantum kernel": {
+    "accuracy": 0.48333333333333334,
+    "precision_macro": 0.6083866246872424,
+    "recall_macro": 0.48333333333333334,
+    "f1_macro": 0.46270169476833845,
+    "train_time_s": 0.050254576000043016,
+    "inference_ms_per_sample": 0.038809350000216604
+  },
+  "hand-crafted features | QNN, 4 qubits, 2 layers": {
+    "accuracy": 0.41,
+    "precision_macro": 0.452991452991453,
+    "recall_macro": 0.41,
+    "f1_macro": 0.3534892958290597,
+    "train_time_s": 13.688282300000083,
+    "inference_ms_per_sample": 0.031752666667064965,
+    "f1_seed_mean": 0.3145083028072738,
+    "f1_seed_std": 0.06900048431731273,
+    "acc_seed_mean": 0.40800000000000003,
+    "acc_seed_std": 0.06767898081712258,
+    "n_seeds": 5
+  },
+  "hand-crafted features | Classical control MLP 8-4-3": {
+    "accuracy": 0.49333333333333335,
+    "precision_macro": 0.4018098816305094,
+    "recall_macro": 0.49333333333333335,
+    "f1_macro": 0.4115156044268888,
+    "train_time_s": 0.17606030000024475,
+    "inference_ms_per_sample": 0.00041899999966214335,
+    "f1_seed_mean": 0.3564724212008417,
+    "f1_seed_std": 0.05067157610249871,
+    "acc_seed_mean": 0.42000000000000004,
+    "acc_seed_std": 0.044221663871405324,
+    "n_seeds": 5
+  },
+  "image patches (ResNet18 frozen) | + quantum layer (4 qubits)": {
+    "accuracy": 0.72,
+    "precision_macro": 0.7547002737969923,
+    "recall_macro": 0.7200000000000001,
+    "f1_macro": 0.7011641809761917,
+    "train_time_s": 25.110309900000175,
+    "inference_ms_per_sample": 1.8047863333352627,
+    "f1_seed_mean": 0.7496609300402,
+    "f1_seed_std": 0.029549897566268853,
+    "acc_seed_mean": 0.7586666666666666,
+    "acc_seed_std": 0.02400000000000001,
+    "n_seeds": 5
+  },
+  "image patches (ResNet18 frozen) | + classical control layer": {
+    "accuracy": 0.77,
+    "precision_macro": 0.7995473333588087,
+    "recall_macro": 0.77,
+    "f1_macro": 0.7629819506976167,
+    "train_time_s": 5.348939299999984,
+    "inference_ms_per_sample": 0.591420333333493,
+    "f1_seed_mean": 0.7728005308591779,
+    "f1_seed_std": 0.034269671953272185,
+    "acc_seed_mean": 0.7786666666666667,
+    "acc_seed_std": 0.030811253355443574,
+    "n_seeds": 5
+  },
+  "image patches (ResNet18 frozen) | + no middle layer": {
+    "accuracy": 0.72,
+    "precision_macro": 0.7566357226960743,
+    "recall_macro": 0.7200000000000001,
+    "f1_macro": 0.7031418110035207,
+    "train_time_s": 1.856144200000017,
+    "inference_ms_per_sample": 1.690142666666361,
+    "f1_seed_mean": 0.700147066766774,
+    "f1_seed_std": 0.0827735615737378,
+    "acc_seed_mean": 0.714,
+    "acc_seed_std": 0.07475589906117408,
+    "n_seeds": 5
+  },
+  "image patches (ResNet18 fine-tuned layer4) | + quantum layer (4 qubits)": {
+    "accuracy": 0.81,
+    "precision_macro": 0.8147374050623825,
+    "recall_macro": 0.81,
+    "f1_macro": 0.8027467659046605,
+    "train_time_s": 86.99642369999947,
+    "inference_ms_per_sample": 1.7249256666673318,
+    "f1_seed_mean": 0.75653007110043,
+    "f1_seed_std": 0.05786322785175141,
+    "acc_seed_mean": 0.7633333333333333,
+    "acc_seed_std": 0.054636848236196675,
+    "n_seeds": 3
+  },
+  "image patches (ResNet18 fine-tuned layer4) | + classical control layer": {
+    "accuracy": 0.8166666666666667,
+    "precision_macro": 0.8364077946700309,
+    "recall_macro": 0.8166666666666668,
+    "f1_macro": 0.8176932155193025,
+    "train_time_s": 38.858860400000594,
+    "inference_ms_per_sample": 1.7048250000001037,
+    "f1_seed_mean": 0.8272051023072128,
+    "f1_seed_std": 0.016488569408254567,
+    "acc_seed_mean": 0.8288888888888888,
+    "acc_seed_std": 0.01728483242900453,
+    "n_seeds": 3
+  }
+}

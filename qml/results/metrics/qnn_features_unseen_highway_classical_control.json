@@ -1,0 +1,54 @@
+{
+  "accuracy": 0.49333333333333335,
+  "precision_macro": 0.4018098816305094,
+  "recall_macro": 0.49333333333333335,
+  "f1_macro": 0.4115156044268888,
+  "per_class": {
+    "Cracks": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 100
+    },
+    "Normal": {
+      "precision": 0.8108108108108109,
+      "recall": 0.6,
+      "f1": 0.6896551724137931,
+      "support": 100
+    },
+    "Pothole": {
+      "precision": 0.39461883408071746,
+      "recall": 0.88,
+      "f1": 0.544891640866873,
+      "support": 100
+    }
+  },
+  "confusion_matrix": [
+    [
+      0,
+      5,
+      95
+    ],
+    [
+      0,
+      60,
+      40
+    ],
+    [
+      3,
+      9,
+      88
+    ]
+  ],
+  "n_test": 300,
+  "train_time_s": 0.17606030000024475,
+  "inference_time_s": 0.000125699999898643,
+  "inference_ms_per_sample": 0.00041899999966214335,
+  "model": "classical_control_mlp",
+  "architecture": "Linear(8,4) + tanh + Linear(4,3)",
+  "epochs": 10,
+  "learning_rate": 0.03,
+  "n_trainable_params": 51,
+  "validation_f1_used_for_selection": 0.537880523202885,
+  "note": "classical replacement of the quantum layer, same inputs, head, optimiser and protocol"
+}

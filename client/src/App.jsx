@@ -1,8 +1,9 @@
 
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import axios from "axios";
 import Dashboard from "./Dashboard";
 import AdminDashboard from "./AdminDashboard";
+import Aura from "./Aura";
 import "./App.css";
 
 const API_URL = "http://localhost:5050/api";
@@ -30,6 +31,32 @@ function App() {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const loginTabRef = useRef(null);
+  const registerTabRef = useRef(null);
+  const indicatorRef = useRef(null);
+
+  // Slide the tab underline under the active tab. Only `transform` changes,
+  // so the browser animates it on the compositor. Re-measured once web fonts
+  // load and on resize, because tab widths depend on the font.
+  useLayoutEffect(() => {
+    const measure = () => {
+      const tab = (mode === "login" ? loginTabRef : registerTabRef).current;
+      const bar = indicatorRef.current;
+      if (!tab || !bar) return;
+      bar.style.transform = `translate3d(${tab.offsetLeft}px, 0, 0) scaleX(${tab.offsetWidth})`;
+    };
+
+    measure();
+    document.fonts?.ready?.then(measure);
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [mode, user]);
+
+  const switchMode = (next) => {
+    setMode(next);
+    setMessage("");
+  };
 
   const handleChange = (event) => {
     setForm((previous) => ({
@@ -76,6 +103,9 @@ function App() {
         localStorage.setItem("user", JSON.stringify(loggedInUser));
 
         setUser(loggedInUser);
+        // The dashboard replaces the login form in place; start it at the top
+        // instead of inheriting the form's scroll position.
+        window.scrollTo(0, 0);
       }
     } catch (error) {
       setMessage(
@@ -95,6 +125,7 @@ function App() {
     setMode("login");
     setForm({ name: "", email: "", password: "" });
     setMessage("");
+    window.scrollTo(0, 0);
   };
 
   // Role-based dashboard routing
@@ -118,74 +149,90 @@ function App() {
 
   return (
     <main className="auth-page">
-      <section className="auth-card">
-        <div className="brand-icon">↗</div>
+      <Aura />
 
-        <p className="eyebrow">
-          SMART CITY · CONNECTED CITIZENS
-        </p>
-
-        <h1>
+      <section className="auth-intro">
+        <h1 className="wordmark reveal" style={{ "--i": 0 }}>
           Traffic<span>Care</span>
         </h1>
 
-        <p className="subtitle">
-          Report traffic problems. Help make your city better.
+        <p className="display reveal" style={{ "--i": 1 }}>
+          Reporting that turns <em>potholes</em>, <em>broken signals</em>,{" "}
+          <em>blocked roads</em> and <em>congestion</em> into safer streets.
         </p>
 
+        <div className="auth-intro-foot reveal" style={{ "--i": 3 }}>
+          <p>
+            Snap a photo, drop a location, and our road-damage model gives your
+            report a head start with the city team.
+          </p>
+          <span className="lavender-link">Smart Traffic Complaint System ↓</span>
+        </div>
+      </section>
+
+      <section className="auth-card reveal" style={{ "--i": 2 }}>
         <div className="auth-tabs">
           <button
             type="button"
+            ref={loginTabRef}
             className={mode === "login" ? "active" : ""}
-            onClick={() => {
-              setMode("login");
-              setMessage("");
-            }}
+            onClick={() => switchMode("login")}
           >
             Login
           </button>
 
           <button
             type="button"
+            ref={registerTabRef}
             className={mode === "register" ? "active" : ""}
-            onClick={() => {
-              setMode("register");
-              setMessage("");
-            }}
+            onClick={() => switchMode("register")}
           >
             Register
           </button>
+
+          <span className="tab-indicator" aria-hidden="true" ref={indicatorRef} />
         </div>
 
-        <h2>
-          {mode === "login"
-            ? "Welcome back"
-            : "Create your account"}
-        </h2>
+        {/* key={mode} remounts this block so it cross-fades on every switch */}
+        <div className="swap" key={mode}>
+          <h2>
+            {mode === "login"
+              ? "Welcome back"
+              : "Create your account"}
+          </h2>
 
-        <p className="form-subtitle">
-          {mode === "login"
-            ? "Sign in to manage your traffic complaints."
-            : "Join your community and report traffic problems."}
-        </p>
+          <p className="form-subtitle">
+            {mode === "login"
+              ? "Sign in to manage your traffic complaints."
+              : "Join your community and report traffic problems."}
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit}>
-          {mode === "register" && (
-            <label>
-              Full name
-              <input
-                type="text"
-                name="name"
-                placeholder="Enter your full name"
-                value={form.name}
-                onChange={handleChange}
-                required
-              />
-            </label>
-          )}
+          {/* Always rendered so it can animate open/closed; disabled + inert
+              while collapsed so it is skipped by validation, focus and AT. */}
+          <div
+            className={`collapse ${mode === "register" ? "open" : ""}`}
+            inert={mode !== "register"}
+          >
+            <div>
+              <label className="field">
+                <span>Full name</span>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Enter your full name"
+                  value={form.name}
+                  onChange={handleChange}
+                  disabled={mode !== "register"}
+                  required
+                />
+              </label>
+            </div>
+          </div>
 
-          <label>
-            Email address
+          <label className="field">
+            <span>Email address</span>
             <input
               type="email"
               name="email"
@@ -196,8 +243,8 @@ function App() {
             />
           </label>
 
-          <label>
-            Password
+          <label className="field">
+            <span>Password</span>
             <input
               type="password"
               name="password"
@@ -209,22 +256,28 @@ function App() {
             />
           </label>
 
-          {message && (
-            <p className="auth-message" role="alert">
-              {message}
-            </p>
-          )}
+          <div className={`collapse ${message ? "open" : ""}`}>
+            <div>
+              {message && (
+                <p className="auth-message" role="alert">
+                  {message}
+                </p>
+              )}
+            </div>
+          </div>
 
           <button
-            className="submit-button"
+            className="submit-button lift"
             type="submit"
             disabled={loading}
           >
-            {loading
-              ? "Please wait..."
-              : mode === "login"
-                ? "Sign in →"
-                : "Create account →"}
+            <span className="swap" key={loading ? "loading" : mode}>
+              {loading
+                ? "Please wait..."
+                : mode === "login"
+                  ? <>Sign in <span className="arrow" aria-hidden="true">→</span></>
+                  : <>Create account <span className="arrow" aria-hidden="true">→</span></>}
+            </span>
           </button>
         </form>
 
@@ -235,18 +288,11 @@ function App() {
 
           <button
             type="button"
-            onClick={() => {
-              setMode(mode === "login" ? "register" : "login");
-              setMessage("");
-            }}
+            onClick={() => switchMode(mode === "login" ? "register" : "login")}
           >
             {mode === "login" ? "Register here" : "Sign in"}
           </button>
         </p>
-
-        <footer>
-          SMART TRAFFIC COMPLAINT &amp; MONITORING SYSTEM
-        </footer>
       </section>
     </main>
   );
