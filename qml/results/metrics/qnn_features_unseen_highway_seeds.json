@@ -1,0 +1,69 @@
+{
+  "qnn": {
+    "seeds": [
+      {
+        "seed": 0,
+        "accuracy": 0.39,
+        "f1_macro": 0.3045978446458063
+      },
+      {
+        "seed": 1,
+        "accuracy": 0.38,
+        "f1_macro": 0.2891002200751985
+      },
+      {
+        "seed": 2,
+        "accuracy": 0.38333333333333336,
+        "f1_macro": 0.28091037504684485
+      },
+      {
+        "seed": 3,
+        "accuracy": 0.54,
+        "f1_macro": 0.44785532758941304
+      },
+      {
+        "seed": 4,
+        "accuracy": 0.3466666666666667,
+        "f1_macro": 0.25007774667910615
+      }
+    ],
+    "accuracy_mean": 0.40800000000000003,
+    "accuracy_std": 0.06767898081712258,
+    "f1_mean": 0.3145083028072738,
+    "f1_std": 0.06900048431731273
+  },
+  "control": {
+    "seeds": [
+      {
+        "seed": 0,
+        "accuracy": 0.4633333333333333,
+        "f1_macro": 0.4043083808703763
+      },
+      {
+        "seed": 1,
+        "accuracy": 0.3566666666666667,
+        "f1_macro": 0.2980555541214715
+      },
+      {
+        "seed": 2,
+        "accuracy": 0.4033333333333333,
+        "f1_macro": 0.3137077045710673
+      },
+      {
+        "seed": 3,
+        "accuracy": 0.4,
+        "f1_macro": 0.33906839726245996
+      },
+      {
+        "seed": 4,
+        "accuracy": 0.4766666666666667,
+        "f1_macro": 0.4272220691788336
+      }
+    ],
+    "accuracy_mean": 0.42000000000000004,
+    "accuracy_std": 0.044221663871405324,
+    "f1_mean": 0.3564724212008417,
+    "f1_std": 0.05067157610249871
+  },
+  "note": "same configuration and epoch budget, only the weight initialisation / batch order seed changes"
+}

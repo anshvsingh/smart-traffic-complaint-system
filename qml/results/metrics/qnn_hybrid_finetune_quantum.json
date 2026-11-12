@@ -1,0 +1,90 @@
+{
+  "accuracy": 0.83,
+  "precision_macro": 0.8403825187677163,
+  "recall_macro": 0.83,
+  "f1_macro": 0.8301363465977719,
+  "per_class": {
+    "Cracks": {
+      "precision": 0.8620689655172413,
+      "recall": 0.75,
+      "f1": 0.8021390374331551,
+      "support": 100
+    },
+    "Normal": {
+      "precision": 0.7479674796747967,
+      "recall": 0.92,
+      "f1": 0.8251121076233184,
+      "support": 100
+    },
+    "Pothole": {
+      "precision": 0.9111111111111111,
+      "recall": 0.82,
+      "f1": 0.8631578947368421,
+      "support": 100
+    }
+  },
+  "confusion_matrix": [
+    [
+      75,
+      18,
+      7
+    ],
+    [
+      7,
+      92,
+      1
+    ],
+    [
+      5,
+      13,
+      82
+    ]
+  ],
+  "n_test": 300,
+  "train_time_s": 82.9991272999996,
+  "inference_time_s": 0.5806196000003183,
+  "inference_ms_per_sample": 1.9353986666677276,
+  "model": "hybrid_resnet18_quantum",
+  "setting": "fine-tune layer4 (BN frozen), AMP",
+  "middle_layer": "quantum",
+  "middle_layer_desc": "quantum layer (4 qubits)",
+  "middle_params": 36,
+  "n_trainable_params": 8395831,
+  "n_qubits": 4,
+  "quantum_layers": 3,
+  "head_learning_rate": 0.003,
+  "backbone_learning_rate": 0.0001,
+  "best_epoch": 16,
+  "epochs_run": 24,
+  "validation_f1": 0.8391382775155455,
+  "n_fit": 682,
+  "n_val": 218,
+  "middle_layer_ms_per_sample": 0.3331139999985074,
+  "seeds": {
+    "42": {
+      "accuracy": 0.83,
+      "f1_macro": 0.8301363465977719,
+      "validation_f1": 0.8391382775155455,
+      "train_time_s": 82.9991272999996
+    },
+    "0": {
+      "accuracy": 0.8333333333333334,
+      "f1_macro": 0.8338436751707463,
+      "validation_f1": 0.8314726209463051,
+      "train_time_s": 66.80519709999953
+    },
+    "1": {
+      "accuracy": 0.6533333333333333,
+      "f1_macro": 0.6177539447129584,
+      "validation_f1": 0.6270242528457496,
+      "train_time_s": 37.96459640000012
+    }
+  },
+  "accuracy_mean": 0.7722222222222221,
+  "accuracy_std": 0.08407815294396719,
+  "f1_mean": 0.7605779888271589,
+  "f1_std": 0.10100319055732286,
+  "device": "backbone NVIDIA GeForce RTX 3050 6GB Laptop GPU (AMP fp16); middle layer CPU float32",
+  "peak_vram_mib": 637.40966796875,
+  "note": "quantum layer = classical state-vector simulation (PennyLane default.qubit, backprop)"
+}

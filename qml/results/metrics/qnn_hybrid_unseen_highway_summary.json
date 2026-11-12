@@ -1,0 +1,76 @@
+{
+  "variant": "cprd_unseen_highway",
+  "device": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+  "settings": {
+    "frozen": {
+      "feature_cache_time_s": 8.21742340000037,
+      "peak_vram_mib_feature_cache": 342.94775390625,
+      "middles": {
+        "quantum": {
+          "accuracy": 0.72,
+          "f1_macro": 0.7011641809761917,
+          "accuracy_mean": 0.7586666666666666,
+          "accuracy_std": 0.02400000000000001,
+          "f1_mean": 0.7496609300402,
+          "f1_std": 0.029549897566268853,
+          "train_time_s": 25.110309900000175,
+          "inference_ms_per_sample": 1.8047863333352627,
+          "middle_params": 36,
+          "learning_rate": 0.003
+        },
+        "classical": {
+          "accuracy": 0.77,
+          "f1_macro": 0.7629819506976167,
+          "accuracy_mean": 0.7786666666666667,
+          "accuracy_std": 0.030811253355443574,
+          "f1_mean": 0.7728005308591779,
+          "f1_std": 0.034269671953272185,
+          "train_time_s": 5.348939299999984,
+          "inference_ms_per_sample": 0.591420333333493,
+          "middle_params": 40,
+          "learning_rate": 0.01
+        },
+        "identity": {
+          "accuracy": 0.72,
+          "f1_macro": 0.7031418110035207,
+          "accuracy_mean": 0.714,
+          "accuracy_std": 0.07475589906117408,
+          "f1_mean": 0.700147066766774,
+          "f1_std": 0.0827735615737378,
+          "train_time_s": 1.856144200000017,
+          "inference_ms_per_sample": 1.690142666666361,
+          "middle_params": 0,
+          "learning_rate": 0.01
+        }
+      }
+    },
+    "finetune": {
+      "middles": {
+        "quantum": {
+          "accuracy": 0.81,
+          "f1_macro": 0.8027467659046605,
+          "accuracy_mean": 0.7633333333333333,
+          "accuracy_std": 0.054636848236196675,
+          "f1_mean": 0.75653007110043,
+          "f1_std": 0.05786322785175141,
+          "train_time_s": 86.99642369999947,
+          "inference_ms_per_sample": 1.7249256666673318,
+          "middle_params": 36,
+          "peak_vram_mib": 649.04443359375
+        },
+        "classical": {
+          "accuracy": 0.8166666666666667,
+          "f1_macro": 0.8176932155193025,
+          "accuracy_mean": 0.8288888888888888,
+          "accuracy_std": 0.01728483242900453,
+          "f1_mean": 0.8272051023072128,
+          "f1_std": 0.016488569408254567,
+          "train_time_s": 38.858860400000594,
+          "inference_ms_per_sample": 1.7048250000001037,
+          "middle_params": 40,
+          "peak_vram_mib": 648.0068359375
+        }
+      }
+    }
+  }
+}

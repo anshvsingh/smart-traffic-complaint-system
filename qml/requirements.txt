@@ -11,5 +11,10 @@ matplotlib>=3.8
 # (the default NumPy simulator needs nothing extra)
 pennylane>=0.38
 
+# QNN (qnn_features.py, qnn_hybrid.py) - versions used for the committed QNN results:
+# torch 2.14 (CUDA 12.6), torchvision 0.29, pennylane 0.45. Install torch from https://pytorch.org for your CUDA/CPU.
+torch>=2.2
+torchvision>=0.17
+
 # Notebooks
 jupyter

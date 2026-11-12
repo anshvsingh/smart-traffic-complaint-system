@@ -1,0 +1,115 @@
+{
+  "accuracy": 0.7733333333333333,
+  "precision_macro": 0.7781477310770916,
+  "recall_macro": 0.7733333333333333,
+  "f1_macro": 0.7737836200310845,
+  "per_class": {
+    "Cracks": {
+      "precision": 0.7087378640776699,
+      "recall": 0.73,
+      "f1": 0.7192118226600985,
+      "support": 100
+    },
+    "Normal": {
+      "precision": 0.8620689655172413,
+      "recall": 0.75,
+      "f1": 0.8021390374331551,
+      "support": 100
+    },
+    "Pothole": {
+      "precision": 0.7636363636363637,
+      "recall": 0.84,
+      "f1": 0.8,
+      "support": 100
+    }
+  },
+  "confusion_matrix": [
+    [
+      73,
+      9,
+      18
+    ],
+    [
+      17,
+      75,
+      8
+    ],
+    [
+      13,
+      3,
+      84
+    ]
+  ],
+  "n_test": 300,
+  "train_time_s": 3.717305600000145,
+  "inference_time_s": 0.5192587999999887,
+  "inference_ms_per_sample": 1.730862666666629,
+  "model": "hybrid_resnet18_identity",
+  "setting": "frozen backbone (cached features)",
+  "middle_layer": "identity",
+  "middle_layer_desc": "no middle layer",
+  "middle_params": 0,
+  "n_trainable_params": 2067,
+  "n_qubits": null,
+  "quantum_layers": null,
+  "learning_rate": 0.01,
+  "lr_selection": {
+    "0.003": {
+      "val_f1": 0.8061487509668704,
+      "best_epoch": 9,
+      "epochs_run": 24
+    },
+    "0.01": {
+      "val_f1": 0.8328968141927239,
+      "best_epoch": 44,
+      "epochs_run": 59
+    },
+    "0.03": {
+      "val_f1": 0.7923243692052216,
+      "best_epoch": 3,
+      "epochs_run": 18
+    }
+  },
+  "best_epoch": 44,
+  "epochs_run": 59,
+  "validation_f1": 0.8328968141927239,
+  "n_fit": 682,
+  "n_val": 218,
+  "train_time_note": "head training on cached features (feature caching time reported separately)",
+  "feature_cache_time_s": 8.222764999999981,
+  "middle_layer_ms_per_sample": 0.24460533333088583,
+  "seeds": {
+    "42": {
+      "accuracy": 0.7733333333333333,
+      "f1_macro": 0.7737836200310845,
+      "validation_f1": 0.8328968141927239
+    },
+    "0": {
+      "accuracy": 0.6233333333333333,
+      "f1_macro": 0.5785058658820534,
+      "validation_f1": 0.6491879580114874
+    },
+    "1": {
+      "accuracy": 0.78,
+      "f1_macro": 0.7813955585841986,
+      "validation_f1": 0.811710745887961
+    },
+    "2": {
+      "accuracy": 0.7933333333333333,
+      "f1_macro": 0.7930187471490862,
+      "validation_f1": 0.8234354076320715
+    },
+    "3": {
+      "accuracy": 0.8166666666666667,
+      "f1_macro": 0.8169701468318307,
+      "validation_f1": 0.7954598305378965
+    }
+  },
+  "accuracy_mean": 0.7573333333333334,
+  "accuracy_std": 0.06861810580629901,
+  "f1_mean": 0.7487347876956507,
+  "f1_std": 0.08635877382123912,
+  "device": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+  "peak_vram_mib": 358.13330078125,
+  "note": "quantum layer = classical state-vector simulation (PennyLane default.qubit, backprop)"
+}

@@ -1,0 +1,31 @@
+0: ──RY(M0)──RZ(M4)─╭StronglyEntanglingLayers(M8)─╭StronglyEntanglingLayers(M9)─┤  <Z>
+1: ──RY(M1)──RZ(M5)─├StronglyEntanglingLayers(M8)─├StronglyEntanglingLayers(M9)─┤  <Z>
+2: ──RY(M2)──RZ(M6)─├StronglyEntanglingLayers(M8)─├StronglyEntanglingLayers(M9)─┤  <Z>
+3: ──RY(M3)──RZ(M7)─╰StronglyEntanglingLayers(M8)─╰StronglyEntanglingLayers(M9)─┤  <Z>
+
+M0 = 
+tensor([0.6459])
+M1 = 
+tensor([2.5510])
+M2 = 
+tensor([0.5288])
+M3 = 
+tensor([1.5721])
+M4 = 
+tensor([0.9425])
+M5 = 
+tensor([1.5317])
+M6 = 
+tensor([1.3543])
+M7 = 
+tensor([0.9397])
+M8 = 
+tensor([[[5.5871, 5.8263, 2.6937],
+         [5.0210, 2.6405, 3.7249],
+         [2.0877, 4.6144, 4.6263],
+         [0.2342, 4.0493, 4.6808]]])
+M9 = 
+tensor([[[7.7403, 3.8856, 5.0010],
+         [4.2387, 5.6097, 3.6644],
+         [0.0251, 3.8065, 1.7433],
+         [2.8536, 1.3642, 5.3344]]])
