@@ -1,187 +1,235 @@
 # TrafficCare: UX Design & Evaluation
 
-Smart Traffic Complaint and Monitoring System · UI v2 (editorial redesign) · November 2026
+**Smart Traffic Complaint and Monitoring System · UI v2 · November 2026**
 
-This document covers the user experience of the TrafficCare web app: who it is for, the screens and how users move between them, the design system behind the new interface, how motion and accessibility were handled, and an honest heuristic evaluation with recommendations.
+This document covers the user experience of the TrafficCare web application: its users and goals, screens and navigation, complaint lifecycle, design system, accessibility considerations, and heuristic evaluation.
 
-| Artefact | File |
-|---|---|
-| Screen diagram (real screenshots + transitions) | [`screen-diagram.png`](screen-diagram.png) (source: [`screen-diagram.html`](screen-diagram.html)) |
-| Screen transition diagram (between screens) | [`screen-transition-diagram.png`](screen-transition-diagram.png) / [`.svg`](screen-transition-diagram.svg) (source: [`.mmd`](screen-transition-diagram.mmd)) |
-| States within each dashboard | [`in-screen-states.png`](in-screen-states.png) / [`.svg`](in-screen-states.svg) (source: [`.mmd`](in-screen-states.mmd)) |
-| Screenshots of every screen and state | [`screens/`](screens/) |
+TrafficCare allows citizens to report traffic-related problems, administrators to review and assign complaints, and responsible departments to record their work and submit completion updates. Administrators verify completed work before complaints are officially resolved.
 
 ---
 
 ## 1. Users and goals
 
+TrafficCare has three user roles.
+
 | User | Main goal | What success looks like |
 |---|---|---|
-| **Citizen** | Report a traffic problem quickly, with proof, and know it is being handled | Complaint submitted in under a minute; status visible later without calling anyone |
-| **Administrator** (city / traffic team) | See every report, decide what matters, and move it to resolution | Can filter by status, set priority and status in place, and see totals at a glance |
+| **Citizen** | Report a traffic problem and track its progress | Can submit a complaint with supporting evidence and see its status and progress history |
+| **Administrator** | Review complaints, assign departments, and verify resolutions | Can view all complaints, manage their status and priority, assign departments, and verify completed work |
+| **Department** | Handle assigned complaints and report progress | Can view only complaints assigned to its department, accept assignments, record progress, and report completed work |
 
-Both roles share one login. The server decides the role (registration always creates a citizen), and the app sends each role to its own dashboard.
+All three roles use the same login system. The server determines the authenticated user's role and the application directs the user to the appropriate dashboard.
+
+Public registration creates citizen accounts. Administrator and department accounts are managed separately rather than being created through public citizen registration.
 
 ## 2. Screen inventory
 
 | ID | Screen | Purpose | Key elements |
 |---|---|---|---|
-| **S1** | Login | Authenticate | Editorial intro, email + password, error alert, link to Register |
-| **S2** | Register | Create a citizen account | Name, email, password (8+ chars), success returns to Login |
-| **S3** | Citizen dashboard | Report and track | Greeting hero, 3 stats (total / active / resolved), complaint form with optional photo, AI analysis result, list of own complaints with status pills |
-| **S4** | Admin dashboard | Triage and manage | Hero, 4 stats (total / active / resolved / rejected), status filter, table of all complaints with inline status and priority selects, photo and AI analysis per row |
+| **S1** | Login | Authenticate users | Email, password, validation messages, registration link |
+| **S2** | Register | Create a citizen account | Name, email, password, validation and success messages |
+| **S3** | Citizen dashboard | Submit and track complaints | Greeting, complaint statistics, complaint form, optional photo, AI analysis, complaint list and progress information |
+| **S4** | Admin dashboard | Manage all complaints | Complaint statistics, complaint cards, status and priority controls, department assignment, citizen information and AI analysis |
+| **S5** | Department dashboard | Handle assigned complaints | Assigned complaint list, complaint details, acceptance action, progress update form and completion action |
+| **S6** | Complaint details | Inspect an individual complaint | Complaint description, location, citizen information, current status and progress history |
 
-![Screen diagram](screen-diagram.png)
+The complaint details view is presented as a modal within the department dashboard rather than as a separate application page.
 
-## 3. Screen transitions
+## 3. User journeys and screen transitions
 
-**Between screens.** On open, a saved session skips the login and goes straight to the right dashboard. Logging out, or a server reply of *session expired* (HTTP 401), always returns the user to S1.
+### 3.1 Authentication and navigation
 
-![Screen transition diagram](screen-transition-diagram.png)
+On application startup, an existing valid session takes the user directly to the appropriate dashboard.
 
 | From | Event | To |
 |---|---|---|
-| App start | no saved session | S1 Login |
-| App start | saved session, role citizen / admin | S3 / S4 |
-| S1 | "Register" tab or "Register here" | S2 |
-| S2 | "Login" tab or "Sign in" | S1 |
-| S2 | account created | S1 (with "Registration successful! Please log in.") |
-| S2 | invalid input / email already used | S2 (error shown) |
-| S1 | Sign in, invalid credentials | S1 (error "Invalid email or password") |
-| S1 | Sign in, valid, citizen / admin | S3 / S4 |
-| S3, S4 | Log out | S1 |
-| S3, S4 | any request returns 401 | S1 |
+| App start | No saved session | S1 Login |
+| App start | Citizen session | S3 Citizen dashboard |
+| App start | Admin session | S4 Admin dashboard |
+| App start | Department session | S5 Department dashboard |
+| S1 | Select Register | S2 Register |
+| S2 | Select Login | S1 Login |
+| S2 | Successful registration | S1 Login |
+| S1 | Invalid credentials | S1 with an error message |
+| S1 | Successful citizen login | S3 |
+| S1 | Successful admin login | S4 |
+| S1 | Successful department login | S5 |
+| S3, S4, S5 | Logout | S1 Login |
 
-**Within each dashboard.** These are states on a single screen rather than separate pages:
+The server controls authorization. Dashboard access and API operations are restricted according to the authenticated user's role.
 
-![States within each dashboard](in-screen-states.png)
+### 3.2 Citizen complaint journey
 
-### Screens and states (screenshots)
+1. The citizen logs in.
+2. The citizen opens the complaint form.
+3. The citizen selects a complaint category and enters its description and location.
+4. The citizen can attach a photograph as evidence.
+5. The backend processes the complaint and can provide an AI-based image prediction.
+6. The complaint is saved with the initial status **Submitted**.
+7. The citizen can view their submitted complaints and follow subsequent status changes and progress updates.
 
-| | |
+### 3.3 Administrator journey
+
+1. The administrator logs in and opens the admin dashboard.
+2. The administrator reviews submitted complaints.
+3. The administrator can change complaint status and priority.
+4. The administrator chooses the responsible department and assigns the complaint.
+5. The department receives the complaint in its dashboard.
+6. The administrator monitors progress updates.
+7. After the department reports completion, the administrator verifies the work.
+8. The administrator marks the complaint **Resolved** when satisfied that the issue has been addressed.
+
+### 3.4 Department journey
+
+1. Department staff log in using their department account.
+2. The dashboard displays complaints assigned to that department.
+3. Staff inspect a complaint and accept the assignment.
+4. Staff enter progress messages as work proceeds.
+5. Staff submit **Work Completed** when they believe the work is finished.
+6. The complaint remains pending administrator verification until the administrator resolves it.
+
+Department staff cannot independently close a complaint as **Resolved**.
+
+## 4. Complaint status lifecycle
+
+The complaint lifecycle distinguishes between administrative review, departmental responsibility, work completion, and final verification.
+
+| Status | Meaning | Responsible role |
+|---|---|---|
+| **Submitted** | A citizen has successfully registered a complaint. | System |
+| **Under Review** | The administrator is reviewing the complaint. | Administrator |
+| **Assigned to Department** | The complaint has been forwarded to a responsible department. | Administrator |
+| **Accepted by Department** | The department has accepted responsibility for the assignment. | Department |
+| **Work in Progress** | The department is actively working on the complaint. | Department |
+| **Work Completed** | The department has reported that the work is finished. | Department |
+| **Resolved** | The administrator has verified the completion and officially closed the complaint. | Administrator |
+| **Rejected** | The administrator has rejected the complaint. | Administrator |
+
+**Important distinction:** Work Completed and Resolved are not interchangeable. Work Completed is a departmental completion report; Resolved is the administrator's final verification.
+
+The older **In Progress** status is retained in the backend for compatibility with existing records, but **Work in Progress** is the preferred status in the current workflow.
+
+### 4.1 Department assignment
+
+The system uses category-based department suggestions:
+
+| Complaint category | Suggested department |
 |---|---|
-| S1 Login ![](screens/S1-login.png) | S1 error state ![](screens/S1-login-error.png) |
-| S2 Register ![](screens/S2-register.png) | S3 submit success ![](screens/S3-citizen-submit-success.png) |
-| S4 filter → empty state ![](screens/S4-admin-filter-empty.png) | Mobile login ![](screens/M1-login-mobile.png) |
+| Pothole | Roads & Maintenance |
+| Traffic Signal | Traffic Signal Department |
+| Illegal Parking | Traffic Police |
+| Road Blockage | Roads & Maintenance |
+| Traffic Congestion | Traffic Police |
+| Street Lighting | Electrical Department |
+| Accident | Traffic Police |
+| Pedestrian Safety | Traffic Police |
+| Road Sign | Roads & Maintenance |
+| Public Transport | Transport Department |
 
-Full-page captures: [`S3-citizen-dashboard.png`](screens/S3-citizen-dashboard.png), [`S4-admin-dashboard.png`](screens/S4-admin-dashboard.png), [`M3-citizen-mobile.png`](screens/M3-citizen-mobile.png).
+The administrator can override the suggested department before forwarding the complaint.
 
-## 4. Design system
+### 4.2 Progress history
 
-The visual direction is *editorial and calm*: a warm-white page, very large type, and a single soft gradient "aura". It was inspired by blur-gradient hero designs on Awwwards. Reporting a pothole is a chore, so the interface aims to feel light and trustworthy rather than like a government form.
+Progress updates are recorded with information about the user who submitted them, their role, the message, and the associated status.
 
-### 4.1 Typography
+This provides a history of complaint handling and helps citizens and administrators understand what has happened since the complaint was submitted.
+
+## 5. Design system
+
+The visual direction of TrafficCare is intended to be editorial and calm, using a warm-white page, large typography, and a soft gradient aura.
+
+The interface aims to feel approachable and trustworthy rather than like a traditional government form.
+
+### 5.1 Typography
 
 | Role | Typeface | Use |
 |---|---|---|
-| Display | **Instrument Serif** (regular + italic) | Hero headlines (clamped 44–148 px), section titles, stat numbers, complaint titles |
-| Interface | **Inter** 400 / 500 / 600 | Labels, body, buttons, tables |
+| Display | Instrument Serif | Hero headlines, section titles and prominent statistics |
+| Interface | Inter | Labels, body text, buttons, forms and dashboard information |
 
-Italic underlined words in the login headline (*potholes*, *broken signals*…) name the actual complaint types, so the type does explanatory work. Stat numbers are set in the display serif at 52–84 px so the dashboard can be read at a glance.
+Display typography establishes visual hierarchy, while interface typography supports readability and efficient interaction.
 
-### 4.2 Colour tokens (all checked against WCAG 2.1)
+### 5.2 Colour tokens
 
-| Token | Value | Used for | Contrast | Result |
-|---|---|---|---|---|
-| `--ink` | `#121116` on paper `#fbfaf8` | Headings, body | 18.0 : 1 | AA ✔ |
-| `--ink-soft` | `#3a3842` | Secondary text | 11.0 : 1 | AA ✔ |
-| `--muted` | `#6f6b77` | Captions, hints | 4.98 : 1 | AA ✔ |
-| `--lavender` | `#6655f0` | Links ("Register here", "Report an issue") | 4.88 : 1 | AA ✔ |
-| Button | white on `#121116` | Primary actions | 18.8 : 1 | AA ✔ |
-| Placeholder | `#77737f` on white | Input hints | 4.6 : 1 | AA ✔ |
-| Status pills | Resolved / In Progress / Under Review / Rejected / Submitted | Tinted backgrounds | 4.8 / 4.9 / 5.5 / 5.6 / 10.0 : 1 | AA ✔ |
+The original design evaluation used the following palette:
 
-During this evaluation three tokens failed and were fixed. The muted grey was 4.43:1, the lavender link 3.12:1 and the placeholder 2.38:1; each was darkened just enough to pass without changing the look. Status is never shown by colour alone: every pill carries its text label.
-
-### 4.3 Layout
-
-- The content column is at most 1240 px, with fluid side gutters `clamp(16px, 4vw, 56px)`.
-- The login page uses two columns (intro and form card) that stack below 900 px.
-- On the citizen dashboard, the form section is split: the title sticks on the left while the form scrolls on the right. It becomes one column below 900 px.
-- Below 600 px, stats stack vertically, header details collapse to the avatar and Log out, and complaint photos go full width.
-- No horizontal scrolling at 390 px, except inside the admin table, which deliberately scrolls on its own.
-
-### 4.4 Components
-
-- **Hairline fields.** Inputs have only a bottom border. On focus, a violet underline grows from the left.
-- **Pill buttons.** Primary buttons are black; ghost buttons are outlined. Each primary button has an arrow that nudges right on hover.
-- **Status pills.** Coloured dot, tinted background and text label.
-- **Editorial complaint rows.** Reference ID, serif title, description, optional photo, AI analysis panel, location and date.
-- **Notices.** Green for success and red for errors. Errors use `role="alert"`, successes use `role="status"`.
-
-## 5. Motion
-
-Motion has two jobs here: to show the user what changed, and to make the app feel responsive. It is never decorative at the cost of smoothness.
-
-| Interaction | What happens | Timing |
+| Token | Value | Use |
 |---|---|---|
-| Page entrance | Headline, text, card and stats rise 28 px and fade in, staggered | 900 ms, 90 ms stagger, ease-out |
-| Login ⇄ Register | Tab underline slides; "Full name" field opens / closes; heading, subtitle and button label cross-fade; card height eases (no jump) | 420–520 ms ease-out |
-| Error message appears | Row expands smoothly instead of pushing the button down instantly | 460 ms |
-| Button hover | Lifts 2 px, soft shadow fades in, arrow nudges right; press scales to 98.5 % | 460 ms / 120 ms |
-| Complaint row hover | Row lifts, white rounded surface fades in behind it, photo zooms 3 % | 520 ms / 600 ms |
-| Aura | Three gradient orbs drift slowly; paused when scrolled out of view | 20–28 s loops |
+| `--ink` | `#121116` | Headings and body text |
+| `--ink-soft` | `#3a3842` | Secondary text |
+| `--muted` | `#6f6b77` | Captions and hints |
+| `--lavender` | `#6655f0` | Links and accents |
+| Paper | `#fbfaf8` | Main page background |
 
-**Performance rules followed** (measured in Chrome on the project laptop):
+The original accessibility evaluation reported that these text combinations passed WCAG 2.1 AA contrast requirements.
 
-- Only `transform` and `opacity` are animated, so movement stays on the GPU compositor.
-- The aura was originally three `filter: blur(70px)` elements under `backdrop-filter` glass, which meant the browser re-blurred large areas every frame. It now uses many-stop radial gradients painted once, and the glass panels are solid. This cut the login page's GPU work per second by about 29 %.
-- Lifting elements carry `will-change: transform`. This prevents the text "snap" that happens when Chrome promotes and demotes a layer at the start and end of a hover.
-- Measured results: 60 fps with no frames over 20 ms while idle, and 55–56 fps during automated scroll and hover tests.
-- Card height during Login → Register passes through 34 intermediate values over about 400 ms instead of jumping 100 px.
-- On battery saver, Chrome caps animations at 30 fps. That is a power setting, not an app issue.
-- `prefers-reduced-motion: reduce` turns off the drift, entrance, lift and switch animations and smooth scrolling.
+Status is communicated using text labels as well as colour, so users do not need to rely on colour alone.
 
-## 6. Accessibility checklist
+### 5.3 Layout and components
 
-| Check | Status |
+The design uses a consistent visual language across authentication and dashboard screens.
+
+Key interface elements include:
+
+- **Hairline fields:** Inputs use understated borders and a visible focus treatment.
+- **Pill buttons:** Primary and secondary actions have distinct visual styles.
+- **Status pills:** Complaint states are displayed using labelled status indicators.
+- **Complaint cards:** Admin and department dashboards present complaint information in organised cards.
+- **Progress forms:** Department users can enter work updates and report completion.
+- **Complaint details modal:** A focused view displays complaint information and progress history.
+- **Notices:** Success and error messages communicate the result of user actions.
+
+The admin dashboard uses complaint cards to present information and actions together. The department dashboard provides separate actions for viewing details, accepting assignments, updating progress, and marking work completed.
+
+The application does not use map functionality.
+
+## 6. Motion and interaction
+
+Motion should communicate changes in application state and make interactions feel responsive without interfering with usability.
+
+The original interface design included:
+
+| Interaction | Intended behaviour |
 |---|---|
-| Text contrast ≥ 4.5 : 1 (AA) for all text tokens | ✔ (after fixes in §4.2) |
-| Every input has a visible label (not placeholder-only) | ✔ |
-| Keyboard: all actions reachable with Tab; visible focus ring (`:focus-visible`, violet) | ✔ |
-| Hidden "Full name" field is `disabled` + `inert` while collapsed, so it is skipped by Tab, validation and screen readers | ✔ |
-| Errors announced (`role="alert"`), successes announced politely (`role="status"`, `aria-live`) | ✔ |
-| Decorative elements (aura, avatar initials, arrows) hidden from assistive tech | ✔ |
-| Status conveyed by text, not colour alone | ✔ |
-| Reduced-motion preference respected | ✔ |
-| Images have alt text; broken thumbnails are hidden instead of showing a broken icon | ✔ |
-| Language attribute set (`lang="en"`) | ✔ |
+| Page entrance | Content appears with a subtle rise and fade |
+| Login and Register switch | Tabs and form content transition smoothly |
+| Error messages | Messages appear without abrupt layout changes |
+| Button hover | Buttons lift slightly and provide visual feedback |
+| Complaint card hover | Cards provide a subtle response to pointer interaction |
+| Background aura | Gradient elements move slowly and remain decorative |
 
-## 7. Heuristic evaluation (Nielsen's 10)
+Reduced-motion preferences should be respected. Important actions must remain usable without animation.
 
-Severity scale: **0** not a problem · **1** cosmetic · **2** minor · **3** major · **4** catastrophic.
+## 7. Accessibility considerations
 
-| # | Heuristic | Works well | Issue found | Sev. | Recommendation |
+The interface should follow these accessibility principles:
+
+| Check | Design consideration |
+|---|---|
+| Text contrast | Maintain WCAG AA contrast for normal text |
+| Form labels | Every input should have a visible label |
+| Keyboard navigation | Actions should be reachable using the keyboard |
+| Focus visibility | Interactive controls should have visible focus indicators |
+| Error announcements | Errors should use appropriate alert semantics |
+| Success announcements | Successful actions should be announced politely |
+| Status indicators | Status should be communicated through text, not colour alone |
+| Reduced motion | Respect the user's reduced-motion preference |
+| Image descriptions | Provide meaningful alternative text for evidence images |
+| Responsive layout | Keep dashboards usable on smaller screens |
+
+These are design requirements; a complete accessibility audit should verify the current implementation with keyboard and screen-reader testing.
+
+## 8. Heuristic evaluation (Nielsen's 10)
+
+Severity scale: **0** = not a problem · **1** = cosmetic · **2** = minor · **3** = major · **4** = catastrophic.
+
+| # | Heuristic | What works well | Issue / opportunity | Severity | Recommendation |
 |---|---|---|---|---|---|
-| 1 | Visibility of system status | Loading text, disabled buttons while submitting, live stats, status pills, AI result message | After submitting, the success notice appears **below** the button and can be below the fold on short screens | 2 | Scroll the notice into view, or use a toast at the top |
-| 2 | Match with the real world | Plain categories ("Pothole / Road damage", "Illegal parking"), Indian date format, location as free text | AI labels ("Road Damage", "Normal Road") use different words from the citizen's own categories | 1 | Map AI output to the same category names |
-| 3 | User control and freedom | Remove image before submit, filter reset, logout everywhere | A citizen cannot edit or withdraw a complaint; an admin can mark "Rejected" with no undo | 2 | Add withdraw (citizen) and undo or confirm for Rejected (admin) |
-| 4 | Consistency and standards | One button style, one field style and one pill style across all screens | None significant | 0 | n/a |
-| 5 | Error prevention | Client- and server-side checks: file type and 10 MB, 2000-character limit with live counter, 8+ character password, email format | None significant | 0 | n/a |
-| 6 | Recognition rather than recall | Category dropdown, status filter, visible labels, complaint reference IDs | Photo requirements are only in helper text | 1 | Add a drag-and-drop zone that shows the limits |
-| 7 | Flexibility and efficiency | Saved session skips login; anchor link jumps to the form | No search or sort in the admin table | 2 | Add search by location / ID and sort by date / priority |
-| 8 | Aesthetic and minimalist design | Calm editorial layout; one accent; no clutter | Native file input shows "No file chosen" in the browser's style | 1 | Custom file picker with preview |
-| 9 | Recognise, diagnose, recover from errors | Specific messages ("Invalid email or password", "Image must be 10 MB or smaller", length limits) | When a session expires the user is returned to Login **without** saying why | 2 | Show "Your session expired, please sign in again" |
-| 10 | Help and documentation | Helper text under the photo field explains what the AI does | No password reset; no admin onboarding (an admin account can only be created in the database) | 3 | Add password reset, and an admin invite or seed flow |
-
-**Summary.** No catastrophic issues. One major gap: account recovery and admin provisioning, which is a product feature rather than a UI defect. The rest are minor polish items that would make the system feel finished.
-
-## 8. Changes made during this evaluation
-
-Fixed in the code:
-- **Dark-mode headings:** they were invisible when the OS used dark mode. The app now forces its light palette.
-- **Mobile dashboard:** it opened scrolled halfway down after login; it now opens at the top.
-- **Sticky header:** dashboard numbers showed through it; it is now solid.
-- **Rejected photo:** after a valid photo was chosen, picking an invalid one left the old photo attached.
-- **Broken thumbnails:** they showed a broken-image icon and alt text; they are now hidden.
-- **Abrupt switches:** Login ⇄ Register and error messages changed instantly; they now animate.
-- **Lift on some buttons:** on Log out, Refresh and Remove image, a later rule overrode the transition so the lift snapped; it now eases.
-- **Low-contrast colours:** three colour tokens failed WCAG AA and were darkened just enough to pass.
-
-## 9. Future work
-
-1. A toast or scroll-into-view for the submit result. Show the AI prediction **before** final submit so the citizen can confirm the category.
-2. A complaint detail view with a status timeline, so citizens can see when an admin changed it.
-3. Search and sort in the admin table, plus a card layout for admins on mobile.
-4. A session-expired message, password reset, and an admin invite flow.
-5. A dark theme. The tokens are already centralised, so this is a token swap plus a second aura palette.
+| 1 | Visibility of system status | Complaint status, dashboard statistics, notices and progress history | Citizens may need clearer feedback when a complaint is submitted or updated | 2 | Keep success notices visible and provide clear timeline updates |
+| 2 | Match with the real world | Familiar complaint categories and department names | AI predictions may use terminology different from the citizen's category | 1 | Use consistent category labels throughout the application |
+| 3 | User control and freedom | Users can log out; departments can submit progress; administrators can manage assignments | Citizens do not currently have a documented withdrawal or editing workflow | 2 | Consider a controlled complaint withdrawal or correction feature |
+| 4 | Consistency and standards | Shared visual components, status labels and dashboard conventions | Legacy status terminology such as In Progress can cause confusion | 1 | Use Work in Progress consistently in the interface |
+| 5 | Error prevention | Input validation and server-side checks | Incorrect department assignment can delay complaint handling | 2 | Make the assigned department clear and allow administrator reassignment |
+| 6 | Recognition rather than recall | Complaint categories, visible actions and progress history | Users may not immediately understand the difference between Work Completed and Resolved | 2 | Explain that administrator verification is required before closure |
+| 7 | Flexibility and efficiency | Role-specific dashboards and department-specific complaint lists | Search and sorting can improve complaint management as records grow | 2 | Add search by complaint ID or location and sorting by date or priority |
+| 
