@@ -1,0 +1,440 @@
+Device: cuda | NVIDIA GeForce RTX 3050 6GB Laptop GPU
+
+=== Variant cprd ===
+  split: {'train': (723, 89), 'val': (177, 22), 'test': (300, 30)} (samples, groups)
+  -- ResNet18 | seed 42
+    [resnet18 s42] epoch  1  train loss 0.782 acc 0.636 f1 0.636 | val loss 0.731 acc 0.678 f1 0.665  *
+    [resnet18 s42] epoch  2  train loss 0.436 acc 0.827 f1 0.827 | val loss 0.580 acc 0.751 f1 0.749  *
+    [resnet18 s42] epoch  3  train loss 0.336 acc 0.860 f1 0.861 | val loss 0.427 acc 0.836 f1 0.835  *
+    [resnet18 s42] epoch  4  train loss 0.263 acc 0.902 f1 0.902 | val loss 0.516 acc 0.825 f1 0.820
+    [resnet18 s42] epoch  5  train loss 0.210 acc 0.932 f1 0.932 | val loss 0.318 acc 0.893 f1 0.893  *
+    [resnet18 s42] epoch  6  train loss 0.172 acc 0.936 f1 0.937 | val loss 0.370 acc 0.853 f1 0.853
+    [resnet18 s42] epoch  7  train loss 0.135 acc 0.952 f1 0.952 | val loss 0.395 acc 0.876 f1 0.875
+    [resnet18 s42] epoch  8  train loss 0.101 acc 0.964 f1 0.964 | val loss 0.346 acc 0.881 f1 0.880
+    [resnet18 s42] epoch  9  train loss 0.093 acc 0.964 f1 0.964 | val loss 0.265 acc 0.910 f1 0.910  *
+    [resnet18 s42] epoch 10  train loss 0.074 acc 0.975 f1 0.975 | val loss 0.295 acc 0.910 f1 0.909
+    [resnet18 s42] epoch 11  train loss 0.043 acc 0.988 f1 0.988 | val loss 0.548 acc 0.831 f1 0.825
+    [resnet18 s42] epoch 12  train loss 0.059 acc 0.976 f1 0.977 | val loss 0.490 acc 0.876 f1 0.871
+    [resnet18 s42] epoch 13  train loss 0.082 acc 0.967 f1 0.967 | val loss 0.414 acc 0.864 f1 0.864
+    [resnet18 s42] epoch 14  train loss 0.072 acc 0.981 f1 0.981 | val loss 0.615 acc 0.814 f1 0.813
+    [resnet18 s42] epoch 15  train loss 0.072 acc 0.974 f1 0.974 | val loss 0.363 acc 0.881 f1 0.881
+    [resnet18 s42] epoch 16  train loss 0.066 acc 0.978 f1 0.978 | val loss 0.613 acc 0.819 f1 0.814
+    [resnet18 s42] epoch 17  train loss 0.046 acc 0.983 f1 0.983 | val loss 0.408 acc 0.893 f1 0.893
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 9, val F1 0.910, test acc 0.833, test F1 0.834, 225s, peak VRAM 603 MiB
+    speed: {'cpu_threads': 8, 'measured_at': '2026-11-04 12:40:37', 'cpu_ms_per_sample': 43.38174999975308, 'cpu_ms_per_sample_batch64': 33.4846234374974, 'gpu_ms_per_sample': 3.9564999997310224, 'gpu_ms_per_sample_batch64': 0.9696786458353776}
+  -- ResNet18 | seed 43
+    [resnet18 s43] epoch  1  train loss 0.780 acc 0.650 f1 0.647 | val loss 0.709 acc 0.701 f1 0.687  *
+    [resnet18 s43] epoch  2  train loss 0.471 acc 0.790 f1 0.788 | val loss 0.508 acc 0.808 f1 0.807  *
+    [resnet18 s43] epoch  3  train loss 0.351 acc 0.859 f1 0.859 | val loss 0.413 acc 0.831 f1 0.829  *
+    [resnet18 s43] epoch  4  train loss 0.278 acc 0.902 f1 0.902 | val loss 0.690 acc 0.729 f1 0.722
+    [resnet18 s43] epoch  5  train loss 0.240 acc 0.924 f1 0.924 | val loss 0.668 acc 0.780 f1 0.767
+    [resnet18 s43] epoch  6  train loss 0.172 acc 0.945 f1 0.945 | val loss 0.408 acc 0.847 f1 0.845  *
+    [resnet18 s43] epoch  7  train loss 0.128 acc 0.953 f1 0.953 | val loss 0.444 acc 0.819 f1 0.819
+    [resnet18 s43] epoch  8  train loss 0.156 acc 0.941 f1 0.940 | val loss 0.481 acc 0.847 f1 0.847  *
+    [resnet18 s43] epoch  9  train loss 0.109 acc 0.961 f1 0.962 | val loss 0.370 acc 0.881 f1 0.881  *
+    [resnet18 s43] epoch 10  train loss 0.138 acc 0.949 f1 0.949 | val loss 0.462 acc 0.831 f1 0.831
+    [resnet18 s43] epoch 11  train loss 0.101 acc 0.963 f1 0.963 | val loss 0.327 acc 0.898 f1 0.898  *
+    [resnet18 s43] epoch 12  train loss 0.075 acc 0.976 f1 0.977 | val loss 0.484 acc 0.847 f1 0.845
+    [resnet18 s43] epoch 13  train loss 0.076 acc 0.976 f1 0.977 | val loss 0.344 acc 0.904 f1 0.902  *
+    [resnet18 s43] epoch 14  train loss 0.076 acc 0.974 f1 0.974 | val loss 0.695 acc 0.819 f1 0.817
+    [resnet18 s43] epoch 15  train loss 0.078 acc 0.968 f1 0.968 | val loss 0.387 acc 0.898 f1 0.898
+    [resnet18 s43] epoch 16  train loss 0.105 acc 0.963 f1 0.963 | val loss 0.589 acc 0.808 f1 0.804
+    [resnet18 s43] epoch 17  train loss 0.067 acc 0.981 f1 0.981 | val loss 0.404 acc 0.859 f1 0.859
+    [resnet18 s43] epoch 18  train loss 0.055 acc 0.975 f1 0.975 | val loss 0.620 acc 0.831 f1 0.823
+    [resnet18 s43] epoch 19  train loss 0.037 acc 0.989 f1 0.989 | val loss 0.385 acc 0.893 f1 0.892
+    [resnet18 s43] epoch 20  train loss 0.030 acc 0.990 f1 0.990 | val loss 0.430 acc 0.881 f1 0.880
+    [resnet18 s43] epoch 21  train loss 0.038 acc 0.992 f1 0.992 | val loss 0.529 acc 0.864 f1 0.861
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 13, val F1 0.902, test acc 0.847, test F1 0.847, 456s, peak VRAM 603 MiB
+  -- ResNet18 | seed 44
+    [resnet18 s44] epoch  1  train loss 0.786 acc 0.640 f1 0.643 | val loss 0.665 acc 0.706 f1 0.705  *
+    [resnet18 s44] epoch  2  train loss 0.464 acc 0.812 f1 0.811 | val loss 0.574 acc 0.785 f1 0.785  *
+    [resnet18 s44] epoch  3  train loss 0.363 acc 0.867 f1 0.867 | val loss 0.419 acc 0.842 f1 0.842  *
+    [resnet18 s44] epoch  4  train loss 0.249 acc 0.907 f1 0.908 | val loss 0.357 acc 0.898 f1 0.899  *
+    [resnet18 s44] epoch  5  train loss 0.187 acc 0.935 f1 0.935 | val loss 0.370 acc 0.870 f1 0.869
+    [resnet18 s44] epoch  6  train loss 0.177 acc 0.928 f1 0.928 | val loss 0.365 acc 0.881 f1 0.881
+    [resnet18 s44] epoch  7  train loss 0.146 acc 0.956 f1 0.956 | val loss 0.522 acc 0.831 f1 0.829
+    [resnet18 s44] epoch  8  train loss 0.133 acc 0.957 f1 0.957 | val loss 0.530 acc 0.836 f1 0.833
+    [resnet18 s44] epoch  9  train loss 0.121 acc 0.954 f1 0.955 | val loss 0.466 acc 0.864 f1 0.864
+    [resnet18 s44] epoch 10  train loss 0.085 acc 0.976 f1 0.976 | val loss 0.387 acc 0.859 f1 0.858
+    [resnet18 s44] epoch 11  train loss 0.090 acc 0.965 f1 0.965 | val loss 0.352 acc 0.887 f1 0.887
+    [resnet18 s44] epoch 12  train loss 0.119 acc 0.960 f1 0.960 | val loss 0.531 acc 0.842 f1 0.839
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 4, val F1 0.899, test acc 0.850, test F1 0.851, 148s, peak VRAM 603 MiB
+  -- EfficientNet-B0 | seed 42
+    [efficientnet_b0 s42] epoch  1  train loss 1.017 acc 0.495 f1 0.477 | val loss 0.935 acc 0.605 f1 0.594  *
+    [efficientnet_b0 s42] epoch  2  train loss 0.771 acc 0.729 f1 0.726 | val loss 0.735 acc 0.701 f1 0.681  *
+    [efficientnet_b0 s42] epoch  3  train loss 0.576 acc 0.809 f1 0.809 | val loss 0.563 acc 0.780 f1 0.773  *
+    [efficientnet_b0 s42] epoch  4  train loss 0.433 acc 0.849 f1 0.850 | val loss 0.484 acc 0.825 f1 0.824  *
+    [efficientnet_b0 s42] epoch  5  train loss 0.316 acc 0.887 f1 0.887 | val loss 0.406 acc 0.831 f1 0.830  *
+    [efficientnet_b0 s42] epoch  6  train loss 0.275 acc 0.898 f1 0.898 | val loss 0.375 acc 0.859 f1 0.858  *
+    [efficientnet_b0 s42] epoch  7  train loss 0.214 acc 0.923 f1 0.923 | val loss 0.378 acc 0.870 f1 0.871  *
+    [efficientnet_b0 s42] epoch  8  train loss 0.165 acc 0.959 f1 0.958 | val loss 0.351 acc 0.893 f1 0.892  *
+    [efficientnet_b0 s42] epoch  9  train loss 0.169 acc 0.946 f1 0.946 | val loss 0.326 acc 0.915 f1 0.915  *
+    [efficientnet_b0 s42] epoch 10  train loss 0.143 acc 0.957 f1 0.957 | val loss 0.352 acc 0.898 f1 0.898
+    [efficientnet_b0 s42] epoch 11  train loss 0.121 acc 0.957 f1 0.957 | val loss 0.349 acc 0.876 f1 0.875
+    [efficientnet_b0 s42] epoch 12  train loss 0.126 acc 0.959 f1 0.959 | val loss 0.336 acc 0.898 f1 0.898
+    [efficientnet_b0 s42] epoch 13  train loss 0.112 acc 0.961 f1 0.961 | val loss 0.340 acc 0.881 f1 0.881
+    [efficientnet_b0 s42] epoch 14  train loss 0.097 acc 0.970 f1 0.970 | val loss 0.348 acc 0.881 f1 0.881
+    [efficientnet_b0 s42] epoch 15  train loss 0.078 acc 0.972 f1 0.972 | val loss 0.350 acc 0.876 f1 0.876
+    [efficientnet_b0 s42] epoch 16  train loss 0.086 acc 0.975 f1 0.975 | val loss 0.396 acc 0.853 f1 0.853
+    [efficientnet_b0 s42] epoch 17  train loss 0.060 acc 0.988 f1 0.988 | val loss 0.394 acc 0.859 f1 0.858
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 9, val F1 0.915, test acc 0.843, test F1 0.844, 716s, peak VRAM 1472 MiB
+    speed: {'cpu_threads': 8, 'measured_at': '2026-11-04 13:02:56', 'cpu_ms_per_sample': 23.29989999998361, 'cpu_ms_per_sample_batch64': 13.087685416664385, 'gpu_ms_per_sample': 6.897800000388088, 'gpu_ms_per_sample_batch64': 1.3388187499998594}
+  -- EfficientNet-B0 | seed 43
+    [efficientnet_b0 s43] epoch  1  train loss 1.011 acc 0.502 f1 0.491 | val loss 0.914 acc 0.627 f1 0.625  *
+    [efficientnet_b0 s43] epoch  2  train loss 0.764 acc 0.712 f1 0.709 | val loss 0.679 acc 0.768 f1 0.765  *
+    [efficientnet_b0 s43] epoch  3  train loss 0.545 acc 0.805 f1 0.804 | val loss 0.480 acc 0.853 f1 0.853  *
+    [efficientnet_b0 s43] epoch  4  train loss 0.421 acc 0.852 f1 0.851 | val loss 0.413 acc 0.876 f1 0.876  *
+    [efficientnet_b0 s43] epoch  5  train loss 0.314 acc 0.896 f1 0.897 | val loss 0.400 acc 0.842 f1 0.843
+    [efficientnet_b0 s43] epoch  6  train loss 0.268 acc 0.916 f1 0.916 | val loss 0.354 acc 0.887 f1 0.887  *
+    [efficientnet_b0 s43] epoch  7  train loss 0.211 acc 0.929 f1 0.930 | val loss 0.337 acc 0.898 f1 0.898  *
+    [efficientnet_b0 s43] epoch  8  train loss 0.234 acc 0.918 f1 0.918 | val loss 0.302 acc 0.904 f1 0.904  *
+    [efficientnet_b0 s43] epoch  9  train loss 0.159 acc 0.952 f1 0.952 | val loss 0.326 acc 0.910 f1 0.909  *
+    [efficientnet_b0 s43] epoch 10  train loss 0.141 acc 0.956 f1 0.956 | val loss 0.321 acc 0.893 f1 0.893
+    [efficientnet_b0 s43] epoch 11  train loss 0.132 acc 0.965 f1 0.966 | val loss 0.317 acc 0.893 f1 0.893
+    [efficientnet_b0 s43] epoch 12  train loss 0.101 acc 0.975 f1 0.975 | val loss 0.320 acc 0.893 f1 0.893
+    [efficientnet_b0 s43] epoch 13  train loss 0.097 acc 0.971 f1 0.971 | val loss 0.381 acc 0.881 f1 0.881
+    [efficientnet_b0 s43] epoch 14  train loss 0.101 acc 0.974 f1 0.974 | val loss 0.372 acc 0.887 f1 0.887
+    [efficientnet_b0 s43] epoch 15  train loss 0.097 acc 0.965 f1 0.965 | val loss 0.335 acc 0.898 f1 0.898
+    [efficientnet_b0 s43] epoch 16  train loss 0.105 acc 0.963 f1 0.963 | val loss 0.365 acc 0.881 f1 0.881
+    [efficientnet_b0 s43] epoch 17  train loss 0.057 acc 0.979 f1 0.979 | val loss 0.397 acc 0.910 f1 0.909
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 9, val F1 0.909, test acc 0.810, test F1 0.810, 464s, peak VRAM 1472 MiB
+  -- EfficientNet-B0 | seed 44
+    [efficientnet_b0 s44] epoch  1  train loss 0.998 acc 0.546 f1 0.544 | val loss 0.901 acc 0.644 f1 0.643  *
+    [efficientnet_b0 s44] epoch  2  train loss 0.747 acc 0.736 f1 0.734 | val loss 0.649 acc 0.763 f1 0.760  *
+    [efficientnet_b0 s44] epoch  3  train loss 0.543 acc 0.812 f1 0.811 | val loss 0.490 acc 0.814 f1 0.812  *
+    [efficientnet_b0 s44] epoch  4  train loss 0.415 acc 0.848 f1 0.848 | val loss 0.404 acc 0.859 f1 0.859  *
+    [efficientnet_b0 s44] epoch  5  train loss 0.342 acc 0.873 f1 0.872 | val loss 0.394 acc 0.847 f1 0.849
+    [efficientnet_b0 s44] epoch  6  train loss 0.274 acc 0.909 f1 0.909 | val loss 0.343 acc 0.881 f1 0.882  *
+    [efficientnet_b0 s44] epoch  7  train loss 0.230 acc 0.918 f1 0.918 | val loss 0.320 acc 0.887 f1 0.888  *
+    [efficientnet_b0 s44] epoch  8  train loss 0.194 acc 0.936 f1 0.936 | val loss 0.278 acc 0.904 f1 0.904  *
+    [efficientnet_b0 s44] epoch  9  train loss 0.180 acc 0.942 f1 0.942 | val loss 0.328 acc 0.893 f1 0.893
+    [efficientnet_b0 s44] epoch 10  train loss 0.125 acc 0.957 f1 0.957 | val loss 0.339 acc 0.887 f1 0.887
+    [efficientnet_b0 s44] epoch 11  train loss 0.122 acc 0.959 f1 0.959 | val loss 0.283 acc 0.910 f1 0.910  *
+    [efficientnet_b0 s44] epoch 12  train loss 0.144 acc 0.952 f1 0.952 | val loss 0.293 acc 0.904 f1 0.904
+    [efficientnet_b0 s44] epoch 13  train loss 0.099 acc 0.965 f1 0.965 | val loss 0.383 acc 0.876 f1 0.876
+    [efficientnet_b0 s44] epoch 14  train loss 0.123 acc 0.961 f1 0.961 | val loss 0.320 acc 0.904 f1 0.904
+    [efficientnet_b0 s44] epoch 15  train loss 0.101 acc 0.967 f1 0.967 | val loss 0.347 acc 0.887 f1 0.887
+    [efficientnet_b0 s44] epoch 16  train loss 0.077 acc 0.975 f1 0.975 | val loss 0.326 acc 0.910 f1 0.909
+    [efficientnet_b0 s44] epoch 17  train loss 0.071 acc 0.978 f1 0.978 | val loss 0.374 acc 0.876 f1 0.876
+    [efficientnet_b0 s44] epoch 18  train loss 0.061 acc 0.985 f1 0.985 | val loss 0.340 acc 0.881 f1 0.881
+    [efficientnet_b0 s44] epoch 19  train loss 0.035 acc 0.992 f1 0.992 | val loss 0.364 acc 0.893 f1 0.892
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 11, val F1 0.910, test acc 0.813, test F1 0.813, 520s, peak VRAM 1472 MiB
+  -- MobileNetV3-Large | seed 42
+    [mobilenet_v3_large s42] epoch  1  train loss 0.971 acc 0.546 f1 0.541 | val loss 1.066 acc 0.395 f1 0.298  *
+    [mobilenet_v3_large s42] epoch  2  train loss 0.604 acc 0.777 f1 0.776 | val loss 0.937 acc 0.582 f1 0.565  *
+    [mobilenet_v3_large s42] epoch  3  train loss 0.410 acc 0.833 f1 0.833 | val loss 0.804 acc 0.729 f1 0.717  *
+    [mobilenet_v3_large s42] epoch  4  train loss 0.301 acc 0.880 f1 0.880 | val loss 0.735 acc 0.729 f1 0.718  *
+    [mobilenet_v3_large s42] epoch  5  train loss 0.201 acc 0.920 f1 0.920 | val loss 0.658 acc 0.774 f1 0.766  *
+    [mobilenet_v3_large s42] epoch  6  train loss 0.199 acc 0.925 f1 0.925 | val loss 0.614 acc 0.763 f1 0.755
+    [mobilenet_v3_large s42] epoch  7  train loss 0.161 acc 0.936 f1 0.937 | val loss 0.771 acc 0.763 f1 0.743
+    [mobilenet_v3_large s42] epoch  8  train loss 0.137 acc 0.941 f1 0.941 | val loss 0.826 acc 0.757 f1 0.746
+    [mobilenet_v3_large s42] epoch  9  train loss 0.148 acc 0.932 f1 0.932 | val loss 0.571 acc 0.814 f1 0.811  *
+    [mobilenet_v3_large s42] epoch 10  train loss 0.129 acc 0.945 f1 0.945 | val loss 0.529 acc 0.842 f1 0.840  *
+    [mobilenet_v3_large s42] epoch 11  train loss 0.094 acc 0.959 f1 0.958 | val loss 0.626 acc 0.831 f1 0.823
+    [mobilenet_v3_large s42] epoch 12  train loss 0.096 acc 0.972 f1 0.972 | val loss 0.453 acc 0.876 f1 0.874  *
+    [mobilenet_v3_large s42] epoch 13  train loss 0.065 acc 0.982 f1 0.982 | val loss 0.475 acc 0.853 f1 0.851
+    [mobilenet_v3_large s42] epoch 14  train loss 0.047 acc 0.993 f1 0.993 | val loss 0.452 acc 0.859 f1 0.857
+    [mobilenet_v3_large s42] epoch 15  train loss 0.042 acc 0.988 f1 0.988 | val loss 0.385 acc 0.898 f1 0.898  *
+    [mobilenet_v3_large s42] epoch 16  train loss 0.044 acc 0.986 f1 0.986 | val loss 0.434 acc 0.887 f1 0.887
+    [mobilenet_v3_large s42] epoch 17  train loss 0.037 acc 0.988 f1 0.988 | val loss 0.415 acc 0.876 f1 0.875
+    [mobilenet_v3_large s42] epoch 18  train loss 0.038 acc 0.988 f1 0.988 | val loss 0.427 acc 0.898 f1 0.898
+    [mobilenet_v3_large s42] epoch 19  train loss 0.043 acc 0.990 f1 0.990 | val loss 0.356 acc 0.898 f1 0.898
+    [mobilenet_v3_large s42] epoch 20  train loss 0.054 acc 0.981 f1 0.981 | val loss 0.421 acc 0.887 f1 0.887
+    [mobilenet_v3_large s42] epoch 21  train loss 0.037 acc 0.993 f1 0.993 | val loss 0.387 acc 0.898 f1 0.898
+    [mobilenet_v3_large s42] epoch 22  train loss 0.033 acc 0.990 f1 0.990 | val loss 0.461 acc 0.898 f1 0.897
+    [mobilenet_v3_large s42] epoch 23  train loss 0.024 acc 0.992 f1 0.992 | val loss 0.476 acc 0.887 f1 0.886
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 15, val F1 0.898, test acc 0.863, test F1 0.864, 415s, peak VRAM 795 MiB
+    speed: {'cpu_threads': 8, 'measured_at': '2026-11-04 13:26:32', 'cpu_ms_per_sample': 27.095099999769445, 'cpu_ms_per_sample_batch64': 13.133859895835561, 'gpu_ms_per_sample': 14.241800000036164, 'gpu_ms_per_sample_batch64': 0.8392026041642945}
+  -- MobileNetV3-Large | seed 43
+    [mobilenet_v3_large s43] epoch  1  train loss 0.967 acc 0.552 f1 0.553 | val loss 1.058 acc 0.531 f1 0.447  *
+    [mobilenet_v3_large s43] epoch  2  train loss 0.616 acc 0.770 f1 0.769 | val loss 0.900 acc 0.667 f1 0.637  *
+    [mobilenet_v3_large s43] epoch  3  train loss 0.399 acc 0.852 f1 0.852 | val loss 0.842 acc 0.661 f1 0.629
+    [mobilenet_v3_large s43] epoch  4  train loss 0.273 acc 0.900 f1 0.900 | val loss 1.026 acc 0.616 f1 0.555
+    [mobilenet_v3_large s43] epoch  5  train loss 0.223 acc 0.916 f1 0.916 | val loss 0.803 acc 0.718 f1 0.695  *
+    [mobilenet_v3_large s43] epoch  6  train loss 0.191 acc 0.925 f1 0.925 | val loss 0.796 acc 0.751 f1 0.734  *
+    [mobilenet_v3_large s43] epoch  7  train loss 0.151 acc 0.938 f1 0.938 | val loss 0.741 acc 0.785 f1 0.769  *
+    [mobilenet_v3_large s43] epoch  8  train loss 0.178 acc 0.932 f1 0.932 | val loss 0.642 acc 0.797 f1 0.790  *
+    [mobilenet_v3_large s43] epoch  9  train loss 0.110 acc 0.959 f1 0.959 | val loss 0.742 acc 0.785 f1 0.780
+    [mobilenet_v3_large s43] epoch 10  train loss 0.120 acc 0.946 f1 0.946 | val loss 0.577 acc 0.836 f1 0.831  *
+    [mobilenet_v3_large s43] epoch 11  train loss 0.108 acc 0.956 f1 0.956 | val loss 0.699 acc 0.808 f1 0.804
+    [mobilenet_v3_large s43] epoch 12  train loss 0.071 acc 0.976 f1 0.977 | val loss 0.627 acc 0.802 f1 0.798
+    [mobilenet_v3_large s43] epoch 13  train loss 0.069 acc 0.979 f1 0.979 | val loss 0.485 acc 0.876 f1 0.875  *
+    [mobilenet_v3_large s43] epoch 14  train loss 0.092 acc 0.972 f1 0.972 | val loss 0.543 acc 0.842 f1 0.841
+    [mobilenet_v3_large s43] epoch 15  train loss 0.077 acc 0.985 f1 0.985 | val loss 0.429 acc 0.864 f1 0.865
+    [mobilenet_v3_large s43] epoch 16  train loss 0.082 acc 0.970 f1 0.970 | val loss 0.430 acc 0.864 f1 0.864
+    [mobilenet_v3_large s43] epoch 17  train loss 0.040 acc 0.986 f1 0.986 | val loss 0.517 acc 0.859 f1 0.856
+    [mobilenet_v3_large s43] epoch 18  train loss 0.032 acc 0.989 f1 0.989 | val loss 0.465 acc 0.864 f1 0.864
+    [mobilenet_v3_large s43] epoch 19  train loss 0.040 acc 0.986 f1 0.986 | val loss 0.483 acc 0.853 f1 0.853
+    [mobilenet_v3_large s43] epoch 20  train loss 0.030 acc 0.990 f1 0.990 | val loss 0.499 acc 0.870 f1 0.871
+    [mobilenet_v3_large s43] epoch 21  train loss 0.022 acc 0.993 f1 0.993 | val loss 0.627 acc 0.831 f1 0.830
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 13, val F1 0.875, test acc 0.817, test F1 0.817, 354s, peak VRAM 795 MiB
+  -- MobileNetV3-Large | seed 44
+    [mobilenet_v3_large s44] epoch  1  train loss 0.987 acc 0.559 f1 0.554 | val loss 0.992 acc 0.616 f1 0.568  *
+    [mobilenet_v3_large s44] epoch  2  train loss 0.666 acc 0.754 f1 0.751 | val loss 0.948 acc 0.627 f1 0.583  *
+    [mobilenet_v3_large s44] epoch  3  train loss 0.419 acc 0.835 f1 0.836 | val loss 0.973 acc 0.650 f1 0.614  *
+    [mobilenet_v3_large s44] epoch  4  train loss 0.302 acc 0.873 f1 0.873 | val loss 0.716 acc 0.729 f1 0.717  *
+    [mobilenet_v3_large s44] epoch  5  train loss 0.238 acc 0.914 f1 0.915 | val loss 0.776 acc 0.729 f1 0.712
+    [mobilenet_v3_large s44] epoch  6  train loss 0.180 acc 0.935 f1 0.935 | val loss 0.552 acc 0.808 f1 0.804  *
+    [mobilenet_v3_large s44] epoch  7  train loss 0.149 acc 0.946 f1 0.946 | val loss 0.641 acc 0.825 f1 0.819  *
+    [mobilenet_v3_large s44] epoch  8  train loss 0.189 acc 0.921 f1 0.921 | val loss 0.558 acc 0.836 f1 0.831  *
+    [mobilenet_v3_large s44] epoch  9  train loss 0.164 acc 0.943 f1 0.943 | val loss 0.419 acc 0.847 f1 0.847  *
+    [mobilenet_v3_large s44] epoch 10  train loss 0.089 acc 0.970 f1 0.970 | val loss 0.420 acc 0.859 f1 0.858  *
+    [mobilenet_v3_large s44] epoch 11  train loss 0.088 acc 0.963 f1 0.963 | val loss 0.426 acc 0.847 f1 0.846
+    [mobilenet_v3_large s44] epoch 12  train loss 0.138 acc 0.953 f1 0.953 | val loss 0.589 acc 0.814 f1 0.813
+    [mobilenet_v3_large s44] epoch 13  train loss 0.080 acc 0.967 f1 0.967 | val loss 0.646 acc 0.814 f1 0.809
+    [mobilenet_v3_large s44] epoch 14  train loss 0.070 acc 0.981 f1 0.981 | val loss 0.482 acc 0.853 f1 0.851
+    [mobilenet_v3_large s44] epoch 15  train loss 0.068 acc 0.982 f1 0.982 | val loss 0.424 acc 0.876 f1 0.875  *
+    [mobilenet_v3_large s44] epoch 16  train loss 0.057 acc 0.982 f1 0.982 | val loss 0.448 acc 0.876 f1 0.876  *
+    [mobilenet_v3_large s44] epoch 17  train loss 0.056 acc 0.981 f1 0.981 | val loss 0.468 acc 0.876 f1 0.876
+    [mobilenet_v3_large s44] epoch 18  train loss 0.041 acc 0.989 f1 0.989 | val loss 0.380 acc 0.893 f1 0.893  *
+    [mobilenet_v3_large s44] epoch 19  train loss 0.033 acc 0.989 f1 0.989 | val loss 0.349 acc 0.904 f1 0.904  *
+    [mobilenet_v3_large s44] epoch 20  train loss 0.029 acc 0.986 f1 0.986 | val loss 0.437 acc 0.887 f1 0.887
+    [mobilenet_v3_large s44] epoch 21  train loss 0.025 acc 0.990 f1 0.990 | val loss 0.642 acc 0.842 f1 0.841
+    [mobilenet_v3_large s44] epoch 22  train loss 0.021 acc 0.993 f1 0.993 | val loss 0.578 acc 0.853 f1 0.853
+    [mobilenet_v3_large s44] epoch 23  train loss 0.036 acc 0.985 f1 0.985 | val loss 0.400 acc 0.893 f1 0.892
+    [mobilenet_v3_large s44] epoch 24  train loss 0.028 acc 0.992 f1 0.992 | val loss 0.437 acc 0.870 f1 0.870
+    [mobilenet_v3_large s44] epoch 25  train loss 0.039 acc 0.983 f1 0.983 | val loss 0.461 acc 0.876 f1 0.875
+    [mobilenet_v3_large s44] epoch 26  train loss 0.041 acc 0.988 f1 0.988 | val loss 0.423 acc 0.881 f1 0.881
+    [mobilenet_v3_large s44] epoch 27  train loss 0.015 acc 0.997 f1 0.997 | val loss 0.424 acc 0.859 f1 0.858
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 19, val F1 0.904, test acc 0.873, test F1 0.873, 468s, peak VRAM 795 MiB
+  metrics saved: dl/results/comparison/metrics_cprd.json
+  report written: dl/results/comparison/comparison_cprd.md (+ figures)
+
+=== Variant cprd_unseen_highway ===
+  split: {'train': (726, 17), 'val': (174, 3), 'test': (300, 7)} (samples, groups)
+  -- ResNet18 | seed 42
+    [resnet18 s42] epoch  1  train loss 0.788 acc 0.660 f1 0.658 | val loss 0.798 acc 0.678 f1 0.627  *
+    [resnet18 s42] epoch  2  train loss 0.465 acc 0.817 f1 0.816 | val loss 0.586 acc 0.736 f1 0.715  *
+    [resnet18 s42] epoch  3  train loss 0.357 acc 0.865 f1 0.865 | val loss 0.700 acc 0.736 f1 0.722  *
+    [resnet18 s42] epoch  4  train loss 0.239 acc 0.910 f1 0.911 | val loss 0.571 acc 0.793 f1 0.776  *
+    [resnet18 s42] epoch  5  train loss 0.203 acc 0.931 f1 0.931 | val loss 0.807 acc 0.764 f1 0.749
+    [resnet18 s42] epoch  6  train loss 0.147 acc 0.953 f1 0.954 | val loss 0.810 acc 0.736 f1 0.718
+    [resnet18 s42] epoch  7  train loss 0.104 acc 0.964 f1 0.965 | val loss 0.712 acc 0.764 f1 0.745
+    [resnet18 s42] epoch  8  train loss 0.092 acc 0.970 f1 0.970 | val loss 0.950 acc 0.724 f1 0.715
+    [resnet18 s42] epoch  9  train loss 0.104 acc 0.963 f1 0.963 | val loss 0.859 acc 0.770 f1 0.748
+    [resnet18 s42] epoch 10  train loss 0.084 acc 0.977 f1 0.977 | val loss 0.672 acc 0.793 f1 0.766
+    [resnet18 s42] epoch 11  train loss 0.076 acc 0.971 f1 0.972 | val loss 1.196 acc 0.678 f1 0.675
+    [resnet18 s42] epoch 12  train loss 0.081 acc 0.975 f1 0.976 | val loss 0.624 acc 0.799 f1 0.786  *
+    [resnet18 s42] epoch 13  train loss 0.076 acc 0.975 f1 0.976 | val loss 0.760 acc 0.782 f1 0.761
+    [resnet18 s42] epoch 14  train loss 0.065 acc 0.979 f1 0.979 | val loss 0.948 acc 0.741 f1 0.729
+    [resnet18 s42] epoch 15  train loss 0.071 acc 0.977 f1 0.976 | val loss 0.641 acc 0.776 f1 0.742
+    [resnet18 s42] epoch 16  train loss 0.087 acc 0.977 f1 0.976 | val loss 0.418 acc 0.874 f1 0.856  *
+    [resnet18 s42] epoch 17  train loss 0.068 acc 0.979 f1 0.979 | val loss 1.082 acc 0.724 f1 0.715
+    [resnet18 s42] epoch 18  train loss 0.072 acc 0.978 f1 0.978 | val loss 0.683 acc 0.776 f1 0.755
+    [resnet18 s42] epoch 19  train loss 0.028 acc 0.994 f1 0.995 | val loss 0.633 acc 0.822 f1 0.804
+    [resnet18 s42] epoch 20  train loss 0.039 acc 0.985 f1 0.985 | val loss 0.857 acc 0.793 f1 0.777
+    [resnet18 s42] epoch 21  train loss 0.027 acc 0.992 f1 0.992 | val loss 0.765 acc 0.776 f1 0.760
+    [resnet18 s42] epoch 22  train loss 0.042 acc 0.982 f1 0.983 | val loss 0.887 acc 0.753 f1 0.738
+    [resnet18 s42] epoch 23  train loss 0.033 acc 0.993 f1 0.993 | val loss 0.735 acc 0.805 f1 0.774
+    [resnet18 s42] epoch 24  train loss 0.017 acc 0.996 f1 0.996 | val loss 0.658 acc 0.833 f1 0.818
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 16, val F1 0.856, test acc 0.600, test F1 0.570, 294s, peak VRAM 603 MiB
+    speed: {'cpu_threads': 8, 'measured_at': '2026-11-04 13:45:25', 'cpu_ms_per_sample': 41.51209999963612, 'cpu_ms_per_sample_batch64': 33.708428645833045, 'gpu_ms_per_sample': 6.460150000293652, 'gpu_ms_per_sample_batch64': 0.8902375000019447}
+  -- ResNet18 | seed 43
+    [resnet18 s43] epoch  1  train loss 0.795 acc 0.624 f1 0.617 | val loss 0.638 acc 0.787 f1 0.745  *
+    [resnet18 s43] epoch  2  train loss 0.456 acc 0.833 f1 0.832 | val loss 0.747 acc 0.695 f1 0.676
+    [resnet18 s43] epoch  3  train loss 0.330 acc 0.877 f1 0.878 | val loss 0.595 acc 0.753 f1 0.737
+    [resnet18 s43] epoch  4  train loss 0.264 acc 0.890 f1 0.891 | val loss 0.764 acc 0.736 f1 0.724
+    [resnet18 s43] epoch  5  train loss 0.208 acc 0.923 f1 0.924 | val loss 0.546 acc 0.805 f1 0.788  *
+    [resnet18 s43] epoch  6  train loss 0.169 acc 0.939 f1 0.940 | val loss 0.630 acc 0.764 f1 0.743
+    [resnet18 s43] epoch  7  train loss 0.130 acc 0.961 f1 0.962 | val loss 0.593 acc 0.782 f1 0.761
+    [resnet18 s43] epoch  8  train loss 0.111 acc 0.963 f1 0.964 | val loss 0.675 acc 0.770 f1 0.752
+    [resnet18 s43] epoch  9  train loss 0.150 acc 0.939 f1 0.940 | val loss 0.476 acc 0.828 f1 0.798  *
+    [resnet18 s43] epoch 10  train loss 0.107 acc 0.964 f1 0.965 | val loss 0.906 acc 0.736 f1 0.727
+    [resnet18 s43] epoch 11  train loss 0.077 acc 0.972 f1 0.973 | val loss 0.660 acc 0.770 f1 0.749
+    [resnet18 s43] epoch 12  train loss 0.050 acc 0.986 f1 0.986 | val loss 0.667 acc 0.799 f1 0.782
+    [resnet18 s43] epoch 13  train loss 0.063 acc 0.981 f1 0.981 | val loss 0.774 acc 0.753 f1 0.731
+    [resnet18 s43] epoch 14  train loss 0.073 acc 0.978 f1 0.977 | val loss 0.726 acc 0.787 f1 0.773
+    [resnet18 s43] epoch 15  train loss 0.067 acc 0.974 f1 0.974 | val loss 1.096 acc 0.701 f1 0.699
+    [resnet18 s43] epoch 16  train loss 0.044 acc 0.986 f1 0.986 | val loss 0.786 acc 0.793 f1 0.768
+    [resnet18 s43] epoch 17  train loss 0.091 acc 0.961 f1 0.963 | val loss 0.996 acc 0.730 f1 0.727
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 9, val F1 0.798, test acc 0.800, test F1 0.796, 192s, peak VRAM 603 MiB
+  -- ResNet18 | seed 44
+    [resnet18 s44] epoch  1  train loss 0.770 acc 0.642 f1 0.643 | val loss 0.675 acc 0.724 f1 0.701  *
+    [resnet18 s44] epoch  2  train loss 0.485 acc 0.799 f1 0.800 | val loss 0.758 acc 0.644 f1 0.615
+    [resnet18 s44] epoch  3  train loss 0.309 acc 0.897 f1 0.898 | val loss 0.620 acc 0.718 f1 0.697
+    [resnet18 s44] epoch  4  train loss 0.247 acc 0.912 f1 0.913 | val loss 0.489 acc 0.816 f1 0.801  *
+    [resnet18 s44] epoch  5  train loss 0.210 acc 0.916 f1 0.916 | val loss 0.602 acc 0.793 f1 0.763
+    [resnet18 s44] epoch  6  train loss 0.162 acc 0.948 f1 0.948 | val loss 0.594 acc 0.770 f1 0.741
+    [resnet18 s44] epoch  7  train loss 0.130 acc 0.953 f1 0.953 | val loss 0.658 acc 0.810 f1 0.791
+    [resnet18 s44] epoch  8  train loss 0.095 acc 0.972 f1 0.973 | val loss 0.490 acc 0.828 f1 0.810  *
+    [resnet18 s44] epoch  9  train loss 0.112 acc 0.960 f1 0.961 | val loss 0.638 acc 0.805 f1 0.776
+    [resnet18 s44] epoch 10  train loss 0.080 acc 0.975 f1 0.975 | val loss 0.504 acc 0.805 f1 0.776
+    [resnet18 s44] epoch 11  train loss 0.068 acc 0.978 f1 0.978 | val loss 0.667 acc 0.810 f1 0.778
+    [resnet18 s44] epoch 12  train loss 0.085 acc 0.968 f1 0.968 | val loss 0.749 acc 0.799 f1 0.781
+    [resnet18 s44] epoch 13  train loss 0.064 acc 0.979 f1 0.980 | val loss 0.734 acc 0.822 f1 0.812  *
+    [resnet18 s44] epoch 14  train loss 0.090 acc 0.968 f1 0.969 | val loss 0.920 acc 0.770 f1 0.757
+    [resnet18 s44] epoch 15  train loss 0.045 acc 0.982 f1 0.982 | val loss 0.646 acc 0.787 f1 0.761
+    [resnet18 s44] epoch 16  train loss 0.063 acc 0.977 f1 0.978 | val loss 1.020 acc 0.707 f1 0.695
+    [resnet18 s44] epoch 17  train loss 0.055 acc 0.978 f1 0.978 | val loss 0.593 acc 0.833 f1 0.809
+    [resnet18 s44] epoch 18  train loss 0.050 acc 0.981 f1 0.981 | val loss 0.663 acc 0.810 f1 0.799
+    [resnet18 s44] epoch 19  train loss 0.043 acc 0.989 f1 0.989 | val loss 0.486 acc 0.851 f1 0.831  *
+    [resnet18 s44] epoch 20  train loss 0.030 acc 0.992 f1 0.992 | val loss 0.804 acc 0.782 f1 0.771
+    [resnet18 s44] epoch 21  train loss 0.026 acc 0.997 f1 0.997 | val loss 0.523 acc 0.839 f1 0.821
+    [resnet18 s44] epoch 22  train loss 0.045 acc 0.989 f1 0.989 | val loss 0.814 acc 0.810 f1 0.802
+    [resnet18 s44] epoch 23  train loss 0.022 acc 0.993 f1 0.993 | val loss 0.967 acc 0.730 f1 0.720
+    [resnet18 s44] epoch 24  train loss 0.041 acc 0.988 f1 0.987 | val loss 1.189 acc 0.701 f1 0.695
+    [resnet18 s44] epoch 25  train loss 0.026 acc 0.994 f1 0.995 | val loss 1.493 acc 0.638 f1 0.636
+    [resnet18 s44] epoch 26  train loss 0.021 acc 0.993 f1 0.994 | val loss 1.155 acc 0.753 f1 0.748
+    [resnet18 s44] epoch 27  train loss 0.027 acc 0.990 f1 0.991 | val loss 0.828 acc 0.787 f1 0.765
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 19, val F1 0.831, test acc 0.813, test F1 0.809, 314s, peak VRAM 603 MiB
+  -- EfficientNet-B0 | seed 42
+    [efficientnet_b0 s42] epoch  1  train loss 1.008 acc 0.510 f1 0.508 | val loss 0.942 acc 0.569 f1 0.539  *
+    [efficientnet_b0 s42] epoch  2  train loss 0.754 acc 0.733 f1 0.733 | val loss 0.760 acc 0.684 f1 0.639  *
+    [efficientnet_b0 s42] epoch  3  train loss 0.581 acc 0.804 f1 0.804 | val loss 0.569 acc 0.810 f1 0.773  *
+    [efficientnet_b0 s42] epoch  4  train loss 0.432 acc 0.833 f1 0.833 | val loss 0.521 acc 0.799 f1 0.765
+    [efficientnet_b0 s42] epoch  5  train loss 0.351 acc 0.868 f1 0.869 | val loss 0.488 acc 0.810 f1 0.783  *
+    [efficientnet_b0 s42] epoch  6  train loss 0.300 acc 0.901 f1 0.901 | val loss 0.502 acc 0.845 f1 0.818  *
+    [efficientnet_b0 s42] epoch  7  train loss 0.248 acc 0.909 f1 0.910 | val loss 0.513 acc 0.839 f1 0.809
+    [efficientnet_b0 s42] epoch  8  train loss 0.215 acc 0.924 f1 0.925 | val loss 0.514 acc 0.828 f1 0.810
+    [efficientnet_b0 s42] epoch  9  train loss 0.197 acc 0.928 f1 0.929 | val loss 0.555 acc 0.816 f1 0.786
+    [efficientnet_b0 s42] epoch 10  train loss 0.161 acc 0.942 f1 0.941 | val loss 0.536 acc 0.839 f1 0.813
+    [efficientnet_b0 s42] epoch 11  train loss 0.127 acc 0.963 f1 0.963 | val loss 0.593 acc 0.822 f1 0.792
+    [efficientnet_b0 s42] epoch 12  train loss 0.114 acc 0.967 f1 0.968 | val loss 0.533 acc 0.816 f1 0.789
+    [efficientnet_b0 s42] epoch 13  train loss 0.113 acc 0.960 f1 0.960 | val loss 0.560 acc 0.816 f1 0.789
+    [efficientnet_b0 s42] epoch 14  train loss 0.102 acc 0.966 f1 0.966 | val loss 0.617 acc 0.822 f1 0.800
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 6, val F1 0.818, test acc 0.797, test F1 0.789, 416s, peak VRAM 1473 MiB
+    speed: {'cpu_threads': 8, 'measured_at': '2026-11-04 14:01:00', 'cpu_ms_per_sample': 18.552700000327604, 'cpu_ms_per_sample_batch64': 13.692924479168292, 'gpu_ms_per_sample': 7.117599999219237, 'gpu_ms_per_sample_batch64': 1.358458854165671}
+  -- EfficientNet-B0 | seed 43
+    [efficientnet_b0 s43] epoch  1  train loss 0.992 acc 0.551 f1 0.548 | val loss 0.876 acc 0.661 f1 0.627  *
+    [efficientnet_b0 s43] epoch  2  train loss 0.736 acc 0.723 f1 0.723 | val loss 0.639 acc 0.770 f1 0.723  *
+    [efficientnet_b0 s43] epoch  3  train loss 0.535 acc 0.802 f1 0.800 | val loss 0.590 acc 0.782 f1 0.754  *
+    [efficientnet_b0 s43] epoch  4  train loss 0.428 acc 0.842 f1 0.842 | val loss 0.545 acc 0.787 f1 0.759  *
+    [efficientnet_b0 s43] epoch  5  train loss 0.348 acc 0.880 f1 0.881 | val loss 0.491 acc 0.816 f1 0.786  *
+    [efficientnet_b0 s43] epoch  6  train loss 0.280 acc 0.899 f1 0.899 | val loss 0.472 acc 0.816 f1 0.778
+    [efficientnet_b0 s43] epoch  7  train loss 0.243 acc 0.894 f1 0.893 | val loss 0.499 acc 0.810 f1 0.777
+    [efficientnet_b0 s43] epoch  8  train loss 0.202 acc 0.937 f1 0.937 | val loss 0.489 acc 0.822 f1 0.787  *
+    [efficientnet_b0 s43] epoch  9  train loss 0.196 acc 0.934 f1 0.935 | val loss 0.562 acc 0.793 f1 0.761
+    [efficientnet_b0 s43] epoch 10  train loss 0.145 acc 0.953 f1 0.954 | val loss 0.572 acc 0.799 f1 0.759
+    [efficientnet_b0 s43] epoch 11  train loss 0.121 acc 0.966 f1 0.966 | val loss 0.579 acc 0.805 f1 0.771
+    [efficientnet_b0 s43] epoch 12  train loss 0.109 acc 0.968 f1 0.968 | val loss 0.603 acc 0.816 f1 0.782
+    [efficientnet_b0 s43] epoch 13  train loss 0.109 acc 0.967 f1 0.968 | val loss 0.578 acc 0.822 f1 0.785
+    [efficientnet_b0 s43] epoch 14  train loss 0.103 acc 0.955 f1 0.955 | val loss 0.652 acc 0.816 f1 0.777
+    [efficientnet_b0 s43] epoch 15  train loss 0.083 acc 0.977 f1 0.976 | val loss 0.631 acc 0.816 f1 0.779
+    [efficientnet_b0 s43] epoch 16  train loss 0.065 acc 0.979 f1 0.980 | val loss 0.643 acc 0.816 f1 0.779
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 8, val F1 0.787, test acc 0.843, test F1 0.841, 476s, peak VRAM 1473 MiB
+  -- EfficientNet-B0 | seed 44
+    [efficientnet_b0 s44] epoch  1  train loss 0.968 acc 0.591 f1 0.590 | val loss 0.845 acc 0.684 f1 0.637  *
+    [efficientnet_b0 s44] epoch  2  train loss 0.730 acc 0.740 f1 0.740 | val loss 0.644 acc 0.770 f1 0.732  *
+    [efficientnet_b0 s44] epoch  3  train loss 0.520 acc 0.832 f1 0.832 | val loss 0.540 acc 0.787 f1 0.760  *
+    [efficientnet_b0 s44] epoch  4  train loss 0.427 acc 0.837 f1 0.837 | val loss 0.503 acc 0.799 f1 0.775  *
+    [efficientnet_b0 s44] epoch  5  train loss 0.357 acc 0.866 f1 0.866 | val loss 0.464 acc 0.828 f1 0.805  *
+    [efficientnet_b0 s44] epoch  6  train loss 0.286 acc 0.894 f1 0.894 | val loss 0.446 acc 0.833 f1 0.808  *
+    [efficientnet_b0 s44] epoch  7  train loss 0.244 acc 0.913 f1 0.914 | val loss 0.447 acc 0.816 f1 0.792
+    [efficientnet_b0 s44] epoch  8  train loss 0.195 acc 0.937 f1 0.936 | val loss 0.488 acc 0.816 f1 0.791
+    [efficientnet_b0 s44] epoch  9  train loss 0.178 acc 0.939 f1 0.939 | val loss 0.447 acc 0.828 f1 0.806
+    [efficientnet_b0 s44] epoch 10  train loss 0.143 acc 0.956 f1 0.956 | val loss 0.447 acc 0.845 f1 0.819  *
+    [efficientnet_b0 s44] epoch 11  train loss 0.131 acc 0.955 f1 0.956 | val loss 0.441 acc 0.839 f1 0.814
+    [efficientnet_b0 s44] epoch 12  train loss 0.148 acc 0.955 f1 0.954 | val loss 0.481 acc 0.828 f1 0.803
+    [efficientnet_b0 s44] epoch 13  train loss 0.112 acc 0.967 f1 0.968 | val loss 0.518 acc 0.833 f1 0.809
+    [efficientnet_b0 s44] epoch 14  train loss 0.121 acc 0.956 f1 0.957 | val loss 0.477 acc 0.856 f1 0.832  *
+    [efficientnet_b0 s44] epoch 15  train loss 0.062 acc 0.979 f1 0.980 | val loss 0.513 acc 0.839 f1 0.814
+    [efficientnet_b0 s44] epoch 16  train loss 0.069 acc 0.974 f1 0.974 | val loss 0.562 acc 0.845 f1 0.825
+    [efficientnet_b0 s44] epoch 17  train loss 0.056 acc 0.988 f1 0.988 | val loss 0.587 acc 0.833 f1 0.806
+    [efficientnet_b0 s44] epoch 18  train loss 0.062 acc 0.979 f1 0.979 | val loss 0.570 acc 0.845 f1 0.820
+    [efficientnet_b0 s44] epoch 19  train loss 0.049 acc 0.986 f1 0.987 | val loss 0.590 acc 0.839 f1 0.810
+    [efficientnet_b0 s44] epoch 20  train loss 0.049 acc 0.985 f1 0.985 | val loss 0.604 acc 0.833 f1 0.807
+    [efficientnet_b0 s44] epoch 21  train loss 0.037 acc 0.994 f1 0.994 | val loss 0.513 acc 0.845 f1 0.818
+    [efficientnet_b0 s44] epoch 22  train loss 0.061 acc 0.981 f1 0.981 | val loss 0.576 acc 0.851 f1 0.827
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 14, val F1 0.832, test acc 0.820, test F1 0.817, 632s, peak VRAM 1473 MiB
+  -- MobileNetV3-Large | seed 42
+    [mobilenet_v3_large s42] epoch  1  train loss 0.959 acc 0.563 f1 0.562 | val loss 1.159 acc 0.322 f1 0.326  *
+    [mobilenet_v3_large s42] epoch  2  train loss 0.612 acc 0.785 f1 0.784 | val loss 1.167 acc 0.471 f1 0.475  *
+    [mobilenet_v3_large s42] epoch  3  train loss 0.410 acc 0.857 f1 0.857 | val loss 1.211 acc 0.506 f1 0.509  *
+    [mobilenet_v3_large s42] epoch  4  train loss 0.291 acc 0.879 f1 0.878 | val loss 1.292 acc 0.563 f1 0.579  *
+    [mobilenet_v3_large s42] epoch  5  train loss 0.243 acc 0.909 f1 0.910 | val loss 1.253 acc 0.609 f1 0.623  *
+    [mobilenet_v3_large s42] epoch  6  train loss 0.219 acc 0.921 f1 0.921 | val loss 0.970 acc 0.667 f1 0.675  *
+    [mobilenet_v3_large s42] epoch  7  train loss 0.172 acc 0.935 f1 0.936 | val loss 0.889 acc 0.724 f1 0.722  *
+    [mobilenet_v3_large s42] epoch  8  train loss 0.142 acc 0.945 f1 0.945 | val loss 0.580 acc 0.833 f1 0.818  *
+    [mobilenet_v3_large s42] epoch  9  train loss 0.118 acc 0.956 f1 0.957 | val loss 0.726 acc 0.787 f1 0.769
+    [mobilenet_v3_large s42] epoch 10  train loss 0.091 acc 0.970 f1 0.970 | val loss 0.604 acc 0.845 f1 0.829  *
+    [mobilenet_v3_large s42] epoch 11  train loss 0.107 acc 0.961 f1 0.962 | val loss 0.758 acc 0.810 f1 0.800
+    [mobilenet_v3_large s42] epoch 12  train loss 0.080 acc 0.972 f1 0.974 | val loss 0.774 acc 0.759 f1 0.749
+    [mobilenet_v3_large s42] epoch 13  train loss 0.078 acc 0.971 f1 0.971 | val loss 0.704 acc 0.810 f1 0.803
+    [mobilenet_v3_large s42] epoch 14  train loss 0.060 acc 0.979 f1 0.979 | val loss 0.610 acc 0.851 f1 0.832  *
+    [mobilenet_v3_large s42] epoch 15  train loss 0.037 acc 0.989 f1 0.989 | val loss 0.755 acc 0.833 f1 0.815
+    [mobilenet_v3_large s42] epoch 16  train loss 0.053 acc 0.981 f1 0.982 | val loss 0.871 acc 0.816 f1 0.794
+    [mobilenet_v3_large s42] epoch 17  train loss 0.051 acc 0.986 f1 0.986 | val loss 0.895 acc 0.856 f1 0.837  *
+    [mobilenet_v3_large s42] epoch 18  train loss 0.063 acc 0.977 f1 0.976 | val loss 1.198 acc 0.799 f1 0.788
+    [mobilenet_v3_large s42] epoch 19  train loss 0.024 acc 0.992 f1 0.992 | val loss 1.103 acc 0.816 f1 0.800
+    [mobilenet_v3_large s42] epoch 20  train loss 0.046 acc 0.988 f1 0.988 | val loss 0.691 acc 0.862 f1 0.842  *
+    [mobilenet_v3_large s42] epoch 21  train loss 0.026 acc 0.992 f1 0.992 | val loss 0.690 acc 0.874 f1 0.859  *
+    [mobilenet_v3_large s42] epoch 22  train loss 0.037 acc 0.986 f1 0.987 | val loss 0.822 acc 0.839 f1 0.821
+    [mobilenet_v3_large s42] epoch 23  train loss 0.027 acc 0.990 f1 0.991 | val loss 0.800 acc 0.851 f1 0.833
+    [mobilenet_v3_large s42] epoch 24  train loss 0.016 acc 0.997 f1 0.997 | val loss 0.800 acc 0.845 f1 0.826
+    [mobilenet_v3_large s42] epoch 25  train loss 0.023 acc 0.992 f1 0.992 | val loss 0.740 acc 0.868 f1 0.849
+    [mobilenet_v3_large s42] epoch 26  train loss 0.017 acc 0.994 f1 0.995 | val loss 0.783 acc 0.862 f1 0.841
+    [mobilenet_v3_large s42] epoch 27  train loss 0.020 acc 0.993 f1 0.993 | val loss 1.118 acc 0.787 f1 0.779
+    [mobilenet_v3_large s42] epoch 28  train loss 0.033 acc 0.983 f1 0.984 | val loss 1.135 acc 0.770 f1 0.753
+    [mobilenet_v3_large s42] epoch 29  train loss 0.038 acc 0.990 f1 0.991 | val loss 0.783 acc 0.816 f1 0.796
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 21, val F1 0.859, test acc 0.800, test F1 0.799, 528s, peak VRAM 795 MiB
+    speed: {'cpu_threads': 8, 'measured_at': '2026-11-04 14:28:24', 'cpu_ms_per_sample': 27.05624999907741, 'cpu_ms_per_sample_batch64': 13.026682291666702, 'gpu_ms_per_sample': 15.57674999912706, 'gpu_ms_per_sample_batch64': 0.8866093750062495}
+  -- MobileNetV3-Large | seed 43
+    [mobilenet_v3_large s43] epoch  1  train loss 0.965 acc 0.566 f1 0.563 | val loss 1.109 acc 0.408 f1 0.407  *
+    [mobilenet_v3_large s43] epoch  2  train loss 0.623 acc 0.775 f1 0.775 | val loss 1.319 acc 0.374 f1 0.354
+    [mobilenet_v3_large s43] epoch  3  train loss 0.414 acc 0.835 f1 0.834 | val loss 1.383 acc 0.489 f1 0.493  *
+    [mobilenet_v3_large s43] epoch  4  train loss 0.320 acc 0.882 f1 0.881 | val loss 1.174 acc 0.540 f1 0.556  *
+    [mobilenet_v3_large s43] epoch  5  train loss 0.256 acc 0.901 f1 0.901 | val loss 0.962 acc 0.603 f1 0.623  *
+    [mobilenet_v3_large s43] epoch  6  train loss 0.200 acc 0.927 f1 0.927 | val loss 0.729 acc 0.730 f1 0.725  *
+    [mobilenet_v3_large s43] epoch  7  train loss 0.182 acc 0.930 f1 0.930 | val loss 0.744 acc 0.753 f1 0.755  *
+    [mobilenet_v3_large s43] epoch  8  train loss 0.142 acc 0.952 f1 0.953 | val loss 0.881 acc 0.741 f1 0.743
+    [mobilenet_v3_large s43] epoch  9  train loss 0.168 acc 0.930 f1 0.930 | val loss 0.635 acc 0.776 f1 0.765  *
+    [mobilenet_v3_large s43] epoch 10  train loss 0.093 acc 0.970 f1 0.970 | val loss 0.533 acc 0.822 f1 0.805  *
+    [mobilenet_v3_large s43] epoch 11  train loss 0.082 acc 0.977 f1 0.977 | val loss 0.617 acc 0.822 f1 0.807  *
+    [mobilenet_v3_large s43] epoch 12  train loss 0.090 acc 0.964 f1 0.964 | val loss 0.570 acc 0.862 f1 0.844  *
+    [mobilenet_v3_large s43] epoch 13  train loss 0.068 acc 0.977 f1 0.977 | val loss 0.539 acc 0.862 f1 0.842
+    [mobilenet_v3_large s43] epoch 14  train loss 0.055 acc 0.985 f1 0.985 | val loss 0.508 acc 0.879 f1 0.863  *
+    [mobilenet_v3_large s43] epoch 15  train loss 0.066 acc 0.975 f1 0.975 | val loss 0.546 acc 0.862 f1 0.845
+    [mobilenet_v3_large s43] epoch 16  train loss 0.046 acc 0.985 f1 0.985 | val loss 0.497 acc 0.879 f1 0.863  *
+    [mobilenet_v3_large s43] epoch 17  train loss 0.059 acc 0.981 f1 0.981 | val loss 0.481 acc 0.902 f1 0.886  *
+    [mobilenet_v3_large s43] epoch 18  train loss 0.048 acc 0.981 f1 0.981 | val loss 0.496 acc 0.885 f1 0.874
+    [mobilenet_v3_large s43] epoch 19  train loss 0.047 acc 0.988 f1 0.988 | val loss 0.690 acc 0.856 f1 0.833
+    [mobilenet_v3_large s43] epoch 20  train loss 0.036 acc 0.988 f1 0.987 | val loss 0.909 acc 0.828 f1 0.812
+    [mobilenet_v3_large s43] epoch 21  train loss 0.056 acc 0.985 f1 0.985 | val loss 0.891 acc 0.822 f1 0.811
+    [mobilenet_v3_large s43] epoch 22  train loss 0.031 acc 0.989 f1 0.989 | val loss 0.926 acc 0.805 f1 0.786
+    [mobilenet_v3_large s43] epoch 23  train loss 0.030 acc 0.986 f1 0.986 | val loss 0.812 acc 0.833 f1 0.819
+    [mobilenet_v3_large s43] epoch 24  train loss 0.052 acc 0.988 f1 0.988 | val loss 0.690 acc 0.868 f1 0.848
+    [mobilenet_v3_large s43] epoch 25  train loss 0.028 acc 0.992 f1 0.992 | val loss 0.624 acc 0.868 f1 0.853
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 17, val F1 0.886, test acc 0.790, test F1 0.789, 435s, peak VRAM 795 MiB
+  -- MobileNetV3-Large | seed 44
+    [mobilenet_v3_large s44] epoch  1  train loss 0.953 acc 0.587 f1 0.583 | val loss 1.075 acc 0.414 f1 0.396  *
+    [mobilenet_v3_large s44] epoch  2  train loss 0.633 acc 0.764 f1 0.763 | val loss 1.147 acc 0.431 f1 0.425  *
+    [mobilenet_v3_large s44] epoch  3  train loss 0.422 acc 0.839 f1 0.838 | val loss 1.139 acc 0.517 f1 0.528  *
+    [mobilenet_v3_large s44] epoch  4  train loss 0.306 acc 0.887 f1 0.887 | val loss 1.018 acc 0.557 f1 0.567  *
+    [mobilenet_v3_large s44] epoch  5  train loss 0.261 acc 0.897 f1 0.898 | val loss 1.015 acc 0.586 f1 0.601  *
+    [mobilenet_v3_large s44] epoch  6  train loss 0.206 acc 0.927 f1 0.928 | val loss 1.044 acc 0.621 f1 0.628  *
+    [mobilenet_v3_large s44] epoch  7  train loss 0.207 acc 0.928 f1 0.929 | val loss 0.930 acc 0.678 f1 0.673  *
+    [mobilenet_v3_large s44] epoch  8  train loss 0.134 acc 0.950 f1 0.951 | val loss 0.830 acc 0.730 f1 0.722  *
+    [mobilenet_v3_large s44] epoch  9  train loss 0.131 acc 0.950 f1 0.951 | val loss 0.673 acc 0.822 f1 0.804  *
+    [mobilenet_v3_large s44] epoch 10  train loss 0.107 acc 0.966 f1 0.966 | val loss 0.624 acc 0.828 f1 0.811  *
+    [mobilenet_v3_large s44] epoch 11  train loss 0.090 acc 0.963 f1 0.964 | val loss 0.646 acc 0.828 f1 0.811  *
+    [mobilenet_v3_large s44] epoch 12  train loss 0.126 acc 0.948 f1 0.947 | val loss 0.578 acc 0.862 f1 0.840  *
+    [mobilenet_v3_large s44] epoch 13  train loss 0.084 acc 0.978 f1 0.977 | val loss 0.580 acc 0.851 f1 0.826
+    [mobilenet_v3_large s44] epoch 14  train loss 0.088 acc 0.967 f1 0.968 | val loss 0.599 acc 0.839 f1 0.812
+    [mobilenet_v3_large s44] epoch 15  train loss 0.040 acc 0.992 f1 0.992 | val loss 0.614 acc 0.851 f1 0.828
+    [mobilenet_v3_large s44] epoch 16  train loss 0.042 acc 0.990 f1 0.991 | val loss 0.672 acc 0.851 f1 0.831
+    [mobilenet_v3_large s44] epoch 17  train loss 0.046 acc 0.988 f1 0.988 | val loss 0.689 acc 0.851 f1 0.826
+    [mobilenet_v3_large s44] epoch 18  train loss 0.052 acc 0.982 f1 0.982 | val loss 0.665 acc 0.851 f1 0.827
+    [mobilenet_v3_large s44] epoch 19  train loss 0.043 acc 0.985 f1 0.985 | val loss 0.664 acc 0.851 f1 0.828
+    [mobilenet_v3_large s44] epoch 20  train loss 0.032 acc 0.992 f1 0.992 | val loss 0.737 acc 0.862 f1 0.837
+    early stop: no val macro-F1 gain for 8 epochs
+    -> best epoch 12, val F1 0.840, test acc 0.850, test F1 0.848, 346s, peak VRAM 795 MiB
+  metrics saved: dl/results/comparison/metrics_cprd_unseen_highway.json
+  report written: dl/results/comparison/comparison_cprd_unseen_highway.md (+ figures)
+exit 0

@@ -1,4 +1,5 @@
 
+import os
 from io import BytesIO
 from pathlib import Path
 
@@ -12,7 +13,9 @@ from torchvision import models, transforms
 
 # Paths
 ROOT = Path(__file__).resolve().parents[1]
-MODEL_PATH = ROOT / "models" / "best_model.pth"
+# Optional override, e.g. DL_MODEL_PATH=dl/models/comparison/resnet18_cprd.pth
+# (must be a ResNet18 checkpoint in the train.py format). Default is unchanged.
+MODEL_PATH = Path(os.environ.get("DL_MODEL_PATH", ROOT / "models" / "best_model.pth"))
 
 # Configuration
 MAX_FILE_SIZE = 10 * 1024 * 1024
