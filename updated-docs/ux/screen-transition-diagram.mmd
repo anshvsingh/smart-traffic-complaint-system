@@ -1,0 +1,36 @@
+---
+title: "TrafficCare - Screen Transition Diagram (between screens)"
+---
+flowchart LR
+    start(((Open app))) --> saved{Saved session<br/>in browser?}
+    saved -- "no" --> S1
+    saved -- "yes, citizen" --> S3
+    saved -- "yes, admin" --> S4
+
+    S1["<b>S1 · Login</b>"]
+    S2["<b>S2 · Register</b>"]
+    S3["<b>S3 · Citizen Dashboard</b>"]
+    S4["<b>S4 · Admin Dashboard</b>"]
+
+    S1 -- "Register tab /<br/>Register here" --> S2
+    S2 -- "Login tab / Sign in" --> S1
+    S2 -- "Create account ✓<br/>'Registration successful'" --> S1
+    S2 -. "invalid input /<br/>email taken" .-> S2
+
+    S1 -- "Sign in" --> creds{Credentials<br/>valid?}
+    creds -. "no: 'Invalid email<br/>or password'" .-> S1
+    creds -- "yes" --> role{Role?}
+    role -- "citizen" --> S3
+    role -- "admin" --> S4
+
+    S3 -- "Log out" --> S1
+    S4 -- "Log out" --> S1
+    S3 -. "session expired<br/>(HTTP 401)" .-> S1
+    S4 -. "session expired<br/>(HTTP 401)" .-> S1
+
+    classDef screen fill:#f3f0ff,stroke:#7b2cff,stroke-width:1.5px,color:#121116,font-size:15px;
+    classDef decision fill:#ffffff,stroke:#8a7dff,color:#121116;
+    classDef terminal fill:#121116,stroke:#121116,color:#ffffff;
+    class S1,S2,S3,S4 screen;
+    class saved,creds,role decision;
+    class start terminal;

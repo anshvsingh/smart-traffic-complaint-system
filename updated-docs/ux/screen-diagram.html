@@ -1,0 +1,78 @@
+<!doctype html>
+<!-- Source for screen-diagram.png: the four TrafficCare screens (real
+     screenshots from ./screens) and the transitions between them.
+     Re-render with headless Chrome at 1900x1260. -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>TrafficCare screen diagram</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" />
+<style>
+  :root { --ink:#121116; --muted:#77737f; --violet:#7b2cff; --lav:#8a7dff; --paper:#fbfaf8; }
+  * { box-sizing: border-box; }
+  body { margin:0; width:1900px; height:1260px; background:var(--paper); font-family:Inter, system-ui, sans-serif; color:var(--ink); position:relative; overflow:hidden; }
+  h1 { position:absolute; left:80px; top:34px; margin:0; font:400 52px/1 "Instrument Serif", serif; letter-spacing:-0.02em; }
+  h1 em { font-style:italic; }
+  .sub { position:absolute; left:82px; top:96px; font-size:15px; color:var(--muted); }
+  .card { position:absolute; width:560px; background:#fff; border:1px solid rgba(18,17,22,.12); border-radius:18px; overflow:hidden; box-shadow:0 24px 60px -30px rgba(40,20,90,.35); }
+  .card img { display:block; width:560px; height:350px; object-fit:cover; object-position:top; border-bottom:1px solid rgba(18,17,22,.08); }
+  .cap { padding:14px 18px 16px; }
+  .cap b { display:block; font:400 28px/1.05 "Instrument Serif", serif; letter-spacing:-0.01em; }
+  .cap span { font-size:13px; color:var(--muted); }
+  .id { display:inline-block; margin-right:8px; padding:2px 8px; border-radius:999px; background:#f3f0ff; color:var(--violet); font:600 12px Inter, sans-serif; vertical-align:middle; }
+  svg { position:absolute; inset:0; }
+  .lbl { font:500 14px Inter, sans-serif; fill:var(--ink); }
+  .lbl.m { fill:var(--muted); font-weight:400; }
+  .start { position:absolute; left:812px; top:150px; width:276px; padding:12px 16px; border-radius:999px; background:var(--ink); color:#fff; text-align:center; font-size:14px; }
+</style>
+</head>
+<body>
+  <h1>TrafficCare · <em>screen diagram</em></h1>
+  <div class="sub">Four screens. Arrows are the user actions (and system events) that move between them. Dashed = automatic / error path.</div>
+
+  <div class="start">Open app → saved session? → straight to the dashboard for that role</div>
+
+  <div class="card" style="left:80px; top:220px">
+    <img src="screens/S1-login.png" alt="" />
+    <div class="cap"><b><span class="id">S1</span>Login</b><span>Email + password · role-based redirect · error alert on bad credentials</span></div>
+  </div>
+  <div class="card" style="left:1260px; top:220px">
+    <img src="screens/S2-register.png" alt="" />
+    <div class="cap"><b><span class="id">S2</span>Register</b><span>Name, email, password (8+ chars) · every new account is a citizen</span></div>
+  </div>
+  <div class="card" style="left:80px; top:790px">
+    <img src="screens/S3-citizen-dashboard.png" alt="" style="height:300px" />
+    <div class="cap"><b><span class="id">S3</span>Citizen dashboard</b><span>Stats · submit complaint + photo (AI analysis) · track own complaints</span></div>
+  </div>
+  <div class="card" style="left:1260px; top:790px">
+    <img src="screens/S4-admin-dashboard.png" alt="" style="height:300px" />
+    <div class="cap"><b><span class="id">S4</span>Admin dashboard</b><span>All complaints · filter by status · set status &amp; priority</span></div>
+  </div>
+
+  <svg width="1900" height="1260" viewBox="0 0 1900 1260">
+    <defs>
+      <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#121116"/></marker>
+      <marker id="v" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7b2cff"/></marker>
+    </defs>
+    <g fill="none" stroke-width="2">
+      <!-- S1 <-> S2 -->
+      <path d="M650 330 C 900 290, 1010 290, 1250 330" stroke="#121116" marker-end="url(#a)"/>
+      <path d="M1250 420 C 1010 470, 900 470, 650 420" stroke="#121116" marker-end="url(#a)"/>
+      <!-- S1 -> S3, S1 -> S4 (violet: sign in) -->
+      <path d="M300 640 L300 780" stroke="#7b2cff" marker-end="url(#v)"/>
+      <path d="M650 560 C 950 600, 1100 700, 1300 780" stroke="#7b2cff" marker-end="url(#v)"/>
+      <!-- S3 -> S1, S4 -> S1 (log out / 401) -->
+      <path d="M440 780 L440 640" stroke="#121116" stroke-dasharray="7 6" marker-end="url(#a)"/>
+      <path d="M1250 860 C 1000 820, 800 700, 650 620" stroke="#121116" stroke-dasharray="7 6" marker-end="url(#a)"/>
+    </g>
+    <text class="lbl" x="950" y="282" text-anchor="middle">Register tab / “Register here”</text>
+    <text class="lbl" x="950" y="492" text-anchor="middle">Login tab / “Sign in” · account created ✓</text>
+    <text class="lbl" x="290" y="705" text-anchor="end" style="fill:#7b2cff">Sign in · citizen</text>
+    <text class="lbl" x="452" y="700">Log out</text>
+    <text class="lbl m" x="452" y="720">or session expired (401)</text>
+    <text class="lbl" x="1080" y="640" style="fill:#7b2cff">Sign in · admin</text>
+    <text class="lbl" x="860" y="800">Log out</text>
+    <text class="lbl m" x="860" y="820">or session expired (401)</text>
+  </svg>
+</body>
+</html>
