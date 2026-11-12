@@ -20,7 +20,12 @@ app.use(express.json());
 // Serve uploaded complaint images
 app.use(
   "/uploads",
-  express.static(path.join(__dirname, "uploads"))
+  express.static(path.join(__dirname, "uploads"), {
+    setHeaders: (res) => {
+      // Stop browsers from sniffing an upload into HTML/script.
+      res.setHeader("X-Content-Type-Options", "nosniff");
+    },
+  })
 );
 
 app.use("/api/auth", authRoutes);
@@ -44,6 +49,24 @@ app.use((req, res) => {
   res.status(404).json({
     status: "error",
     message: "Route not found",
+  });
+});
+
+// Final error handler: always answer in JSON and never leak stack traces.
+// eslint-disable-next-line no-unused-vars
+app.use((error, req, res, next) => {
+  if (error.type === "entity.parse.failed") {
+    return res.status(400).json({
+      status: "error",
+      message: "Malformed JSON in request body",
+    });
+  }
+
+  console.error("Unhandled error:", error.message);
+
+  return res.status(error.status || 500).json({
+    status: "error",
+    message: "Something went wrong",
   });
 });
 

@@ -22,7 +22,10 @@ const storage = multer.diskStorage({
   },
 
   filename: (req, file, cb) => {
-    const extension = path.extname(file.originalname).toLowerCase();
+    // Derive the extension from the validated MIME type, never from the
+    // client-supplied filename, so an upload can't be saved (and served)
+    // as .html, .svg, etc.
+    const extension = file.mimetype === "image/png" ? ".png" : ".jpg";
     cb(null, `${crypto.randomUUID()}${extension}`);
   },
 });
@@ -172,9 +175,22 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
       complaint,
     });
   } catch (error) {
-    console.error("Create complaint error:", error.message);
-
     await removeUploadedFile(req.file);
+
+    if (error instanceof mongoose.Error.ValidationError) {
+      return res.status(400).json({
+        status: "error",
+        message: Object.values(error.errors)
+          .map((item) =>
+            item.kind === "maxlength"
+              ? `${item.path} must be ${item.properties.maxlength} characters or fewer`
+              : `${item.path} is invalid`
+          )
+          .join(", "),
+      });
+    }
+
+    console.error("Create complaint error:", error.message);
 
     return res.status(500).json({
       status: "error",

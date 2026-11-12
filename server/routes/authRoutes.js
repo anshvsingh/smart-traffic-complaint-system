@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
       typeof email !== "string" ||
       typeof password !== "string" ||
       !name.trim() ||
-      !email.trim() ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) ||
       password.length < 8
     ) {
       return res.status(400).json({
@@ -59,6 +59,17 @@ router.post("/register", async (req, res) => {
       return res.status(409).json({
         status: "error",
         message: "An account with this email already exists",
+      });
+    }
+
+    // Schema limits (e.g. name longer than 100 characters) are user input
+    // errors, not server errors.
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        status: "error",
+        message: error.errors?.name
+          ? "Name must be 100 characters or fewer"
+          : "Invalid registration details",
       });
     }
 
