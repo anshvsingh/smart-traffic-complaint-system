@@ -181,11 +181,13 @@ router.post("/", protect, upload.single("image"), async (req, res) => {
       return res.status(400).json({
         status: "error",
         message: Object.values(error.errors)
-          .map((item) =>
-            item.kind === "maxlength"
-              ? `${item.path} must be ${item.properties.maxlength} characters or fewer`
-              : `${item.path} is invalid`
-          )
+          .map((item) => {
+            const field =
+              item.path.charAt(0).toUpperCase() + item.path.slice(1);
+            return item.kind === "maxlength"
+              ? `${field} must be ${item.properties.maxlength} characters or fewer`
+              : `${field} is invalid`;
+          })
           .join(", "),
       });
     }

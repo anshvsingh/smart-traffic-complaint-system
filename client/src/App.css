@@ -1041,6 +1041,10 @@ span.swap {
   align-self: start;
 }
 
+.complaint-media img[hidden] {
+  display: none;
+}
+
 .complaint-media img {
   display: block;
   width: 220px;

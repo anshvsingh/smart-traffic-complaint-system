@@ -296,6 +296,7 @@ function Dashboard({ user, onLogout }) {
                   value={form.location}
                   onChange={handleChange}
                   placeholder="e.g. Near college main gate"
+                  maxLength={200}
                   required
                 />
               </label>
