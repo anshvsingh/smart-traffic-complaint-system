@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Aura from "./Aura";
 
 const API = "http://localhost:5050/api/complaints";
 const SERVER_URL = "http://localhost:5050";
@@ -65,6 +66,11 @@ function Dashboard({ user, onLogout }) {
 
   const handleImageChange = (event) => {
     const selectedFile = event.target.files?.[0];
+
+    // Drop any previous selection first, so a rejected file doesn't leave
+    // the old image attached (and previewed) while the input looks empty.
+    setImage(null);
+    setImagePreview("");
 
     if (!selectedFile) return;
 
@@ -192,15 +198,14 @@ function Dashboard({ user, onLogout }) {
     <main className="portal">
       <header className="portal-header">
         <div className="portal-brand">
-          <div className="portal-logo">↗</div>
-          <div>
-            <h1>TrafficCare</h1>
-            <span>SMART CITY · CITIZEN PORTAL</span>
-          </div>
+          <span className="wordmark">
+            Traffic<span>Care</span>
+          </span>
+          <span className="kicker">Citizen portal</span>
         </div>
 
         <div className="portal-user">
-          <div className="user-avatar">
+          <div className="user-avatar" aria-hidden="true">
             {(user?.name || "C").charAt(0).toUpperCase()}
           </div>
 
@@ -209,55 +214,52 @@ function Dashboard({ user, onLogout }) {
             <span>Citizen account</span>
           </div>
 
-          <button className="logout-button" onClick={onLogout}>
+          <button className="logout-button lift" onClick={onLogout}>
             Log out
           </button>
         </div>
       </header>
 
       <div className="portal-content">
-        <section className="welcome-banner">
-          <div>
-            <span className="welcome-label">CITIZEN DASHBOARD</span>
-            <h2>Your city. Your voice.</h2>
-            <p>
-              Help make your streets safer by reporting traffic issues and
-              tracking their progress.
+        <section className="portal-hero">
+          <Aura />
+
+          <div className="portal-hero-inner">
+            <span className="kicker reveal" style={{ "--i": 0 }}>
+              Hello, {user?.name?.split(" ")[0] || "there"}
+            </span>
+            <h2 className="display reveal" style={{ "--i": 1 }}>Your city. Your voice.</h2>
+            <p className="lede reveal" style={{ "--i": 2 }}>
+              Report potholes, broken signals and blocked roads, then follow
+              each report until it is fixed.
             </p>
+            <a className="lavender-link reveal" style={{ "--i": 3 }} href="#report">
+              Report an issue ↓
+            </a>
           </div>
-          <div className="welcome-icon">🏙️</div>
         </section>
 
-        <section className="stats-grid">
+        <section className="stats-grid reveal" style={{ "--i": 4 }} aria-label="Complaint summary">
           <article className="stat-card">
-            <span className="stat-icon">📋</span>
-            <div>
-              <span>Total complaints</span>
-              <strong>{complaints.length}</strong>
-            </div>
+            <span>Total complaints</span>
+            <strong>{complaints.length}</strong>
           </article>
 
           <article className="stat-card">
-            <span className="stat-icon">⏳</span>
-            <div>
-              <span>Active complaints</span>
-              <strong>{activeCount}</strong>
-            </div>
+            <span>Active complaints</span>
+            <strong>{activeCount}</strong>
           </article>
 
           <article className="stat-card">
-            <span className="stat-icon">✓</span>
-            <div>
-              <span>Resolved complaints</span>
-              <strong>{resolvedCount}</strong>
-            </div>
+            <span>Resolved complaints</span>
+            <strong>{resolvedCount}</strong>
           </article>
         </section>
 
-        <section className="portal-section">
+        <section className="portal-section section-split" id="report">
           <div className="section-heading">
             <div>
-              <span className="section-kicker">REPORT AN ISSUE</span>
+              <span className="kicker">Report an issue</span>
               <h2>Submit a complaint</h2>
               <p>Give us the details so the right team can take action.</p>
             </div>
@@ -265,7 +267,7 @@ function Dashboard({ user, onLogout }) {
 
           <div className="portal-card">
             <form onSubmit={handleSubmit} className="modern-complaint-form">
-              <label>
+              <label className="field">
                 <span>Complaint category</span>
                 <select
                   name="category"
@@ -287,7 +289,7 @@ function Dashboard({ user, onLogout }) {
                 </select>
               </label>
 
-              <label>
+              <label className="field">
                 <span>Location</span>
                 <input
                   name="location"
@@ -298,7 +300,7 @@ function Dashboard({ user, onLogout }) {
                 />
               </label>
 
-              <label>
+              <label className="field">
                 <span>Description</span>
                 <textarea
                   name="description"
@@ -312,7 +314,7 @@ function Dashboard({ user, onLogout }) {
                 <small>{form.description.length}/2000 characters</small>
               </label>
 
-              <label>
+              <label className="field">
                 <span>Road image (optional)</span>
                 <input
                   id="complaint-image"
@@ -321,28 +323,18 @@ function Dashboard({ user, onLogout }) {
                   onChange={handleImageChange}
                 />
                 <small>
-                  Upload a JPG or PNG image, up to 10 MB. The AI model will
-                  analyse the image for potholes, road damage, or normal road
-                  conditions.
+                  JPG or PNG, up to 10 MB. Our AI model checks the photo for
+                  potholes, road damage, or a normal road.
                 </small>
               </label>
 
               {imagePreview && (
-                <div style={{ marginTop: "12px" }}>
+                <div className="image-preview">
                   <p>Image preview</p>
-                  <img
-                    src={imagePreview}
-                    alt="Selected road"
-                    style={{
-                      width: "100%",
-                      maxWidth: "360px",
-                      maxHeight: "240px",
-                      objectFit: "contain",
-                      borderRadius: "10px",
-                    }}
-                  />
+                  <img src={imagePreview} alt="Selected road" />
                   <button
                     type="button"
+                    className="button-ghost lift"
                     onClick={() => {
                       setImage(null);
                       setImagePreview("");
@@ -356,17 +348,17 @@ function Dashboard({ user, onLogout }) {
               )}
 
               <button
-                className="modern-submit-button"
+                className="modern-submit-button lift"
                 type="submit"
                 disabled={loading}
               >
-                {loading ? "Submitting..." : "Submit complaint →"}
+                {loading ? "Submitting..." : <>Submit complaint <span className="arrow" aria-hidden="true">→</span></>}
               </button>
             </form>
 
             {message && (
               <div
-                className={`portal-message ${messageType}`}
+                className={`notice ${messageType}`}
                 role={messageType === "error" ? "alert" : "status"}
                 aria-live={messageType === "error" ? "assertive" : "polite"}
               >
@@ -377,15 +369,15 @@ function Dashboard({ user, onLogout }) {
         </section>
 
         <section className="portal-section">
-          <div className="section-heading complaints-heading">
+          <div className="section-heading">
             <div>
-              <span className="section-kicker">YOUR REPORTS</span>
+              <span className="kicker">Your reports</span>
               <h2>My complaints</h2>
               <p>Keep track of the issues you have reported.</p>
             </div>
 
             <button
-              className="refresh-button"
+              className="refresh-button lift"
               type="button"
               onClick={loadComplaints}
               disabled={fetching}
@@ -396,7 +388,6 @@ function Dashboard({ user, onLogout }) {
 
           {complaints.length === 0 ? (
             <div className="empty-state">
-              <div>📭</div>
               <h3>No complaints yet</h3>
               <p>Your submitted complaints will appear here.</p>
             </div>
@@ -421,57 +412,48 @@ function Dashboard({ user, onLogout }) {
                     </span>
                   </div>
 
-                  <p className="complaint-description">
-                    {complaint.description}
-                  </p>
+                  <div className="complaint-body">
+                    <p className="complaint-description">
+                      {complaint.description}
+                    </p>
+
+                    {complaint.aiPrediction?.status === "Completed" && (
+                      <div className="ai-panel">
+                        <strong>AI road analysis</strong>
+                        <p>Prediction: {complaint.aiPrediction.category}</p>
+                        <p>
+                          Confidence:{" "}
+                          {(complaint.aiPrediction.confidence * 100).toFixed(1)}%
+                        </p>
+                        <small>
+                          AI assistance only; verify the road condition manually.
+                        </small>
+                      </div>
+                    )}
+
+                    {complaint.aiPrediction?.status === "Failed" && (
+                      <p className="ai-muted">
+                        AI analysis was unavailable for this image.
+                      </p>
+                    )}
+                  </div>
 
                   {complaint.imageUrl && (
-                    <div style={{ margin: "12px 0" }}>
+                    <div className="complaint-media">
                       <img
                         src={`${SERVER_URL}${complaint.imageUrl}`}
                         alt="Road reported in complaint"
                         loading="lazy"
-                        style={{
-                          width: "100%",
-                          maxWidth: "360px",
-                          maxHeight: "240px",
-                          objectFit: "contain",
-                          borderRadius: "10px",
+                        onError={(event) => {
+                          event.currentTarget.hidden = true;
                         }}
                       />
                     </div>
                   )}
 
-                  {complaint.aiPrediction?.status === "Completed" && (
-                    <div
-                      style={{
-                        margin: "12px 0",
-                        padding: "12px",
-                        borderRadius: "8px",
-                        background: "#eef8f0",
-                      }}
-                    >
-                      <strong>AI road analysis</strong>
-                      <p>
-                        Prediction: {complaint.aiPrediction.category}
-                      </p>
-                      <p>
-                        Confidence:{" "}
-                        {(complaint.aiPrediction.confidence * 100).toFixed(1)}%
-                      </p>
-                      <small>
-                        AI assistance only; verify the road condition manually.
-                      </small>
-                    </div>
-                  )}
-
-                  {complaint.aiPrediction?.status === "Failed" && (
-                    <p>AI analysis was unavailable for this image.</p>
-                  )}
-
                   <div className="complaint-card-footer">
                     <span>📍 {complaint.location}</span>
-                    <span>📅 {formatDate(complaint.createdAt)}</span>
+                    <span>{formatDate(complaint.createdAt)}</span>
                   </div>
                 </article>
               ))}
@@ -480,7 +462,9 @@ function Dashboard({ user, onLogout }) {
         </section>
 
         <footer className="portal-footer">
-          <span>TrafficCare</span>
+          <span className="wordmark">
+            Traffic<span>Care</span>
+          </span>
           <span>Building safer streets together.</span>
         </footer>
       </div>
@@ -489,4 +473,3 @@ function Dashboard({ user, onLogout }) {
 }
 
 export default Dashboard;
-
