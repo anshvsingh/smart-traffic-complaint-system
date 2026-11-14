@@ -1,0 +1,38 @@
+classDiagram
+  class User {
+    ObjectId id
+    string name
+    string email
+    string password
+    Role role
+    string department
+  }
+  class Complaint {
+    ObjectId id
+    ObjectId user
+    string category
+    string description
+    string location
+    string imageUrl
+    ComplaintStatus status
+    string assignedDepartment
+    DepartmentStatus departmentStatus
+    Priority priority
+  }
+  class AIPrediction {
+    PredictionStatus status
+    string category
+    number confidence
+    object probabilities
+  }
+  class ProgressUpdate {
+    ObjectId updatedBy
+    Role role
+    string message
+    string status
+    Date createdAt
+  }
+  User "1" --> "0..*" Complaint : submits
+  Complaint "1" *-- "0..1" AIPrediction
+  Complaint "1" *-- "0..*" ProgressUpdate
+  User "1" --> "0..*" ProgressUpdate : authors

@@ -1,0 +1,25 @@
+sequenceDiagram
+  actor Citizen
+  participant UI as React Client
+  participant API as Express API
+  participant Auth as JWT Middleware
+  participant DL as FastAPI / ResNet18
+  participant DB as MongoDB
+  Citizen->>UI: Enter complaint and optional image
+  UI->>API: POST /api/complaints (multipart + JWT)
+  API->>Auth: Verify token and load user
+  Auth-->>API: Authorized citizen
+  API->>API: Validate fields / image
+  opt Image attached
+    API->>DL: POST /predict
+    alt Prediction succeeds
+      DL-->>API: category, confidence, probabilities
+    else Prediction fails or times out
+      DL-->>API: error / timeout
+      API->>API: Set prediction status Failed
+    end
+  end
+  API->>DB: Create complaint
+  DB-->>API: Persisted complaint
+  API-->>UI: 201 + complaint
+  UI-->>Citizen: Confirmation and tracking state

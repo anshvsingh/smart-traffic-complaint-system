@@ -1,0 +1,15 @@
+flowchart LR
+  Citizen([Citizen]) --> Auth((Register / sign in))
+  Citizen --> Submit((Submit complaint))
+  Citizen --> Own((View own complaints))
+  Submit -. optional image .-> AI((AI image classification))
+  Admin([Administrator]) --> Auth
+  Admin --> Review((Review all complaints))
+  Admin --> Accounts((Manage department accounts))
+  Admin --> Assign((Assign complaint))
+  Admin --> Update((Set status / priority))
+  Admin --> Counts((View dashboard counts))
+  Dept([Department user]) --> Auth
+  Dept --> Assigned((View assigned complaints))
+  Dept --> Accept((Accept assignment))
+  Dept --> Progress((Post progress / complete work))
