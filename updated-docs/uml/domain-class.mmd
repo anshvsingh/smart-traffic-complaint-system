@@ -1,38 +1,74 @@
 classDiagram
+  direction LR
   class User {
-    ObjectId id
-    string name
-    string email
-    string password
-    Role role
-    string department
+    +ObjectId _id
+    +String name
+    +String email
+    -String password
+    +Role role
+    +String department
+    +Date createdAt
+    +Date updatedAt
+    +comparePassword(candidate) Promise~Boolean~
   }
   class Complaint {
-    ObjectId id
-    ObjectId user
-    string category
-    string description
-    string location
-    string imageUrl
-    ComplaintStatus status
-    string assignedDepartment
-    DepartmentStatus departmentStatus
-    Priority priority
+    +ObjectId _id
+    +ObjectId user
+    +Category category
+    +String description
+    +String location
+    +String imageUrl
+    +ComplaintStatus status
+    +String assignedDepartment
+    +DepartmentStatus departmentStatus
+    +Priority priority
+    +Date createdAt
+    +Date updatedAt
   }
   class AIPrediction {
-    PredictionStatus status
-    string category
-    number confidence
-    object probabilities
+    +PredictionStatus status
+    +String category
+    +Number confidence
+    +Map probabilities
   }
   class ProgressUpdate {
-    ObjectId updatedBy
-    Role role
-    string message
-    string status
-    Date createdAt
+    +ObjectId updatedBy
+    +Role role
+    +String message
+    +String status
+    +Date createdAt
+  }
+  class Role {
+    <<enumeration>>
+    citizen
+    admin
+    department
+  }
+  class Priority {
+    <<enumeration>>
+    Low
+    Medium
+    High
+  }
+  class PredictionStatus {
+    <<enumeration>>
+    Not Requested
+    Completed
+    Failed
+  }
+  class DepartmentStatus {
+    <<enumeration>>
+    Not Assigned
+    Assigned
+    Accepted
+    Work in Progress
+    Work Completed
   }
   User "1" --> "0..*" Complaint : submits
-  Complaint "1" *-- "0..1" AIPrediction
+  Complaint "1" *-- "1" AIPrediction
   Complaint "1" *-- "0..*" ProgressUpdate
   User "1" --> "0..*" ProgressUpdate : authors
+  User ..> Role
+  Complaint ..> Priority
+  Complaint ..> DepartmentStatus
+  AIPrediction ..> PredictionStatus

@@ -1,0 +1,37 @@
+flowchart TB
+  subgraph Citizen
+    S((Start)) --> A1[Fill complaint form]
+    A1 --> A2{Photo attached?}
+    A2 -- yes --> A3[Attach JPEG/PNG]
+    A2 -- no --> A4[Submit]
+    A3 --> A4
+    Z1[View status and history]
+  end
+  subgraph System
+    A4 --> B1{Valid?}
+    B1 -- no --> B2[Return error] --> A1
+    B1 -- yes --> B3{Image?}
+    B3 -- yes --> B4[Call DL service] --> B5[Store AI result or Failed]
+    B3 -- no --> B6[Save complaint: Submitted]
+    B5 --> B6
+  end
+  subgraph Administrator
+    B6 --> C1[Review complaint]
+    C1 --> C2{Valid complaint?}
+    C2 -- no --> C3[Set Rejected]
+    C2 -- yes --> C4[Set priority and assign department]
+    C6{Work verified?}
+    C6 -- yes --> C7[Set Resolved]
+    C6 -- no --> C4
+  end
+  subgraph Department
+    C4 --> D1[Accept assignment]
+    D1 --> D2[Post progress]
+    D2 --> D3{Work finished?}
+    D3 -- no --> D2
+    D3 -- yes --> D4[Mark Work Completed]
+    D4 --> C6
+  end
+  C3 --> Z1
+  C7 --> Z1
+  Z1 --> E((End))

@@ -1,0 +1,22 @@
+flowchart TB
+  subgraph Device["«device» User device"]
+    Browser["«execution env» Web browser<br/>React SPA"]
+  end
+  subgraph Node["«device» Host: Docker Desktop"]
+    subgraph Cluster["«execution env» Kubernetes cluster"]
+      FEPod["«pod» frontend<br/>node:24-alpine · :5173"]
+      BEPod["«pod» backend<br/>node:24-alpine · :5050"]
+      DLPod["«pod» dl<br/>python:3.11-slim · :8000"]
+      Secret["«secret» trafficcare-secrets"]
+    end
+  end
+  subgraph Cloud["«device» MongoDB Atlas"]
+    Mongo[("«database» trafficcare")]
+  end
+  Registry["«registry» Docker Hub"]
+  Browser -->|HTTP via port-forward| FEPod
+  Browser -->|HTTP REST via port-forward| BEPod
+  BEPod -->|"HTTP http://dl:8000"| DLPod
+  BEPod -->|"TLS / MongoDB protocol"| Mongo
+  Secret -.-> BEPod
+  Registry -. image pull .-> FEPod & BEPod & DLPod

@@ -1,0 +1,19 @@
+flowchart TB
+  S((Start)) --> P1[Download CPRD dataset]
+  P1 --> P2[Cut 128×128 patches, label from masks]
+  P2 --> P3[Group split by 500 m road stretch: 900 train / 300 test]
+  P3 --> F1[Extract 16 texture/colour features]
+  P3 --> I1[Export image patches]
+  F1 --> F2[Scale + PCA → 8 angles]
+  F1 --> ML[Train LogReg, SVM-RBF, Random Forest<br/>GroupKFold CV]
+  F2 --> Q1[Train VQC and QSVM<br/>NumPy simulator / PennyLane]
+  F2 --> Q2[Train feature QNN + classical control]
+  I1 --> D1[Fine-tune ResNet18, EfficientNet-B0, MobileNetV3-L<br/>3 seeds, early stopping on val F1]
+  I1 --> Q3[Train hybrid ResNet18 + quantum layer + classical control]
+  ML & Q1 & Q2 & D1 & Q3 --> E1[Evaluate on the same 300 test patches]
+  E1 --> E2[Metrics JSON, confusion matrices, McNemar, comparison tables]
+  E2 --> E3{Better than served model and significant?}
+  E3 -- yes --> E4[Export checkpoint, set DL_MODEL_PATH]
+  E3 -- no --> E5[Keep ResNet18 in production]
+  E4 --> X((End))
+  E5 --> X

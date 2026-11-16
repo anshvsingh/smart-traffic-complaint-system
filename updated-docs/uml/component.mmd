@@ -1,0 +1,28 @@
+flowchart LR
+  subgraph Client["«component» Web Client (React)"]
+    UIAuth["Auth & routing"]
+    UICit["Citizen dashboard"]
+    UIAdm["Admin dashboard"]
+    UIDep["Department dashboard"]
+  end
+  subgraph Backend["«component» Backend API (Express)"]
+    IREST(("REST /api"))
+    CAuth["Auth"]
+    CCmp["Complaints"]
+    CAdm["Admin"]
+    CDep["Department"]
+    CMod["Models"]
+  end
+  subgraph DLSvc["«component» DL Service (FastAPI)"]
+    IPred(("/predict"))
+    CInf["Inference"]
+    CModel["ResNet18 checkpoint"]
+  end
+  DB[("«component» MongoDB")]
+  FS[("«artifact» uploads/")]
+  UIAuth & UICit & UIAdm & UIDep -->|requires| IREST
+  IREST --- CAuth & CCmp & CAdm & CDep
+  CAuth & CCmp & CAdm & CDep --> CMod --> DB
+  CCmp --> FS
+  CCmp -->|requires| IPred
+  IPred --- CInf --> CModel
