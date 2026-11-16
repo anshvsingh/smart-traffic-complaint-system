@@ -279,12 +279,13 @@ Results below are copied from the repository's own records; they are not re-exec
 
 | Suite | Tool | Last reported result | Source |
 |---|---|---|---|
-| Backend | Jest | 6 suites, 40 tests passed | Root README |
-| DL API | unittest | 6 tests passed (model mocked in the prediction test) | Root README |
-| Frontend | Vitest | 12 passed, 1 failing (unsupported-image test) | Root README |
+| Backend | Jest | 9 suites, 93/93 tests passed (16 Nov 2026) | `TrafficCare_Code_Coverage_Report.docx` |
+| DL API | unittest / pytest | 14/14 tests passed (model mocked in the prediction tests) | `TrafficCare_Code_Coverage_Report.docx` |
+| Frontend | Vitest | 5 files, 34/34 tests passed | `TrafficCare_Code_Coverage_Report.docx` |
 | Python lint | Pylint | 8.97 / 10 | Root README |
 | QA API suite | Jest (`testing/automated`) | Not Run yet | `testing/test-results.md` |
 | Manual UI cases | none | Not Run | `testing/test-results.md` |
+| Code and branch coverage | Jest, Vitest v8, coverage.py | 83.0 % statements, 78.6 % branches (all 141 tests passed) | `TrafficCare_Code_Coverage_Report.docx` |
 | Model evaluation | scripts | Completed: see SAD §8.3 for all 10 models | `dl/results`, `qml/results` |
 
 ### 10.1 Defect status
