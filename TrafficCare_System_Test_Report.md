@@ -5,10 +5,10 @@
 | Item | Value |
 |---|---|
 | Document | System Test Report |
-| Version | 1.0 |
+| Version | 1.1 |
 | Date | 17 November 2026 |
 | Test period | 16–17 November 2026 |
-| Build tested | Branch `docs/update-srs-sad-stp-uml` (pull request #20); application code identical to `main` |
+| Build tested | Branch `docs/update-srs-sad-stp-uml` (pull request #20). First run: application code = `main`. Re-test: plus fix commit `c4ca873` |
 | Test plan | TrafficCare_STP v2.0 |
 | Related documents | TrafficCare_SRS, TrafficCare_Unit_Testing_Report, TrafficCare_Code_Coverage_Report |
 
@@ -16,7 +16,8 @@
 
 | Version | Date | Description |
 |---|---|---|
-| 1.0 | 17 Nov 2026 | First system test execution: 104 test cases run on the complete, running system |
+| 1.0 | 17 Nov 2026 | First system test execution: 104 test cases run on the complete, running system; 2 defects found |
+| 1.1 | 17 Nov 2026 | BUG-007 and BUG-008 fixed (commit `c4ca873`); all executed suites re-run: 104 / 104 passed |
 
 ---
 
@@ -28,21 +29,21 @@ The complete TrafficCare system was tested end to end: React web client, Express
 |---|---|---|---|---|---|
 | A. QA API suite (TC01–TC41) | Jest + Supertest, in-memory MongoDB | 45 | 45 | 0 | 0 |
 | B. Live API system tests | HTTP against the running stack | 39 | 39 | 0 | 0 |
-| C. Browser end-to-end tests | Chrome driven by puppeteer, running stack | 16 | 14 | **2** | 0 |
+| C. Browser end-to-end tests | Chrome driven by puppeteer, running stack | 16 | 16 | 0 | 0 |
 | D. Failure and recovery tests | DL service stopped; start-up checks | 4 | 4 | 0 | 0 |
 | E. Deployment smoke tests | Docker Compose, Kubernetes | 2 | 0 | 0 | 2 |
-| **Total** | | **106** | **102** | **2** | **2** |
+| **Total** | | **106** | **104** | **0** | **2** |
 
-**Pass rate of executed cases: 102 / 104 (98.1 %).**
+**Pass rate of executed cases: 104 / 104 (100 %) after the defect fixes.** The first execution passed 102 / 104 (98.1 %). The two failures were real defects, which were fixed and re-tested (§12).
 
 **Result.** The core workflow works end to end through the user interface: a citizen reports with a photo, the AI classifies it, the admin assigns, the department works and completes, and the admin resolves. Every access-control and validation check passed, and an AI outage does not block complaints.
 
-Two **user-interface defects** were found, and both are logged:
+Two **user-interface defects** were found in the first run. Both were fixed in commit `c4ca873` and verified by re-test:
 
-| Bug | Severity | Summary |
-|---|---|---|
-| BUG-007 | Medium | The citizen dashboard does not show the progress history or the assigned department, although the API provides both (SRS UI-03) |
-| BUG-008 | Low | After an admin update, the admin's complaint card shows the reporter as "Unknown" until the page is reloaded |
+| Bug | Severity | Summary | Status |
+|---|---|---|---|
+| BUG-007 | Medium | The citizen dashboard did not show the progress history or the assigned department, although the API provides both (SRS UI-03) | **Fixed, verified** |
+| BUG-008 | Low | After an admin update, the admin's complaint card showed the reporter as "Unknown" until the page was reloaded | **Fixed, verified** |
 
 The five defects from code review (BUG-001 … BUG-005) were re-tested and are **verified fixed**. BUG-006 is verified by inspection. Container and Kubernetes smoke tests were **not run** because Docker was not running on the test machine.
 
@@ -168,7 +169,7 @@ Full table: `testing/system/results/system-api-results.md`.
 
 ## 6. Suite C: Browser End-to-End Tests
 
-Chrome was driven through the real web client. A screenshot was saved for each step in `testing/system/screenshots/`. **14 / 16 passed.**
+Chrome was driven through the real web client. A screenshot was saved for each step in `testing/system/screenshots/`. **First run: 14 / 16 passed. Re-test after fixes: 16 / 16 passed.**
 
 | ID | STP case | Test | Result | Observed |
 |---|---|---|---|---|
@@ -180,11 +181,11 @@ Chrome was driven through the real web client. A screenshot was saved for each s
 | UI-06 | TC43, TC-AI-01 | Submit complaint with photo | Pass | "Complaint submitted! AI prediction: …"; AI panel on the card |
 | UI-07 | TC44 | Logout | Pass | Session cleared; reopening and reloading shows sign-in |
 | UI-08 | TC45, TC-ADM-04/07 | Admin: priority High, assign Roads & Maintenance | Pass | Card updated |
-| UI-08b | UI-04, TC-ADM-01 | Reporter still shown after the update | **Fail** | Shows "Unknown / N/A" until reload → **BUG-008** |
+| UI-08b | UI-04, TC-ADM-01 | Reporter still shown after the update | **Fail → Pass** | First run: "Unknown / N/A" until reload (**BUG-008**). Re-test: name and e-mail kept |
 | UI-09 | TC-DEP-02/05 | Department: accept, progress, complete | Pass | All three notices; completion note |
 | UI-10 | TC45, TC-ADM-09 | Admin sets Resolved | Pass | Badge Resolved; statistics refreshed |
 | UI-11 | TC-UI-04 | Citizen sees Resolved | Pass | Card status Resolved |
-| UI-12 | UI-03, TC-UI-04 | Citizen sees progress history and department | **Fail** | Neither is shown → **BUG-007** |
+| UI-12 | UI-03, TC-UI-04 | Citizen sees progress history and department | **Fail → Pass** | First run: neither shown (**BUG-007**). Re-test: "Handled by Roads & Maintenance" and 5-entry history |
 | UI-13 | TC46 | Tampered token, page reloaded | Pass | Returned to sign-in |
 | UI-14 | UI-06, TC-UI-05 | 375 px mobile width | Pass | No horizontal scrolling |
 | UI-15 | NFR-ACC-01 | Keyboard-only sign-in | Pass | Tab order correct; Enter submits |
@@ -197,9 +198,13 @@ No JavaScript errors were raised in the browser during the run.
 
 ![Department accepts, records progress and completes the work (UI-09)](testing/system/screenshots/UI-09-department-completed.png)
 
-![BUG-008: after an update the admin card shows the reporter as Unknown (UI-08b)](testing/system/screenshots/UI-08b-admin-reporter-after-update.png)
+![Before fix, BUG-007: the citizen sees only the Resolved badge, without history or department (UI-12)](testing/system/screenshots/before-fix/UI-12-citizen-no-history.png)
 
-![BUG-007: the citizen sees only the Resolved badge, without history or department (UI-12)](testing/system/screenshots/UI-12-failure.png)
+![After fix: department and progress history on the citizen card (UI-12 re-test)](testing/system/screenshots/UI-12-citizen-history.png)
+
+![Before fix, BUG-008: after an update the admin card shows the reporter as Unknown (UI-08b)](testing/system/screenshots/before-fix/UI-08b-admin-reporter-unknown.png)
+
+![After fix: the reporter stays visible after the update (UI-08b re-test)](testing/system/screenshots/UI-08b-admin-reporter-after-update.png)
 
 ---
 
@@ -251,9 +256,9 @@ The README records an earlier successful local Kubernetes deployment, but no exe
 | FR-AUTH-01 … 09 | TC01–TC16, SYS-03…13, UI-01…04, UI-07, UI-13 | Pass |
 | FR-CMP-01 … 09 | TC04, TC17–TC27, SYS-14…21, UI-05, UI-06 | Pass |
 | FR-AI-01 … 07 | SYS-02, SYS-14, SYS-22, SYS-23, SYS-41, UI-06 | Pass |
-| FR-ADM-01 … 07 | TC28–TC39, SYS-24…29, SYS-35, UI-08, UI-10 | Pass (UI display defect BUG-008) |
+| FR-ADM-01 … 07 | TC28–TC39, SYS-24…29, SYS-35, UI-08, UI-08b, UI-10 | Pass (after the BUG-008 fix) |
 | FR-DEP-01 … 05 | SYS-30…34, UI-09 | Pass |
-| UI-01 … UI-06 | UI-01…15 | **UI-03 fails (BUG-007)**; UI-04 has display defect (BUG-008); others pass |
+| UI-01 … UI-06 | UI-01…15 | Pass (UI-03 after the BUG-007 fix, UI-04 after the BUG-008 fix) |
 | NFR-SEC, NFR-PRV | TC05–TC16, TC40, SYS-09…13, SYS-15, SYS-37, SYS-38 | Pass |
 | NFR-REL-01/02 | SYS-01, SYS-41…43 | Pass |
 | NFR-PRF-01/02 | SYS-39, §8 | Pass |
@@ -272,37 +277,59 @@ The README records an earlier successful local Kubernetes deployment, but no exe
 | BUG-004 Invalid e-mail accepted | Low | **Verified fixed** | TC15 |
 | BUG-005 Malformed JSON leaks stack trace | Medium | **Verified fixed** | TC40, SYS-37 |
 | BUG-006 Dead duplicate set-up in `index.js` | Low | **Verified fixed** | Inspection; full suite passes |
-| **BUG-007** Citizen dashboard hides progress history and department | Medium | **Open** | UI-12 |
-| **BUG-008** Admin card shows reporter "Unknown" after an update | Low | **Open** | UI-08b |
+| **BUG-007** Citizen dashboard hides progress history and department | Medium | **Verified fixed** (`c4ca873`) | Found by UI-12; re-tested by UI-12 and `DashboardTracking.test.jsx` |
+| **BUG-008** Admin card shows reporter "Unknown" after an update | Low | **Verified fixed** (`c4ca873`) | Found by UI-08b; re-tested by UI-08b and `adminWorkflow.test.js` |
 
 Details and suggested fixes: `testing/bug-reports/BUG-007-…md` and `BUG-008-…md`.
 
 ---
 
-## 12. Exit Criteria Assessment (STP §6)
+## 12. Defect Fixes and Re-test
+
+| Bug | Fix (commit `c4ca873`) | Regression tests added |
+|---|---|---|
+| BUG-007 | `client/src/Dashboard.jsx`: the citizen card shows "Handled by <department>" (or "Not yet assigned") and a progress-history timeline, newest first, with who made each update and when. Styles in `App.css`, desktop and mobile | `client/src/test/DashboardTracking.test.jsx` (3) |
+| BUG-008 | `server/routes/adminRoutes.js`: the assign and status/priority endpoints populate the reporter (name, e-mail) and progress authors before responding, matching `GET /admin/complaints` | `server/tests/adminWorkflow.test.js` (2) |
+
+After the fixes, everything that ran before was re-run on 17 Nov 2026:
+
+| Suite | Result |
+|---|---|
+| Backend unit tests | 95 / 95 passed |
+| Frontend unit tests | 37 / 37 passed; production build succeeds |
+| A. QA API suite | 45 / 45 passed |
+| B. Live API system tests | 39 / 39 passed |
+| C. Browser end-to-end tests | **16 / 16 passed** (UI-08b and UI-12 now pass; no JavaScript errors; 375 px layout still fits) |
+| D. Failure and recovery (DL outage) | 2 / 2 passed |
+
+No regressions were found.
+
+---
+
+## 13. Exit Criteria Assessment (STP §6)
 
 | Criterion | Status |
 |---|---|
 | All Critical and High cases executed | Met, except deployment smoke tests (High) not run |
-| No open Critical defects | **Met**: open defects are Medium and Low |
-| Failures linked to defects | **Met**: both failures logged as BUG-007 and BUG-008 |
+| No open Critical defects | **Met**: no open defects |
+| Failures linked to defects | **Met**: both failures were logged (BUG-007, BUG-008), fixed and re-tested |
 | Blocked / not-run cases documented | **Met**: §9 |
-| Regression evidence recorded | **Met**: Suite A and unit tests (133 / 133) |
+| Regression evidence recorded | **Met**: after the fixes, Suites A–D and all unit tests (138 / 138) were re-run and pass |
 
-**Recommendation.** The system is acceptable for demonstration. Before final release: fix BUG-007, since a citizen can't see what the department did; optionally fix BUG-008; and run the two deployment smoke tests with Docker Desktop.
+**Recommendation.** The system is acceptable for demonstration and release on a local deployment. The only outstanding item is the two deployment smoke tests (§9), which need Docker Desktop.
 
 ---
 
-## 13. Test Deliverables
+## 14. Test Deliverables
 
 | Item | Location |
 |---|---|
 | This report | `TrafficCare_System_Test_Report.pdf / .docx / .md` |
 | QA suite results | `testing/automated/latest-results.md` |
 | Live API results | `testing/system/results/system-api-results.md / .json` |
-| Browser results | `testing/system/results/ui-e2e-results.md / .json` |
+| Browser results | `testing/system/results/ui-e2e-results.md / .json` (re-test); `ui-e2e-results-before-fix.md` (first run) |
 | DL outage results | `testing/system/results/dl-outage-results.md / .json` |
-| Screenshots | `testing/system/screenshots/` (17 images) |
+| Screenshots | `testing/system/screenshots/` (17 images, re-test) and `screenshots/before-fix/` (the 2 defects) |
 | Test scripts | `testing/system/system-tests.mjs`, `ui-e2e.cjs`, `create-admin.js`, `fixtures/` |
 | Defect reports | `testing/bug-reports/` |
 | Execution log | `testing/test-results.md` |

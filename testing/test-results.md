@@ -9,8 +9,8 @@ Rules (from our STP §5.4–5.5): a case is **Pass** only if observed behaviour 
 | Test cases written | 47 (TC01–TC47) in `test-cases.md`; TC01–TC41 are automated in `testing/automated/` (45 Jest tests, some IDs have a/b variants) |
 | Automated suite executed | **45/45 passed** on 16 Nov 2026 (Run 1 below) |
 | Manual UI cases (TC42–TC47) | TC42–TC46 Pass (run in Chrome via `system/ui-e2e.cjs`); TC47 Firefox not run |
-| System tests on the running stack | 102/104 executed cases passed; 2 new defects (BUG-007, BUG-008); deployment smoke tests not run (see `TrafficCare_System_Test_Report`) |
-| Static code review | Done: 6 issues logged (BUG-001 … BUG-006), all now verified fixed |
+| System tests on the running stack | First run 102/104 (BUG-007, BUG-008 found). After fixes (Run 2): **104/104** executed cases pass; deployment smoke tests not run (see `TrafficCare_System_Test_Report`) |
+| Defects | BUG-001 … BUG-008: all verified fixed; none open |
 
 ### Predicted outcome of the first automated run (from code review, 30 Oct; superseded by Run 1: all passed)
 
@@ -26,6 +26,17 @@ Rules (from our STP §5.4–5.5): a case is **Pass** only if observed behaviour 
 ## Run log
 
 Copy each run's `testing/automated/latest-results.md` here (newest first). Record the commit you tested.
+
+### Run 2: 17 Nov 2026, regression after fixing BUG-007 and BUG-008 (commit `c4ca873`)
+
+| Suite | Command | Result |
+|---|---|---|
+| QA API suite | `bash testing/run-tests.sh` | **45/45 passed** |
+| Backend unit tests | `cd server && npm test` | 95/95 passed |
+| Frontend unit tests | `cd client && npm test` | 37/37 passed |
+| Live API system tests | `node testing/system/system-tests.mjs` | 39/39 passed |
+| Browser end-to-end | `node testing/system/ui-e2e.cjs` | **16/16 passed** (UI-08b, UI-12 now pass) |
+| DL outage | `node testing/system/system-tests.mjs --outage` | 2/2 passed |
 
 ### Run 1: 16–17 Nov 2026, branch `docs/update-srs-sad-stp-uml` @ `f2ff527` (application code = `main`)
 
@@ -112,3 +123,5 @@ When the backend owner fixes a bug:
 | BUG-004 | already on `main` | 16 Nov 2026 | TC15 | 45/45 QA + 93/93 backend | **Verified** |
 | BUG-005 | already on `main` | 16 Nov 2026 | TC40 | 45/45 QA + 93/93 backend | **Verified** |
 | BUG-006 | already on `main` | 16 Nov 2026 | (full suite) | 45/45 QA + 93/93 backend | **Verified** |
+| BUG-007 | `c4ca873` | 17 Nov 2026 | UI-12, DashboardTracking.test.jsx | Run 2: all suites pass | **Verified** |
+| BUG-008 | `c4ca873` | 17 Nov 2026 | UI-08b, adminWorkflow.test.js | Run 2: all suites pass | **Verified** |

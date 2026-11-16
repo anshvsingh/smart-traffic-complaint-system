@@ -253,7 +253,9 @@ async function login(email, password) {
     const hasHistory = /Pothole filled and resurfaced|Crew dispatched/.test(card);
     const hasDept = /Roads & Maintenance/.test(card);
     expect(hasHistory && hasDept, `history shown: ${hasHistory}, department shown: ${hasDept} (API returns both)`);
-    return { observed: "History and department shown" };
+    await page.evaluate((d) => [...document.querySelectorAll(".modern-complaint-card")].find((c) => c.innerText.includes(d)).querySelector(".complaint-tracking").scrollIntoView({ block: "center" }), description);
+    const entries = await page.evaluate((d) => [...document.querySelectorAll(".modern-complaint-card")].find((c) => c.innerText.includes(d)).querySelectorAll(".tracking-history li").length, description);
+    return { observed: `"Handled by Roads & Maintenance"; progress history with ${entries} entries, newest first`, screenshot: await shot("UI-12-citizen-history") };
   });
 
   await step("UI-13", "TC46", "Tampered token: user is returned to sign-in", async () => {

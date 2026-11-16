@@ -1,22 +1,22 @@
 {
   "suite": "system-api",
-  "date": "2026-11-16T18:21:54.770Z",
+  "date": "2026-11-16T18:45:09.145Z",
   "api": "http://localhost:5050/api",
   "dl": "http://localhost:8010",
   "passed": 39,
   "total": 39,
   "perf": {
     "list": {
-      "med": 1.1308329999997113,
-      "p95": 1.424040999999761
+      "med": 1.0925419999998667,
+      "p95": 1.5727500000002692
     },
     "admin": {
-      "med": 2.1551660000000084,
-      "p95": 2.9427920000002814
+      "med": 2.7858750000000327,
+      "p95": 3.942833000000064
     },
     "dl": {
-      "med": 8.935041000000183,
-      "p95": 12.539000000000215
+      "med": 13.505416999999852,
+      "p95": 15.729083000000173
     }
   },
   "results": [
@@ -25,8 +25,8 @@
       "stp": "NFR-REL-02",
       "title": "Backend health endpoint responds",
       "status": "Pass",
-      "observed": "200 ok in 65 ms",
-      "ms": 66
+      "observed": "200 ok in 24 ms",
+      "ms": 25
     },
     {
       "id": "SYS-02",
@@ -34,7 +34,7 @@
       "title": "DL service health reports the model is loaded",
       "status": "Pass",
       "observed": "model_loaded=true on mps",
-      "ms": 16
+      "ms": 2
     },
     {
       "id": "SYS-03",
@@ -42,7 +42,7 @@
       "title": "Seeded department accounts can sign in",
       "status": "Pass",
       "observed": "roads and police accounts: role department",
-      "ms": 539
+      "ms": 561
     },
     {
       "id": "SYS-04",
@@ -50,7 +50,7 @@
       "title": "Administrator can sign in",
       "status": "Pass",
       "observed": "role admin",
-      "ms": 268
+      "ms": 270
     },
     {
       "id": "SYS-05",
@@ -58,7 +58,7 @@
       "title": "Citizen registers; a client-supplied admin role is ignored",
       "status": "Pass",
       "observed": "201, role citizen, no password in response",
-      "ms": 522
+      "ms": 543
     },
     {
       "id": "SYS-06",
@@ -82,7 +82,7 @@
       "title": "Citizen logs in and receives a 1-hour JWT",
       "status": "Pass",
       "observed": "200, exp - iat = 3600 s",
-      "ms": 549
+      "ms": 539
     },
     {
       "id": "SYS-09",
@@ -90,7 +90,7 @@
       "title": "Wrong password and unknown e-mail give the same 401",
       "status": "Pass",
       "observed": "both 401 \"Invalid email or password\"",
-      "ms": 287
+      "ms": 262
     },
     {
       "id": "SYS-10",
@@ -106,7 +106,7 @@
       "title": "Missing, malformed and wrongly signed tokens are rejected",
       "status": "Pass",
       "observed": "401 for all three",
-      "ms": 3
+      "ms": 2
     },
     {
       "id": "SYS-12",
@@ -114,7 +114,7 @@
       "title": "Citizen is refused on admin and department routes",
       "status": "Pass",
       "observed": "403 on both",
-      "ms": 2
+      "ms": 3
     },
     {
       "id": "SYS-13",
@@ -129,8 +129,8 @@
       "stp": "TC-CMP-06, TC-AI-01",
       "title": "Complaint with JPEG photo is stored and classified by the DL service",
       "status": "Pass",
-      "observed": "201 in 109 ms; AI Completed: Road Damage (44.0 %); Submitted/Medium/Not Assigned",
-      "ms": 110
+      "observed": "201 in 691 ms; AI Completed: Road Damage (44.0 %); Submitted/Medium/Not Assigned",
+      "ms": 692
     },
     {
       "id": "SYS-15",
@@ -138,15 +138,15 @@
       "title": "Uploaded image is served with nosniff",
       "status": "Pass",
       "observed": "200 image/jpeg, nosniff",
-      "ms": 1
+      "ms": 3
     },
     {
       "id": "SYS-16",
       "stp": "TC-CMP-06",
       "title": "PNG with a misleading .html file name is stored as .png",
       "status": "Pass",
-      "observed": "201, stored as 7853a4e5-a4b2-4eab-a275-b874cb1c2154.png",
-      "ms": 20
+      "observed": "201, stored as 45985615-918e-4240-b361-61e3aa4f4559.png",
+      "ms": 28
     },
     {
       "id": "SYS-17",
@@ -154,7 +154,7 @@
       "title": "Complaint without a photo: AI Not Requested",
       "status": "Pass",
       "observed": "201, AI Not Requested",
-      "ms": 2
+      "ms": 3
     },
     {
       "id": "SYS-18",
@@ -162,7 +162,7 @@
       "title": "Invalid complaint input is rejected",
       "status": "Pass",
       "observed": "invalid category, blank location, 2,001-char description: all 400",
-      "ms": 4
+      "ms": 7
     },
     {
       "id": "SYS-19",
@@ -170,7 +170,7 @@
       "title": "GIF and over-10 MB images are rejected",
       "status": "Pass",
       "observed": "GIF 400 \"Only JPG and PNG images are allowed\"; 10 MB + 1 byte 400 \"Image must be 10 MB or smaller\"",
-      "ms": 28
+      "ms": 115
     },
     {
       "id": "SYS-20",
@@ -178,7 +178,7 @@
       "title": "Each citizen lists only their own complaints, newest first",
       "status": "Pass",
       "observed": "A sees 3, B sees 1; newest first",
-      "ms": 21
+      "ms": 19
     },
     {
       "id": "SYS-21",
@@ -194,31 +194,31 @@
       "title": "DL service rejects invalid files",
       "status": "Pass",
       "observed": "text 400, empty 400, > 10 MB 413, corrupted 400",
-      "ms": 31
+      "ms": 92
     },
     {
       "id": "SYS-23",
       "stp": "TC-DL-06",
       "title": "DL service classifies a PNG with three class probabilities",
       "status": "Pass",
-      "observed": "200 in 21 ms: Road Damage",
-      "ms": 21
+      "observed": "200 in 16 ms: Road Damage",
+      "ms": 16
     },
     {
       "id": "SYS-24",
       "stp": "TC-ADM-01",
       "title": "Admin sees all complaints with reporter details and no passwords",
       "status": "Pass",
-      "observed": "8 complaints listed; reporter e-mail shown; no passwords",
-      "ms": 10
+      "observed": "17 complaints listed; reporter e-mail shown; no passwords",
+      "ms": 12
     },
     {
       "id": "SYS-25",
       "stp": "TC-ADM-10",
       "title": "Admin dashboard counts match the stored complaints",
       "status": "Pass",
-      "observed": "total 8, Submitted 6",
-      "ms": 31
+      "observed": "total 17, Submitted 10",
+      "ms": 34
     },
     {
       "id": "SYS-26",
@@ -226,7 +226,7 @@
       "title": "Admin creates a department account; duplicate rejected",
       "status": "Pass",
       "observed": "201, new account can sign in as department; duplicate 409",
-      "ms": 536
+      "ms": 553
     },
     {
       "id": "SYS-27",
@@ -234,7 +234,7 @@
       "title": "Admin assigns the complaint to Roads & Maintenance and sets priority High",
       "status": "Pass",
       "observed": "Assigned to Department / Assigned; priority High",
-      "ms": 21
+      "ms": 18
     },
     {
       "id": "SYS-28",
@@ -250,7 +250,7 @@
       "title": "Invalid status and priority values are rejected",
       "status": "Pass",
       "observed": "400 for each",
-      "ms": 3
+      "ms": 2
     },
     {
       "id": "SYS-30",
@@ -274,7 +274,7 @@
       "title": "Department accepts once; second acceptance rejected",
       "status": "Pass",
       "observed": "200 Accepted by Department; repeat 400",
-      "ms": 3
+      "ms": 4
     },
     {
       "id": "SYS-33",
@@ -298,7 +298,7 @@
       "title": "Admin verifies and resolves",
       "status": "Pass",
       "observed": "Resolved; department status Work Completed",
-      "ms": 2
+      "ms": 3
     },
     {
       "id": "SYS-36",
@@ -314,7 +314,7 @@
       "title": "Malformed JSON and unknown routes return JSON errors",
       "status": "Pass",
       "observed": "400 \"Malformed JSON in request body\"; 404 \"Route not found\"",
-      "ms": 2
+      "ms": 3
     },
     {
       "id": "SYS-38",
@@ -322,15 +322,15 @@
       "title": "CORS allows only the web client origin",
       "status": "Pass",
       "observed": "client origin allowed; foreign origin not echoed",
-      "ms": 0
+      "ms": 1
     },
     {
       "id": "SYS-39",
       "stp": "NFR-PRF-01/02",
       "title": "Response-time sample (20 requests each)",
       "status": "Pass",
-      "observed": "citizen list median 1 ms (p95 1); admin list median 2 ms; DL predict median 9 ms (p95 13)",
-      "ms": 265
+      "observed": "citizen list median 1 ms (p95 2); admin list median 3 ms; DL predict median 14 ms (p95 16)",
+      "ms": 348
     }
   ]
 }

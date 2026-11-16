@@ -5,8 +5,8 @@
 | Item | Value |
 |---|---|
 | Document | Unit Testing Report |
-| Version | 2.0 |
-| Date | 16 November 2026 |
+| Version | 2.1 |
+| Date | 17 November 2026 |
 | Code tested | Branch `docs/update-srs-sad-stp-uml` (pull request #20) |
 | Related documents | TrafficCare_STP, TrafficCare_Code_Coverage_Report |
 
@@ -16,6 +16,7 @@
 |---|---|---|
 | 1.0 | Nov 2026 | Backend 6 suites, frontend 3 files, DL 6 tests: 59 / 59 passed |
 | 2.0 | 16 Nov 2026 | Re-run after 73 new backend and frontend tests: backend 9 suites / 93 tests, frontend 5 files / 34 tests. DL results unchanged from v1.0. 133 / 133 passed |
+| 2.1 | 17 Nov 2026 | Re-run after fixing BUG-007 and BUG-008 found in system testing: +2 backend and +3 frontend regression tests. Backend 95, frontend 37, DL 6: 138 / 138 passed |
 
 ---
 
@@ -25,7 +26,7 @@ TrafficCare is a Smart Traffic Complaint System. Citizens report traffic problem
 
 Unit testing verifies that individual modules and components behave correctly on their own. This report documents the unit tests of the backend, frontend and deep-learning modules.
 
-**What changed since version 1.0.** Version 1.0 had no tests for the department workflow, the department dashboard, department-account creation, complaint assignment or the image-upload / AI-prediction path. Version 2.0 adds 52 backend and 21 frontend tests for these areas. All tests were re-run.
+**What changed since version 1.0.** Version 1.0 had no tests for the department workflow, the department dashboard, department-account creation, complaint assignment or the image-upload / AI-prediction path. Version 2.0 added 52 backend and 21 frontend tests for these areas. Version 2.1 adds 5 regression tests for two defects found in system testing (BUG-007, BUG-008) and re-runs everything.
 
 ## 2. Objectives of Unit Testing
 
@@ -75,9 +76,9 @@ cd server && npm test
 | 5 | `app.test.js` | Welcome route, health check, unknown routes, auth guards | 6 | Existing |
 | 6 | `mongo-connection.test.js` | Connection to the in-memory MongoDB | 1 | Existing |
 | 7 | `department.test.js` | Department role guard; list scoped to own department; accept (valid, twice, invalid ID, other department); progress before acceptance; Work in Progress → Work Completed with history; message length 0 / 1,000 / 1,001; department cannot set Resolved or use the admin API | 18 | **New** |
-| 8 | `adminWorkflow.test.js` | Create department account (valid, each missing field, short password, duplicate, citizen forbidden); assign, reassign with history, unknown department, invalid/missing IDs; Resolved also completes the department status | 16 | **New** |
+| 8 | `adminWorkflow.test.js` | Create department account (valid, each missing field, short password, duplicate, citizen forbidden); assign, reassign with history, unknown department, invalid/missing IDs; Resolved also completes the department status; **v2.1:** assign and update responses include the reporter (BUG-008) | 18 | **New** |
 | 9 | `complaintImage.test.js` | JPEG/PNG upload with server-generated names; `nosniff` header; AI prediction `Completed`; AI `Failed` when the DL service is unreachable, returns 500, `success:false`, a malformed body, or times out; GIF, > 10 MB and multiple-file rejection; uploaded file deleted on validation errors; malformed JSON → 400; generic 500 without leaking details | 18 | **New** |
-| | **Total** | | **93** | |
+| | **Total** | | **95** | |
 
 ### 4.2 Backend test execution results
 
@@ -86,12 +87,12 @@ cd server && npm test
 | Total test suites | 9 |
 | Passed test suites | 9 |
 | Failed test suites | 0 |
-| Total test cases | 93 |
-| Passed test cases | 93 |
+| Total test cases | 95 |
+| Passed test cases | 95 |
 | Failed test cases | 0 |
-| Execution time | 61.079 seconds |
+| Execution time | 66.147 seconds |
 
-Jest output: **9 of 9 test suites and 93 of 93 tests passed (61.079 s).**
+Jest output: **9 of 9 test suites and 95 of 95 tests passed (66.147 s).** The v2.0 run (93 tests) was 61.079 s.
 
 Execution time rose from 18.9 s to 61.1 s because each of the three new suites starts its own in-memory MongoDB, and the upload tests include a 10 MB file.
 
@@ -114,21 +115,22 @@ cd client && npm test
 | 3 | `App.test.jsx` | Application shell, sign-in and registration | 5 | Existing |
 | 4 | `DepartmentDashboard.test.jsx` | Loading, statistics, empty and error states with retry; accept assignment; progress message required; progress and completion requests; error messages; details modal with history; logout | 11 | **New** |
 | 5 | `AdminDashboardActions.test.jsx` | Reporter and AI analysis display; assign (no selection, success, server error); status and priority updates with statistics refresh; update errors; logout on 401; load error; logout | 10 | **New** |
-| | **Total** | | **34** | |
+| 6 | `DashboardTracking.test.jsx` | **v2.1, BUG-007:** citizen card shows "Handled by" department; progress history newest first with role and time; "Not yet assigned" without an empty history | 3 | **New** |
+| | **Total** | | **37** | |
 
 ### 5.2 Frontend test execution results
 
 | Parameter | Result |
 |---|---|
-| Total test files | 5 |
-| Passed test files | 5 |
+| Total test files | 6 |
+| Passed test files | 6 |
 | Failed test files | 0 |
-| Total test cases | 34 |
-| Passed test cases | 34 |
+| Total test cases | 37 |
+| Passed test cases | 37 |
 | Failed test cases | 0 |
-| Execution time | 2.17 seconds |
+| Execution time | 2.51 seconds |
 
-Vitest output: **5 of 5 test files and 34 of 34 tests passed (2.17 s).**
+Vitest output: **6 of 6 test files and 37 of 37 tests passed (2.51 s).**
 
 ---
 
@@ -174,24 +176,24 @@ The results below are from the version 1.0 run and were not re-executed for this
 
 | Parameter | Backend | Frontend | Deep Learning | Total |
 |---|---|---|---|---|
-| Test suites / files | 9 | 5 | 1 | 15 |
-| Test cases | 93 | 34 | 6 | 133 |
-| Passed | 93 | 34 | 6 | **133** |
+| Test suites / files | 9 | 6 | 1 | 16 |
+| Test cases | 95 | 37 | 6 | 138 |
+| Passed | 95 | 37 | 6 | **138** |
 | Failed | 0 | 0 | 0 | **0** |
 | Pass rate | 100 % | 100 % | 100 % | **100 %** |
 
 ### 7.1 Comparison with version 1.0
 
-| Module | v1.0 tests | v2.0 tests | Added |
+| Module | v1.0 tests | v2.1 tests | Added |
 |---|---|---|---|
-| Backend | 40 | 93 | +53 (52 new tests, plus 1 existing test not counted in v1.0) |
-| Frontend | 13 | 34 | +21 |
+| Backend | 40 | 95 | +55 (54 new tests, plus 1 existing test not counted in v1.0) |
+| Frontend | 13 | 37 | +24 |
 | Deep Learning | 6 | 6 | 0 |
-| **Total** | **59** | **133** | **+74** |
+| **Total** | **59** | **138** | **+79** |
 
 ### 7.2 Areas covered
 
-| Area | v1.0 | v2.0 |
+| Area | v1.0 | v2.1 |
 |---|---|---|
 | Registration, login, tokens | Tested | Tested |
 | Complaint creation, validation, ownership | Tested | Tested |
@@ -201,10 +203,11 @@ The results below are from the version 1.0 run and were not re-executed for this
 | Department workflow (accept, progress, complete) | Not tested | **Tested** |
 | Department dashboard (React) | Not tested | **Tested** |
 | Admin dashboard actions (React) | Partly | **Tested** |
+| Citizen progress history and department (React) | Not tested | **Tested** |
 | Error handling (malformed JSON, 500) | Not tested | **Tested** |
 | DL API validation and prediction | Tested | Tested |
 
-Statement and branch coverage for these tests is reported in TrafficCare_Code_Coverage_Report (backend 79.5 % / 83.7 %, frontend 84.1 % / 75.2 %).
+Statement and branch coverage for these tests is reported in TrafficCare_Code_Coverage_Report (backend 79.7 % / 83.7 %, frontend 84.3 % / 75.7 %).
 
 ---
 
@@ -229,10 +232,10 @@ None of these warnings caused a test failure.
 ## 9. Limitations of Testing
 
 1. The DL prediction test uses a mock model, so unit tests do not measure the accuracy of the trained ResNet18 model. Model accuracy is reported separately in `dl/results/`.
-2. The DL module was not re-run for version 2.0, and its results are carried over from version 1.0.
+2. The DL module was not re-run for versions 2.0 and 2.1, and its results are carried over from version 1.0.
 3. Server start-up code (`index.js`, `config/db.js`, `seedDepartments.js`) needs a real database and is covered by system testing, not unit testing.
 4. Browser-level end-to-end and performance testing are not part of unit testing. They belong to the System Test Report.
 
 ## 10. Conclusion
 
-Unit testing was repeated after the test suite was extended. All 9 backend suites (93 tests), all 5 frontend test files (34 tests) and the 6 deep-learning tests pass: **133 of 133 unit tests passed, with zero failures.** The department workflow, department-account management, complaint assignment, image upload with AI fallback, and the department and admin dashboards, all untested in version 1.0, are now covered. The tested backend, frontend and deep-learning components behave as expected for the tested scenarios.
+Unit testing was repeated after the test suite was extended and two defects found in system testing were fixed. All 9 backend suites (95 tests), all 6 frontend test files (37 tests) and the 6 deep-learning tests pass: **138 of 138 unit tests passed, with zero failures.** The department workflow, department-account management, complaint assignment, image upload with AI fallback, and the department and admin dashboards, all untested in version 1.0, are now covered. The tested backend, frontend and deep-learning components behave as expected for the tested scenarios.

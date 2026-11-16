@@ -279,13 +279,13 @@ Results below are copied from the repository's own records; they are not re-exec
 
 | Suite | Tool | Last reported result | Source |
 |---|---|---|---|
-| Backend | Jest | 9 suites, 93/93 tests passed (16 Nov 2026) | `TrafficCare_Code_Coverage_Report.docx` |
+| Backend | Jest | 9 suites, 95/95 tests passed (17 Nov 2026) | `TrafficCare_Code_Coverage_Report.docx` |
 | DL API | unittest / pytest | 14/14 tests passed (model mocked in the prediction tests) | `TrafficCare_Code_Coverage_Report.docx` |
-| Frontend | Vitest | 5 files, 34/34 tests passed | `TrafficCare_Code_Coverage_Report.docx` |
+| Frontend | Vitest | 6 files, 37/37 tests passed | `TrafficCare_Code_Coverage_Report.docx` |
 | Python lint | Pylint | 8.97 / 10 | Root README |
 | QA API suite | Jest (`testing/automated`) | 45/45 passed; BUG-001…005 verified fixed | `testing/test-results.md` |
-| System tests (live stack) | HTTP + Chrome end-to-end | 102/104 passed; BUG-007, BUG-008 open; Docker/Kubernetes not run | `TrafficCare_System_Test_Report` |
-| Code and branch coverage | Jest, Vitest v8, coverage.py | 83.0 % statements, 78.6 % branches (all 141 tests passed) | `TrafficCare_Code_Coverage_Report.docx` |
+| System tests (live stack) | HTTP + Chrome end-to-end | 104/104 passed after fixing BUG-007/008 (first run 102/104); Docker/Kubernetes not run | `TrafficCare_System_Test_Report` |
+| Code and branch coverage | Jest, Vitest v8, coverage.py | 83.2 % statements, 78.8 % branches (all 146 tests passed) | `TrafficCare_Code_Coverage_Report.docx` |
 | Model evaluation | scripts | Completed: see SAD §8.3 for all 10 models | `dl/results`, `qml/results` |
 
 ### 10.1 Defect status
@@ -298,8 +298,8 @@ Results below are copied from the repository's own records; they are not re-exec
 | BUG-004 | Invalid e-mail accepted | E-mail regex now present | Verified 16 Nov 2026 |
 | BUG-005 | Malformed JSON shows stack trace | JSON error handler now present in `app.js` | Verified 16 Nov 2026 |
 | BUG-006 | Duplicate setup in `index.js` | `index.js` now only bootstraps | Verified 16 Nov 2026 |
-| BUG-007 | Citizen dashboard hides progress history and department | Open | Fix `Dashboard.jsx`; re-run UI-12 |
-| BUG-008 | Admin card shows reporter "Unknown" after update | Open | Populate `user` in admin PATCH responses; re-run UI-08b |
+| BUG-007 | Citizen dashboard hides progress history and department | Fixed in `c4ca873` | Verified 17 Nov 2026 (UI-12) |
+| BUG-008 | Admin card shows reporter "Unknown" after update | Fixed in `c4ca873` | Verified 17 Nov 2026 (UI-08b) |
 
 A defect moves to **Verified** only after its tagged test passes and the full suite shows no regression.
 

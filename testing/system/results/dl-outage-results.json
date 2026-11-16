@@ -1,6 +1,6 @@
 {
   "suite": "dl-outage",
-  "date": "2026-11-16T18:30:20.795Z",
+  "date": "2026-11-16T18:47:32.136Z",
   "api": "http://localhost:5050/api",
   "dl": "http://localhost:8010",
   "passed": 2,

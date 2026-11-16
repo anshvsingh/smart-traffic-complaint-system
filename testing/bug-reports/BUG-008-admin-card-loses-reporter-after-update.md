@@ -4,7 +4,7 @@
 - **Test case:** UI-08b (system test), SRS UI-04 / FR-ADM-01
 - **Environment:** branch `docs/update-srs-sad-stp-uml` @ `f2ff527`, macOS, Node 24, Chrome (headless), local stack
 - **Found by:** system test run, 17 Nov 2026
-- **Status:** Open
+- **Status:** Verified (fixed in commit `c4ca873`, re-tested 17 Nov 2026)
 
 ## Description
 After the administrator changes the status or priority of a complaint, or assigns it to a department, the card's *Reported by* field changes from the citizen's name and e-mail to "Unknown / N/A". After a page reload it is correct again.
@@ -25,4 +25,7 @@ The reporter's name and e-mail stay visible.
 Backend: `await complaint.populate("user", "name email")` (and `progressUpdates.updatedBy`) before responding. Or frontend: keep the existing `user` object when merging the updated complaint.
 
 ## Re-test
-Pending: `node testing/system/ui-e2e.cjs` step UI-08b.
+- **Fix:** commit `c4ca873` on branch `docs/update-srs-sad-stp-uml` (PR #20).
+- **Regression tests added:** `server/tests/adminWorkflow.test.js` (2 tests); they pass.
+- **System re-test, 17 Nov 2026:** `node testing/system/ui-e2e.cjs` step UI-08b **Pass**; the full browser suite passes 16/16. Live API 39/39, QA suite 45/45 and DL-outage 2/2 also re-run with no regressions.
+- Evidence: before `../system/screenshots/before-fix/`, after `../system/screenshots/`.

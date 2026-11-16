@@ -1,8 +1,8 @@
 {
   "suite": "ui-e2e",
-  "date": "2026-11-16T18:30:13.753Z",
+  "date": "2026-11-16T18:46:52.695Z",
   "web": "http://localhost:5173",
-  "passed": 14,
+  "passed": 16,
   "total": 16,
   "pageErrors": [],
   "results": [
@@ -13,7 +13,7 @@
       "status": "Pass",
       "observed": "Login and Register tabs, e-mail and password fields shown",
       "screenshot": "UI-01-login.png",
-      "ms": 8002
+      "ms": 9864
     },
     {
       "id": "UI-02",
@@ -22,7 +22,7 @@
       "status": "Pass",
       "observed": "\"Registration successful! Please log in.\" shown",
       "screenshot": "UI-02-registered.png",
-      "ms": 1842
+      "ms": 1836
     },
     {
       "id": "UI-03",
@@ -31,7 +31,7 @@
       "status": "Pass",
       "observed": "role=\"alert\": \"Invalid email or password\"",
       "screenshot": "UI-03-login-error.png",
-      "ms": 1632
+      "ms": 1671
     },
     {
       "id": "UI-04",
@@ -40,7 +40,7 @@
       "status": "Pass",
       "observed": "Citizen dashboard with complaint form and My complaints",
       "screenshot": "UI-04-citizen-dashboard.png",
-      "ms": 2142
+      "ms": 2223
     },
     {
       "id": "UI-05",
@@ -49,7 +49,7 @@
       "status": "Pass",
       "observed": "Validation message shown; no preview",
       "screenshot": "UI-05-gif-rejected.png",
-      "ms": 1296
+      "ms": 1287
     },
     {
       "id": "UI-06",
@@ -58,7 +58,7 @@
       "status": "Pass",
       "observed": "\"Complaint submitted! AI prediction: Road Damage (44.0% confidence).\"; card shows Submitted; AI road analysis · Prediction: Road Damage · Confidence: 44.0% · AI assistance only; verify the road condition manually.",
       "screenshot": "UI-06-complaint-submitted.png",
-      "ms": 2099
+      "ms": 2039
     },
     {
       "id": "UI-07",
@@ -67,7 +67,7 @@
       "status": "Pass",
       "observed": "token and user removed from localStorage; Back leaves the single-page app; re-opening and reloading the app shows sign-in",
       "screenshot": "UI-07-logged-out.png",
-      "ms": 2187
+      "ms": 2217
     },
     {
       "id": "UI-08",
@@ -76,16 +76,16 @@
       "status": "Pass",
       "observed": "Card shows Assigned to Department, Roads & Maintenance, Priority High; AI analysis visible",
       "screenshot": "UI-08-admin-assigned.png",
-      "ms": 2352
+      "ms": 2391
     },
     {
       "id": "UI-08b",
       "stp": "UI-04, TC-ADM-01",
       "title": "Admin card still shows the reporter after an update",
-      "status": "Fail",
-      "observed": "reporter shown as \"Unknown\" after the update (correct after a page reload)",
+      "status": "Pass",
+      "observed": "Reporter name and e-mail still shown",
       "screenshot": "UI-08b-admin-reporter-after-update.png",
-      "ms": 1521
+      "ms": 755
     },
     {
       "id": "UI-09",
@@ -94,7 +94,7 @@
       "status": "Pass",
       "observed": "Accepted → Work in Progress → Work Completed; notices shown; completion note shown",
       "screenshot": "UI-09-department-completed.png",
-      "ms": 3168
+      "ms": 3266
     },
     {
       "id": "UI-10",
@@ -103,7 +103,7 @@
       "status": "Pass",
       "observed": "Status badge Resolved; statistics refreshed",
       "screenshot": "UI-10-admin-resolved.png",
-      "ms": 2263
+      "ms": 2148
     },
     {
       "id": "UI-11",
@@ -112,16 +112,16 @@
       "status": "Pass",
       "observed": "Card status Resolved",
       "screenshot": "UI-11-citizen-resolved.png",
-      "ms": 2038
+      "ms": 2056
     },
     {
       "id": "UI-12",
       "stp": "UI-03, TC-UI-04",
       "title": "Citizen dashboard shows the progress history and assigned department",
-      "status": "Fail",
-      "observed": "history shown: false, department shown: false (API returns both)",
-      "screenshot": "UI-12-failure.png",
-      "ms": 747
+      "status": "Pass",
+      "observed": "\"Handled by Roads & Maintenance\"; progress history with 5 entries, newest first",
+      "screenshot": "UI-12-citizen-history.png",
+      "ms": 1154
     },
     {
       "id": "UI-13",
@@ -130,7 +130,7 @@
       "status": "Pass",
       "observed": "Returned to sign-in",
       "screenshot": "UI-13-tampered-token.png",
-      "ms": 3201
+      "ms": 3070
     },
     {
       "id": "UI-14",
@@ -139,7 +139,7 @@
       "status": "Pass",
       "observed": "sign-in and citizen dashboard fit 375 px (scrollWidth 375)",
       "screenshot": "UI-14-mobile-dashboard.png",
-      "ms": 3675
+      "ms": 3533
     },
     {
       "id": "UI-15",
@@ -147,7 +147,7 @@
       "title": "Sign-in form can be completed with the keyboard only",
       "status": "Pass",
       "observed": "Tab from e-mail reaches password; Enter submits; dashboard opens",
-      "ms": 1057
+      "ms": 1087
     }
   ]
 }
