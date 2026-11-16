@@ -46,6 +46,9 @@ pip install -r dl/requirements.txt          # CPU is fine for the API
 
 The original dataset (`dl/datasets/raw/{Training,Validation,Testing}/{Cracks,Normal,Pothole}`) and
 `models/best_model.pth` are tracked with DVC: `dvc pull` (needs access to the DVC remote).
+The DVC remote is a Google Drive folder. Set it up with `bash scripts/setup-dvc-gdrive.sh <FOLDER_ID>`. Full DVC and
+MLflow guide: [`docs/03_dvc_and_mlflow.md`](docs/03_dvc_and_mlflow.md); a recorded MLflow run is in
+[`results/mlflow/`](results/mlflow/).
 
 ## Original ResNet18 pipeline
 

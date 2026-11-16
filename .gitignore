@@ -71,3 +71,5 @@ mlartifacts/
 # ==========================================
 
 dl/verification.txt
+# Local MLflow training runs on public data (checkpoints, curves)
+dl/runs/

@@ -1,0 +1,1360 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/24.6.0/bin/node",
+      "testing/system/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "testing/system/playwright.config.mjs",
+    "rootDir": "testing/system/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "testing/system/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chrome-desktop",
+        "name": "chrome-desktop",
+        "testDir": "testing/system/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "testing/system/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chrome-desktop",
+        "testDir": "testing/system/e2e",
+        "snapshotDir": "testing/system/e2e",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://localhost:5173",
+          "viewport": {
+            "width": 1366,
+            "height": 900
+          },
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "channel": "chrome",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chrome-desktop"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "results/playwright-results.json"
+        }
+      ],
+      [
+        "testing/system/e2e/markdown-reporter.mjs",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "trafficcare.spec.mjs",
+      "file": "trafficcare.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UI-01 Sign-in page loads",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "TC42"
+                },
+                {
+                  "type": "observed",
+                  "description": "Login and Register tabs, e-mail and password fields shown"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-01-login.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6990,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:34:51.103Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "TC42"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "Login and Register tabs, e-mail and password fields shown"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-01-login.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-f717d7354f8734cc5bc1",
+          "file": "trafficcare.spec.mjs",
+          "line": 81,
+          "column": 1
+        },
+        {
+          "title": "UI-02 Citizen registers through the UI",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "TC42, TC-AUTH-01"
+                },
+                {
+                  "type": "observed",
+                  "description": "\"Registration successful! Please log in.\" shown"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-02-registered.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2437,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:02.208Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "TC42, TC-AUTH-01"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "\"Registration successful! Please log in.\" shown"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-02-registered.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-c63709e9c83ae412eecd",
+          "file": "trafficcare.spec.mjs",
+          "line": 90,
+          "column": 1
+        },
+        {
+          "title": "UI-03 Wrong password shows an accessible error",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "TC-AUTH-08, NFR-ACC-01"
+                },
+                {
+                  "type": "observed",
+                  "description": "role=\"alert\": \"Invalid email or password\""
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-03-login-error.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2636,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:04.654Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "TC-AUTH-08, NFR-ACC-01"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "role=\"alert\": \"Invalid email or password\""
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-03-login-error.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-19e420ee7e9b8b5124e2",
+          "file": "trafficcare.spec.mjs",
+          "line": 101,
+          "column": 1
+        },
+        {
+          "title": "UI-04 Citizen signs in and sees the citizen dashboard",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "TC42, TC-UI-01"
+                },
+                {
+                  "type": "observed",
+                  "description": "Citizen dashboard with complaint form and My complaints"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-04-citizen-dashboard.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2078,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:07.300Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "TC42, TC-UI-01"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "Citizen dashboard with complaint form and My complaints"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-04-citizen-dashboard.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-e1d61d318fb582ef6e3b",
+          "file": "trafficcare.spec.mjs",
+          "line": 111,
+          "column": 1
+        },
+        {
+          "title": "UI-05 Client rejects a GIF before upload",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "TC-UI-03"
+                },
+                {
+                  "type": "observed",
+                  "description": "\"Please select a JPG or PNG image.\" shown; no preview"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-05-gif-rejected.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 827,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:09.394Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "TC-UI-03"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "\"Please select a JPG or PNG image.\" shown; no preview"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-05-gif-rejected.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-02c4bcc4c701a2d038b0",
+          "file": "trafficcare.spec.mjs",
+          "line": 119,
+          "column": 1
+        },
+        {
+          "title": "UI-06 Citizen submits a complaint with a photo; AI analysis appears",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "TC43, TC-CMP-06, TC-AI-01"
+                },
+                {
+                  "type": "observed",
+                  "description": "\"Complaint submitted! AI prediction: Road Damage (44.0% confidence).\"; card shows Submitted; AI road analysis · Prediction: Road Damage · Confidence: 44.0% · AI assistance only; verify the road condition manually."
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-06-complaint-submitted.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1758,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:10.231Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "TC43, TC-CMP-06, TC-AI-01"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "\"Complaint submitted! AI prediction: Road Damage (44.0% confidence).\"; card shows Submitted; AI road analysis · Prediction: Road Damage · Confidence: 44.0% · AI assistance only; verify the road condition manually."
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-06-complaint-submitted.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-274b81e420525b46aa93",
+          "file": "trafficcare.spec.mjs",
+          "line": 131,
+          "column": 1
+        },
+        {
+          "title": "UI-07 Logout clears the session; reopening and reloading stay on sign-in",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "TC44, FR-AUTH-08"
+                },
+                {
+                  "type": "observed",
+                  "description": "token and user removed from localStorage; re-opening and reloading the app shows sign-in"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-07-logged-out.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1214,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:12.001Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "TC44, FR-AUTH-08"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "token and user removed from localStorage; re-opening and reloading the app shows sign-in"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-07-logged-out.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-5f177667f4ae8b557ec6",
+          "file": "trafficcare.spec.mjs",
+          "line": 150,
+          "column": 1
+        },
+        {
+          "title": "UI-08 Admin sets priority High and assigns Roads & Maintenance",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "TC45, TC-UI-01, TC-ADM-04/07"
+                },
+                {
+                  "type": "observed",
+                  "description": "Card shows Assigned to Department, Roads & Maintenance, Priority High; AI analysis visible"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-08-admin-assigned.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2491,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:13.225Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "TC45, TC-UI-01, TC-ADM-04/07"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "Card shows Assigned to Department, Roads & Maintenance, Priority High; AI analysis visible"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-08-admin-assigned.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-aef39314e1bb27b917b2",
+          "file": "trafficcare.spec.mjs",
+          "line": 162,
+          "column": 1
+        },
+        {
+          "title": "UI-08b Admin card still shows the reporter after an update",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "UI-04, TC-ADM-01"
+                },
+                {
+                  "type": "observed",
+                  "description": "Reporter name and e-mail still shown"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-08b-admin-reporter-after-update.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 815,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:15.726Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "UI-04, TC-ADM-01"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "Reporter name and e-mail still shown"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-08b-admin-reporter-after-update.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-37876e65a144e661c413",
+          "file": "trafficcare.spec.mjs",
+          "line": 176,
+          "column": 1
+        },
+        {
+          "title": "UI-09 Department accepts, posts progress and marks work completed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "TC-DEP-02/05, TC-UI-01"
+                },
+                {
+                  "type": "observed",
+                  "description": "Accepted → Work in Progress → Work Completed; notices shown; completion note shown"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-09a-department-progress.png"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-09-department-completed.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2951,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:16.550Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "TC-DEP-02/05, TC-UI-01"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "Accepted → Work in Progress → Work Completed; notices shown; completion note shown"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-09a-department-progress.png"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-09-department-completed.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-b617f2af1804cc17299f",
+          "file": "trafficcare.spec.mjs",
+          "line": 183,
+          "column": 1
+        },
+        {
+          "title": "UI-10 Admin verifies the work and sets Resolved",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "TC45, TC-ADM-09"
+                },
+                {
+                  "type": "observed",
+                  "description": "Status badge Resolved; statistics refreshed"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-10-admin-resolved.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1823,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:19.510Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "TC45, TC-ADM-09"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "Status badge Resolved; statistics refreshed"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-10-admin-resolved.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-19da8985bd98dac6e01d",
+          "file": "trafficcare.spec.mjs",
+          "line": 202,
+          "column": 1
+        },
+        {
+          "title": "UI-11 Citizen sees the complaint as Resolved",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "TC-UI-04"
+                },
+                {
+                  "type": "observed",
+                  "description": "Card status Resolved"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-11-citizen-resolved.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1271,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:21.342Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "TC-UI-04"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "Card status Resolved"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-11-citizen-resolved.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-81b5720a7cfe903304a6",
+          "file": "trafficcare.spec.mjs",
+          "line": 212,
+          "column": 1
+        },
+        {
+          "title": "UI-12 Citizen dashboard shows the progress history and assigned department",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "UI-03, TC-UI-04"
+                },
+                {
+                  "type": "observed",
+                  "description": "\"Handled by Roads & Maintenance\"; progress history with 5 entries, newest first"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-12-citizen-history.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 832,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:22.625Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "UI-03, TC-UI-04"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "\"Handled by Roads & Maintenance\"; progress history with 5 entries, newest first"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-12-citizen-history.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-58adb6f5975f7c21e3e5",
+          "file": "trafficcare.spec.mjs",
+          "line": 220,
+          "column": 1
+        },
+        {
+          "title": "UI-13 Tampered token: user is returned to sign-in",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "TC46"
+                },
+                {
+                  "type": "observed",
+                  "description": "Returned to sign-in"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-13-tampered-token.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1093,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:23.471Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "TC46"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "Returned to sign-in"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-13-tampered-token.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-071986a6844958c29d20",
+          "file": "trafficcare.spec.mjs",
+          "line": 232,
+          "column": 1
+        },
+        {
+          "title": "UI-14 Mobile width (375 px): no horizontal scrolling",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-14a-mobile-login.png"
+                },
+                {
+                  "type": "stp",
+                  "description": "UI-06, TC-UI-05"
+                },
+                {
+                  "type": "observed",
+                  "description": "sign-in and citizen dashboard fit 375 px (scrollWidth 375)"
+                },
+                {
+                  "type": "screenshot",
+                  "description": "UI-14-mobile-dashboard.png"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3355,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:24.572Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-14a-mobile-login.png"
+                    },
+                    {
+                      "type": "stp",
+                      "description": "UI-06, TC-UI-05"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "sign-in and citizen dashboard fit 375 px (scrollWidth 375)"
+                    },
+                    {
+                      "type": "screenshot",
+                      "description": "UI-14-mobile-dashboard.png"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-21a425582d717847bd62",
+          "file": "trafficcare.spec.mjs",
+          "line": 240,
+          "column": 1
+        },
+        {
+          "title": "UI-15 Sign-in form can be completed with the keyboard only",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "testing/system/e2e/trafficcare.spec.mjs",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "stp",
+                  "description": "NFR-ACC-01"
+                },
+                {
+                  "type": "observed",
+                  "description": "Tab from e-mail reaches password; Enter submits; dashboard opens"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chrome-desktop",
+              "projectName": "chrome-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 606,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T19:35:27.938Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "testing/system/e2e/trafficcare.spec.mjs",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "stp",
+                      "description": "NFR-ACC-01"
+                    },
+                    {
+                      "type": "observed",
+                      "description": "Tab from e-mail reaches password; Enter submits; dashboard opens"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e18b136d0f50dfb519b-ce0ba2b8cdf7a5d1bd54",
+          "file": "trafficcare.spec.mjs",
+          "line": 255,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T19:34:50.706Z",
+    "duration": 38415.765,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
