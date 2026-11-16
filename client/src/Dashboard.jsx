@@ -6,6 +6,12 @@ import Aura from "./Aura";
 const API = "http://localhost:5050/api/complaints";
 const SERVER_URL = "http://localhost:5050";
 
+const ROLE_LABELS = {
+  admin: "Administrator",
+  department: "Department",
+  citizen: "You",
+};
+
 function Dashboard({ user, onLogout }) {
   const [form, setForm] = useState({
     category: "Pothole",
@@ -174,6 +180,17 @@ function Dashboard({ user, onLogout }) {
       default:
         return "submitted";
     }
+  };
+
+  const formatDateTime = (date) => {
+    if (!date) return "";
+
+    return new Date(date).toLocaleString("en-IN", {
+      day: "numeric",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
   const formatDate = (date) => {
@@ -452,6 +469,34 @@ function Dashboard({ user, onLogout }) {
                     </div>
                   )}
 
+                  <div className="complaint-tracking">
+                    <p className="tracking-department">
+                      <span>Handled by</span>{" "}
+                      <strong>
+                        {complaint.assignedDepartment || "Not yet assigned"}
+                      </strong>
+                    </p>
+                    {complaint.progressUpdates?.length > 0 && (
+                      <div className="tracking-history">
+                        <h4>Progress history</h4>
+                        <ol>
+                          {[...complaint.progressUpdates]
+                            .reverse()
+                            .map((update, index) => (
+                              <li key={update._id || index}>
+                                <span className="tracking-role">
+                                  {ROLE_LABELS[update.role] || update.role}
+                                </span>
+                                <p>{update.message}</p>
+                                <time dateTime={update.createdAt}>
+                                  {formatDateTime(update.createdAt)}
+                                </time>
+                              </li>
+                            ))}
+                        </ol>
+                      </div>
+                    )}
+                  </div>
                   <div className="complaint-card-footer">
                     <span>📍 {complaint.location}</span>
                     <span>{formatDate(complaint.createdAt)}</span>

@@ -29,6 +29,13 @@ const allowedStatuses = [
 
 const allowedPriorities = ["Low", "Medium", "High"];
 
+// Fill in the reporter and progress authors, as the list endpoint does.
+const populateComplaint = (complaint) =>
+  complaint.populate([
+    { path: "user", select: "name email" },
+    { path: "progressUpdates.updatedBy", select: "name email role" },
+  ]);
+
 // --------------------------------------------------
 // POST /api/admin/departments
 // Create a department account
@@ -189,6 +196,8 @@ router.patch("/complaints/:id/assign", async (req, res) => {
     });
 
     await complaint.save();
+    // Return the same shape as GET /complaints so the dashboard keeps the reporter (BUG-008).
+    await populateComplaint(complaint);
 
     return res.status(200).json({
       status: "success",
@@ -278,6 +287,8 @@ router.patch("/complaints/:id", async (req, res) => {
     }
 
     await complaint.save();
+    // Return the same shape as GET /complaints so the dashboard keeps the reporter (BUG-008).
+    await populateComplaint(complaint);
 
     return res.status(200).json({
       status: "success",
