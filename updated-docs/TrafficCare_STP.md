@@ -284,7 +284,7 @@ Results below are copied from the repository's own records; they are not re-exec
 | Frontend | Vitest | 6 files, 37/37 tests passed | `TrafficCare_Code_Coverage_Report.docx` |
 | Python lint | Pylint | 8.97 / 10 | Root README |
 | QA API suite | Jest (`testing/automated`) | 45/45 passed; BUG-001…005 verified fixed | `testing/test-results.md` |
-| System tests (live stack) | HTTP + Chrome end-to-end | 104/104 passed after fixing BUG-007/008 (first run 102/104); Docker/Kubernetes not run | `TrafficCare_System_Test_Report` |
+| System tests (live stack) | HTTP, Chrome end-to-end, Docker Compose, Kubernetes | 106/106 passed after fixing BUG-007/008 (first run 102/104) | `TrafficCare_System_Test_Report` |
 | Code and branch coverage | Jest, Vitest v8, coverage.py | 83.2 % statements, 78.8 % branches (all 146 tests passed) | `TrafficCare_Code_Coverage_Report.docx` |
 | Model evaluation | scripts | Completed: see SAD §8.3 for all 10 models | `dl/results`, `qml/results` |
 
