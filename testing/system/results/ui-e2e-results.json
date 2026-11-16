@@ -1,0 +1,153 @@
+{
+  "suite": "ui-e2e",
+  "date": "2026-11-16T18:30:13.753Z",
+  "web": "http://localhost:5173",
+  "passed": 14,
+  "total": 16,
+  "pageErrors": [],
+  "results": [
+    {
+      "id": "UI-01",
+      "stp": "TC42",
+      "title": "Sign-in page loads",
+      "status": "Pass",
+      "observed": "Login and Register tabs, e-mail and password fields shown",
+      "screenshot": "UI-01-login.png",
+      "ms": 8002
+    },
+    {
+      "id": "UI-02",
+      "stp": "TC42, TC-AUTH-01",
+      "title": "Citizen registers through the UI",
+      "status": "Pass",
+      "observed": "\"Registration successful! Please log in.\" shown",
+      "screenshot": "UI-02-registered.png",
+      "ms": 1842
+    },
+    {
+      "id": "UI-03",
+      "stp": "TC-AUTH-08, NFR-ACC-01",
+      "title": "Wrong password shows an accessible error",
+      "status": "Pass",
+      "observed": "role=\"alert\": \"Invalid email or password\"",
+      "screenshot": "UI-03-login-error.png",
+      "ms": 1632
+    },
+    {
+      "id": "UI-04",
+      "stp": "TC42, TC-UI-01",
+      "title": "Citizen signs in and sees the citizen dashboard",
+      "status": "Pass",
+      "observed": "Citizen dashboard with complaint form and My complaints",
+      "screenshot": "UI-04-citizen-dashboard.png",
+      "ms": 2142
+    },
+    {
+      "id": "UI-05",
+      "stp": "TC-UI-03",
+      "title": "Client rejects a GIF before upload",
+      "status": "Pass",
+      "observed": "Validation message shown; no preview",
+      "screenshot": "UI-05-gif-rejected.png",
+      "ms": 1296
+    },
+    {
+      "id": "UI-06",
+      "stp": "TC43, TC-CMP-06, TC-AI-01",
+      "title": "Citizen submits a complaint with a photo; AI analysis appears",
+      "status": "Pass",
+      "observed": "\"Complaint submitted! AI prediction: Road Damage (44.0% confidence).\"; card shows Submitted; AI road analysis · Prediction: Road Damage · Confidence: 44.0% · AI assistance only; verify the road condition manually.",
+      "screenshot": "UI-06-complaint-submitted.png",
+      "ms": 2099
+    },
+    {
+      "id": "UI-07",
+      "stp": "TC44, FR-AUTH-08",
+      "title": "Logout clears the session; Back and reload stay on sign-in",
+      "status": "Pass",
+      "observed": "token and user removed from localStorage; Back leaves the single-page app; re-opening and reloading the app shows sign-in",
+      "screenshot": "UI-07-logged-out.png",
+      "ms": 2187
+    },
+    {
+      "id": "UI-08",
+      "stp": "TC45, TC-UI-01, TC-ADM-04/07",
+      "title": "Admin sets priority High and assigns Roads & Maintenance",
+      "status": "Pass",
+      "observed": "Card shows Assigned to Department, Roads & Maintenance, Priority High; AI analysis visible",
+      "screenshot": "UI-08-admin-assigned.png",
+      "ms": 2352
+    },
+    {
+      "id": "UI-08b",
+      "stp": "UI-04, TC-ADM-01",
+      "title": "Admin card still shows the reporter after an update",
+      "status": "Fail",
+      "observed": "reporter shown as \"Unknown\" after the update (correct after a page reload)",
+      "screenshot": "UI-08b-admin-reporter-after-update.png",
+      "ms": 1521
+    },
+    {
+      "id": "UI-09",
+      "stp": "TC-DEP-02/05, TC-UI-01",
+      "title": "Department accepts, posts progress and marks work completed",
+      "status": "Pass",
+      "observed": "Accepted → Work in Progress → Work Completed; notices shown; completion note shown",
+      "screenshot": "UI-09-department-completed.png",
+      "ms": 3168
+    },
+    {
+      "id": "UI-10",
+      "stp": "TC45, TC-ADM-09",
+      "title": "Admin verifies the work and sets Resolved",
+      "status": "Pass",
+      "observed": "Status badge Resolved; statistics refreshed",
+      "screenshot": "UI-10-admin-resolved.png",
+      "ms": 2263
+    },
+    {
+      "id": "UI-11",
+      "stp": "TC-UI-04",
+      "title": "Citizen sees the complaint as Resolved",
+      "status": "Pass",
+      "observed": "Card status Resolved",
+      "screenshot": "UI-11-citizen-resolved.png",
+      "ms": 2038
+    },
+    {
+      "id": "UI-12",
+      "stp": "UI-03, TC-UI-04",
+      "title": "Citizen dashboard shows the progress history and assigned department",
+      "status": "Fail",
+      "observed": "history shown: false, department shown: false (API returns both)",
+      "screenshot": "UI-12-failure.png",
+      "ms": 747
+    },
+    {
+      "id": "UI-13",
+      "stp": "TC46",
+      "title": "Tampered token: user is returned to sign-in",
+      "status": "Pass",
+      "observed": "Returned to sign-in",
+      "screenshot": "UI-13-tampered-token.png",
+      "ms": 3201
+    },
+    {
+      "id": "UI-14",
+      "stp": "UI-06, TC-UI-05",
+      "title": "Mobile width (375 px): no horizontal scrolling",
+      "status": "Pass",
+      "observed": "sign-in and citizen dashboard fit 375 px (scrollWidth 375)",
+      "screenshot": "UI-14-mobile-dashboard.png",
+      "ms": 3675
+    },
+    {
+      "id": "UI-15",
+      "stp": "NFR-ACC-01",
+      "title": "Sign-in form can be completed with the keyboard only",
+      "status": "Pass",
+      "observed": "Tab from e-mail reaches password; Enter submits; dashboard opens",
+      "ms": 1057
+    }
+  ]
+}

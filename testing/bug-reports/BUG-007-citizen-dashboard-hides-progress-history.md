@@ -1,0 +1,27 @@
+# BUG-007: Citizen dashboard does not show progress history or assigned department
+
+- **Severity:** Medium
+- **Test case:** UI-12 (system test), SRS UI-03, STP TC-UI-04
+- **Environment:** branch `docs/update-srs-sad-stp-uml` @ `f2ff527`, macOS, Node 24, Chrome (headless), local stack
+- **Found by:** system test run, 17 Nov 2026
+- **Status:** Open
+
+## Description
+The README and SRS (UI-03) say a citizen can see the progress history of their complaint. The API returns it: `GET /api/complaints/:id` includes `progressUpdates` and `assignedDepartment` (verified by system test SYS-36, 5 entries). But `client/src/Dashboard.jsx` only renders the status badge, description, AI analysis, image, location and date. Department messages such as "Pothole filled and resurfaced." and the assigned department never appear for the citizen.
+
+## Steps to reproduce
+1. Citizen submits a complaint.
+2. Admin assigns it to Roads & Maintenance; the department accepts, posts progress and marks work completed; admin resolves.
+3. Citizen signs in and opens *My complaints*.
+
+## Expected behaviour
+The complaint card shows the assigned department and the progress history (who, what, when).
+
+## Actual behaviour
+Only the status badge changes to *Resolved*. No history or department is shown. See `../system/screenshots/UI-12-failure.png`.
+
+## Suggested fix (for the frontend owner)
+In `Dashboard.jsx`, render `complaint.assignedDepartment` and a timeline of `complaint.progressUpdates` (as `DepartmentDashboard.jsx` already does in its details modal).
+
+## Re-test
+Pending: `node testing/system/ui-e2e.cjs` step UI-12.
