@@ -5,7 +5,7 @@
 | Item | Value |
 |---|---|
 | Document | System Test Report |
-| Version | 1.1 |
+| Version | 1.2 |
 | Date | 17 November 2026 |
 | Test period | 16–17 November 2026 |
 | Build tested | Branch `docs/update-srs-sad-stp-uml` (pull request #20). First run: application code = `main`. Re-test: plus fix commit `c4ca873` |
@@ -18,6 +18,7 @@
 |---|---|---|
 | 1.0 | 17 Nov 2026 | First system test execution: 104 test cases run on the complete, running system; 2 defects found |
 | 1.1 | 17 Nov 2026 | BUG-007 and BUG-008 fixed (commit `c4ca873`); all executed suites re-run: 104 / 104 passed |
+| 1.2 | 17 Nov 2026 | Deployment smoke tests executed: Docker Compose and Kubernetes both pass. 106 / 106 passed, nothing left unexecuted |
 
 ---
 
@@ -31,10 +32,10 @@ The complete TrafficCare system was tested end to end: React web client, Express
 | B. Live API system tests | HTTP against the running stack | 39 | 39 | 0 | 0 |
 | C. Browser end-to-end tests | Chrome driven by puppeteer, running stack | 16 | 16 | 0 | 0 |
 | D. Failure and recovery tests | DL service stopped; start-up checks | 4 | 4 | 0 | 0 |
-| E. Deployment smoke tests | Docker Compose, Kubernetes | 2 | 0 | 0 | 2 |
-| **Total** | | **106** | **104** | **0** | **2** |
+| E. Deployment smoke tests | Docker Compose, Kubernetes (Docker Desktop) | 2 | 2 | 0 | 0 |
+| **Total** | | **106** | **106** | **0** | **0** |
 
-**Pass rate of executed cases: 104 / 104 (100 %) after the defect fixes.** The first execution passed 102 / 104 (98.1 %). The two failures were real defects, which were fixed and re-tested (§12).
+**All 106 test cases were executed and passed (100 %) after the defect fixes.** The first execution passed 102 / 104 (98.1 %). The two failures were real defects, which were fixed and re-tested (§12).
 
 **Result.** The core workflow works end to end through the user interface: a citizen reports with a photo, the AI classifies it, the admin assigns, the department works and completes, and the admin resolves. Every access-control and validation check passed, and an AI outage does not block complaints.
 
@@ -45,7 +46,7 @@ Two **user-interface defects** were found in the first run. Both were fixed in c
 | BUG-007 | Medium | The citizen dashboard did not show the progress history or the assigned department, although the API provides both (SRS UI-03) | **Fixed, verified** |
 | BUG-008 | Low | After an admin update, the admin's complaint card showed the reporter as "Unknown" until the page was reloaded | **Fixed, verified** |
 
-The five defects from code review (BUG-001 … BUG-005) were re-tested and are **verified fixed**. BUG-006 is verified by inspection. Container and Kubernetes smoke tests were **not run** because Docker was not running on the test machine.
+The five defects from code review (BUG-001 … BUG-005) were re-tested and are **verified fixed**. BUG-006 is verified by inspection. The Docker Compose and Kubernetes smoke tests were run on Docker Desktop and **pass** (§9).
 
 ---
 
@@ -238,14 +239,21 @@ These are single-user figures on one machine with a small test database. They co
 
 ---
 
-## 9. Suite E: Deployment Smoke Tests (Not Run)
+## 9. Suite E: Deployment Smoke Tests
 
-| STP case | Test | Status | Reason |
-|---|---|---|---|
-| TC-SYS-01 | `docker compose up --build`; containers healthy | Not Run | Docker Desktop was not running on the test machine; building the DL image downloads several GB |
-| TC-SYS-02 | `kubectl apply -f k8s/`; pods Running | Not Run | Same: needs Docker Desktop's Kubernetes |
+Run on 17 Nov 2026 with Docker Desktop 29.8.2 and its built-in Kubernetes cluster (kubectl v1.36.1).
 
-The README records an earlier successful local Kubernetes deployment, but no execution evidence was available for this report. These two cases should be run before the final submission.
+| ID | STP case | Test | Result | Observed |
+|---|---|---|---|---|
+| SYS-44 | TC-SYS-01, NFR-POR-01 | `docker compose up --build` | Pass | 3 images built; `trafficcare-frontend`, `trafficcare-backend`, `trafficcare-dl` all **Up**; backend `/api/health` ok and connected to MongoDB; DL `/health` `model_loaded: true` with the **real trained model**; web client HTTP 200 |
+| SYS-45 | TC-SYS-02, NFR-POR-01 | Kubernetes deployments | Pass | `backend`, `dl`, `frontend` deployments 1/1 available; pods Running (16 days); ClusterIP services on 5050 / 8000 / 5173; images pulled from Docker Hub `ansh6625/smart-traffic-complaint-system-*`; backend pod reaches `http://dl:8000` by service name; frontend and backend reachable through `kubectl port-forward` |
+
+Observations (not failures):
+
+- The first Compose start stopped the DL container with "Model weights not found". The DVC-tracked `best_model.pth` was missing from the checkout because **no DVC remote is configured**. The file was recovered from the Kubernetes DL pod, where its md5 `8c2c7a72…` is identical to the DVC record, and the DL image was rebuilt. Configuring a DVC remote would prevent this.
+- Calling the frontend by its in-cluster name returns HTTP 403, because the Vite development server only accepts known host names. Users reach it through port-forward, which works. A production image should serve the built files (SAD §13).
+
+Full command output: `testing/system/results/deployment-smoke-results.md`.
 
 ---
 
@@ -263,7 +271,7 @@ The README records an earlier successful local Kubernetes deployment, but no exe
 | NFR-REL-01/02 | SYS-01, SYS-41…43 | Pass |
 | NFR-PRF-01/02 | SYS-39, §8 | Pass |
 | NFR-ACC-01 | UI-03, UI-15 | Pass (partial check, no screen-reader audit) |
-| NFR-POR-01 | TC-SYS-01/02 | **Not run** |
+| NFR-POR-01 | TC-SYS-01/02, SYS-44/45 | Pass |
 
 ---
 
@@ -310,13 +318,13 @@ No regressions were found.
 
 | Criterion | Status |
 |---|---|
-| All Critical and High cases executed | Met, except deployment smoke tests (High) not run |
+| All Critical and High cases executed | **Met**: all 106 cases executed |
 | No open Critical defects | **Met**: no open defects |
 | Failures linked to defects | **Met**: both failures were logged (BUG-007, BUG-008), fixed and re-tested |
-| Blocked / not-run cases documented | **Met**: §9 |
+| Blocked / not-run cases documented | **Met**: none remain |
 | Regression evidence recorded | **Met**: after the fixes, Suites A–D and all unit tests (138 / 138) were re-run and pass |
 
-**Recommendation.** The system is acceptable for demonstration and release on a local deployment. The only outstanding item is the two deployment smoke tests (§9), which need Docker Desktop.
+**Recommendation.** All exit criteria are met. The system is accepted for demonstration and release on the local Docker Compose / Kubernetes deployment. Improvements noted for a production deployment (not defects): serve the frontend as built static files instead of the Vite dev server, and configure a DVC remote so the trained model can be pulled (§9).
 
 ---
 
@@ -330,6 +338,7 @@ No regressions were found.
 | Browser results | `testing/system/results/ui-e2e-results.md / .json` (re-test); `ui-e2e-results-before-fix.md` (first run) |
 | DL outage results | `testing/system/results/dl-outage-results.md / .json` |
 | Screenshots | `testing/system/screenshots/` (17 images, re-test) and `screenshots/before-fix/` (the 2 defects) |
+| Deployment evidence | `testing/system/results/deployment-smoke-results.md` |
 | Test scripts | `testing/system/system-tests.mjs`, `ui-e2e.cjs`, `create-admin.js`, `fixtures/` |
 | Defect reports | `testing/bug-reports/` |
 | Execution log | `testing/test-results.md` |

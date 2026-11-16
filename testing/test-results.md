@@ -9,7 +9,7 @@ Rules (from our STP §5.4–5.5): a case is **Pass** only if observed behaviour 
 | Test cases written | 47 (TC01–TC47) in `test-cases.md`; TC01–TC41 are automated in `testing/automated/` (45 Jest tests, some IDs have a/b variants) |
 | Automated suite executed | **45/45 passed** on 16 Nov 2026 (Run 1 below) |
 | Manual UI cases (TC42–TC47) | TC42–TC46 Pass (run in Chrome via `system/ui-e2e.cjs`); TC47 Firefox not run |
-| System tests on the running stack | First run 102/104 (BUG-007, BUG-008 found). After fixes (Run 2): **104/104** executed cases pass; deployment smoke tests not run (see `TrafficCare_System_Test_Report`) |
+| System tests on the running stack | First run 102/104 (BUG-007, BUG-008 found). After fixes (Run 2): 104/104. Run 3 deployment smoke tests: Docker Compose and Kubernetes pass. **106/106** (see `TrafficCare_System_Test_Report`) |
 | Defects | BUG-001 … BUG-008: all verified fixed; none open |
 
 ### Predicted outcome of the first automated run (from code review, 30 Oct; superseded by Run 1: all passed)
@@ -26,6 +26,15 @@ Rules (from our STP §5.4–5.5): a case is **Pass** only if observed behaviour 
 ## Run log
 
 Copy each run's `testing/automated/latest-results.md` here (newest first). Record the commit you tested.
+
+### Run 3: 17 Nov 2026, deployment smoke tests (Docker Desktop 29.8.2, Kubernetes)
+
+| Case | Command | Result |
+|---|---|---|
+| TC-SYS-01 Docker Compose | `docker compose up --build`; `docker compose ps`; health checks | **Pass**: 3 containers up; backend ok; DL `model_loaded: true`; web HTTP 200 |
+| TC-SYS-02 Kubernetes | `kubectl get deployments,pods,services`; in-cluster and port-forward checks | **Pass**: 3 deployments 1/1, pods Running, services resolve |
+
+Evidence: `system/results/deployment-smoke-results.md`.
 
 ### Run 2: 17 Nov 2026, regression after fixing BUG-007 and BUG-008 (commit `c4ca873`)
 
