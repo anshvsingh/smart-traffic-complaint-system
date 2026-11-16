@@ -8,12 +8,14 @@ Version 2.0 · 16 November 2026. Every document is available as Word (for submis
 | Software Architecture and Design (SAD) | ISO/IEC/IEEE 42010, IEEE 1016 | [TrafficCare_SAD.docx](TrafficCare_SAD.docx) | [TrafficCare_SAD.md](TrafficCare_SAD.md) |
 | Software Test Plan (STP) | IEEE 829 / ISO/IEC/IEEE 29119-3 | [TrafficCare_STP.docx](TrafficCare_STP.docx) | [TrafficCare_STP.md](TrafficCare_STP.md) |
 | UML Diagrams (14 diagrams) | UML 2.5 | [TrafficCare_UML.docx](TrafficCare_UML.docx) | [TrafficCare_UML.md](TrafficCare_UML.md) |
+| Product Backlog (60 stories, 12 epics) | Scrum, MoSCoW, story points | [TrafficCare_Product_Backlog.docx](TrafficCare_Product_Backlog.docx) · [PDF](TrafficCare_Product_Backlog.pdf) | [TrafficCare_Product_Backlog.md](TrafficCare_Product_Backlog.md) |
 
 ## What each document covers
 
 - **SRS:** scope, users, operating environment, constraints. Then numbered, prioritised and verifiable requirements: authentication, complaints, AI classification, administration, department workflow, the ML/DL/QML research module, data dictionary, non-functional requirements, business rules and a traceability matrix.
 - **SAD:** architectural drivers, plus context, logical, process, data, interface, AI/ML, security, deployment and development views. Also covers design decisions, risks and technical debt.
 - **STP:** test items, approach and techniques, pass/fail and suspension criteria, and 75 test cases traced to SRS requirements (including ML/DL/QML model evaluation). Also covers the environment, the latest reported results, defect status, responsibilities and risks.
+- **Product Backlog:** 60 user stories in 12 epics with MoSCoW priority, story points, acceptance criteria, owner, status and evidence (issue, PR or commit); 46 done, 14 open for future iterations.
 - **UML:** use case diagram with use case descriptions, domain and backend class diagrams, component and deployment diagrams, five sequence diagrams, an end-to-end activity diagram, complaint and department state machines, and the ML experiment pipeline.
 
 ## Folders
