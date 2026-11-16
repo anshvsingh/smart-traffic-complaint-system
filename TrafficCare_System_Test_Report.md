@@ -5,7 +5,7 @@
 | Item | Value |
 |---|---|
 | Document | System Test Report |
-| Version | 1.2 |
+| Version | 1.3 |
 | Date | 17 November 2026 |
 | Test period | 16–17 November 2026 |
 | Build tested | Branch `docs/update-srs-sad-stp-uml` (pull request #20). First run: application code = `main`. Re-test: plus fix commit `c4ca873` |
@@ -19,6 +19,7 @@
 | 1.0 | 17 Nov 2026 | First system test execution: 104 test cases run on the complete, running system; 2 defects found |
 | 1.1 | 17 Nov 2026 | BUG-007 and BUG-008 fixed (commit `c4ca873`); all executed suites re-run: 104 / 104 passed |
 | 1.2 | 17 Nov 2026 | Deployment smoke tests executed: Docker Compose and Kubernetes both pass. 106 / 106 passed, nothing left unexecuted |
+| 1.3 | 17 Nov 2026 | Browser end-to-end suite moved from Puppeteer to **Playwright** (`@playwright/test` 1.64.1) and re-run: 16 / 16 passed |
 
 ---
 
@@ -30,7 +31,7 @@ The complete TrafficCare system was tested end to end: React web client, Express
 |---|---|---|---|---|---|
 | A. QA API suite (TC01–TC41) | Jest + Supertest, in-memory MongoDB | 45 | 45 | 0 | 0 |
 | B. Live API system tests | HTTP against the running stack | 39 | 39 | 0 | 0 |
-| C. Browser end-to-end tests | Chrome driven by puppeteer, running stack | 16 | 16 | 0 | 0 |
+| C. Browser end-to-end tests | Playwright driving Google Chrome, running stack | 16 | 16 | 0 | 0 |
 | D. Failure and recovery tests | DL service stopped; start-up checks | 4 | 4 | 0 | 0 |
 | E. Deployment smoke tests | Docker Compose, Kubernetes (Docker Desktop) | 2 | 2 | 0 | 0 |
 | **Total** | | **106** | **106** | **0** | **0** |
@@ -85,7 +86,7 @@ Features not implemented (maps, notifications, pagination, token revocation); lo
 | A | `bash testing/run-tests.sh` |
 | Set-up for B–D | Start MongoDB, `cd server && npm start`, `cd dl && uvicorn src.api:app --port 8010`, `cd client && npm run dev`, then `node testing/system/create-admin.js` |
 | B | `node testing/system/system-tests.mjs` |
-| C | `node testing/system/ui-e2e.cjs` (needs `puppeteer-core`) |
+| C | `cd testing/system && npm install && npx playwright test` (HTML report: `npx playwright show-report`) |
 | D | Stop the DL service, then `node testing/system/system-tests.mjs --outage`; start-up checks as in §7.1 |
 
 Test configuration (database URI, secrets, test passwords) was kept in `server/.env`, which is not committed.
@@ -170,7 +171,7 @@ Full table: `testing/system/results/system-api-results.md`.
 
 ## 6. Suite C: Browser End-to-End Tests
 
-Chrome was driven through the real web client. A screenshot was saved for each step in `testing/system/screenshots/`. **First run: 14 / 16 passed. Re-test after fixes: 16 / 16 passed.**
+Google Chrome was driven through the real web client with **Playwright** (`testing/system/e2e/trafficcare.spec.mjs`). A screenshot was saved for each step in `testing/system/screenshots/`. **First run: 14 / 16 passed. Re-test after fixes: 16 / 16 passed.** The first run and the re-test used an equivalent Puppeteer script, and the suite was then ported step for step to Playwright, as the course toolchain requires, and re-run: 16 / 16 passed (`testing/system/results/ui-e2e-results.md`).
 
 | ID | STP case | Test | Result | Observed |
 |---|---|---|---|---|
@@ -335,10 +336,10 @@ No regressions were found.
 | This report | `TrafficCare_System_Test_Report.pdf / .docx / .md` |
 | QA suite results | `testing/automated/latest-results.md` |
 | Live API results | `testing/system/results/system-api-results.md / .json` |
-| Browser results | `testing/system/results/ui-e2e-results.md / .json` (re-test); `ui-e2e-results-before-fix.md` (first run) |
+| Browser results | `testing/system/results/ui-e2e-results.md`, `playwright-results.json` (Playwright run); `ui-e2e-results-before-fix.md` (first run) |
 | DL outage results | `testing/system/results/dl-outage-results.md / .json` |
 | Screenshots | `testing/system/screenshots/` (17 images, re-test) and `screenshots/before-fix/` (the 2 defects) |
 | Deployment evidence | `testing/system/results/deployment-smoke-results.md` |
-| Test scripts | `testing/system/system-tests.mjs`, `ui-e2e.cjs`, `create-admin.js`, `fixtures/` |
+| Test scripts | `testing/system/system-tests.mjs`, `e2e/trafficcare.spec.mjs` + `playwright.config.mjs` (Playwright), `create-admin.js`, `fixtures/` |
 | Defect reports | `testing/bug-reports/` |
 | Execution log | `testing/test-results.md` |

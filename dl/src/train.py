@@ -1,6 +1,7 @@
 
 import csv
 import json
+import os
 import random
 from pathlib import Path
 
@@ -30,9 +31,17 @@ torch.manual_seed(SEED)
 
 ROOT = Path(__file__).resolve().parents[1]
 
-DATA_DIR = ROOT / "datasets" / "raw"
-MODEL_DIR = ROOT / "models"
-RESULTS_DIR = ROOT / "results"
+# Optional overrides (defaults unchanged):
+#   DL_DATA_DIR    dataset with Training/ and Validation/ class folders
+#   DL_OUTPUT_DIR  write the checkpoint and results here instead of models/ and results/
+#   DL_EPOCHS      number of epochs (default 10)
+#   DL_RUN_NAME    MLflow run name;  DL_DATASET_NAME  MLflow "dataset" tag
+DATA_DIR = Path(os.environ.get("DL_DATA_DIR", ROOT / "datasets" / "raw"))
+OUTPUT_DIR = os.environ.get("DL_OUTPUT_DIR")
+MODEL_DIR = Path(OUTPUT_DIR) / "models" if OUTPUT_DIR else ROOT / "models"
+RESULTS_DIR = Path(OUTPUT_DIR) / "results" if OUTPUT_DIR else ROOT / "results"
+RUN_NAME = os.environ.get("DL_RUN_NAME", "ResNet18-Traffic-Damage")
+DATASET_NAME = os.environ.get("DL_DATASET_NAME", "dl/datasets/raw (DVC)")
 
 TRACKING_DB = ROOT / "mlflow.db"
 ARTIFACT_DIR = ROOT / "mlflow_artifacts"
@@ -77,7 +86,7 @@ print("Training device:", device)
 # ==========================================
 
 BATCH_SIZE = 16
-EPOCHS = 10
+EPOCHS = int(os.environ.get("DL_EPOCHS", "10"))
 LEARNING_RATE = 0.0001
 NUM_CLASSES = 3
 
@@ -212,9 +221,14 @@ history = {
 # 12. START MLFLOW EXPERIMENT
 # ==========================================
 
-with mlflow.start_run(run_name="ResNet18-Traffic-Damage"):
+with mlflow.start_run(run_name=RUN_NAME):
 
     print("\nMLflow experiment started!")
+    try:
+        DATA_DIR_TAG = DATA_DIR.resolve().relative_to(ROOT.parent).as_posix()
+    except ValueError:
+        DATA_DIR_TAG = DATA_DIR.name
+    mlflow.set_tags({"dataset": DATASET_NAME, "data_dir": DATA_DIR_TAG})
 
     mlflow.log_params({
         "model": "ResNet18",

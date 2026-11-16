@@ -1,0 +1,93 @@
+{
+  "experiment": "Smart-Traffic-DL-Training",
+  "run_name": "ResNet18-CPRD",
+  "run_id": "6325561035864049b1ed50dcc201d395",
+  "status": "FINISHED",
+  "start_time_utc": "2026-11-16T19:39:20",
+  "duration_s": 117.7,
+  "source": "dl/src/train.py",
+  "tags": {
+    "dataset": "CPRD public road patches (qml/data/cprd)",
+    "data_dir": "dl/datasets/cprd_imagefolder"
+  },
+  "params": {
+    "model": "ResNet18",
+    "batch_size": "16",
+    "epochs": "10",
+    "learning_rate": "0.0001",
+    "optimizer": "Adam",
+    "loss_function": "CrossEntropyLoss",
+    "num_classes": "3",
+    "seed": "42",
+    "device": "mps",
+    "image_size": "224x224",
+    "pretrained_weights": "DEFAULT",
+    "training_images": "670",
+    "validation_images": "230"
+  },
+  "final_metrics": {
+    "train_loss": 0.12039573710800996,
+    "train_accuracy": 95.67164179104478,
+    "val_loss": 0.6076051211875418,
+    "val_accuracy": 81.30434782608695,
+    "best_val_accuracy": 85.21739130434783
+  },
+  "per_epoch": {
+    "train_loss": [
+      0.7643278543628863,
+      0.5015341721363922,
+      0.3753295115125713,
+      0.3067937929238846,
+      0.24268849283011992,
+      0.24265269766102976,
+      0.21313523254287778,
+      0.15237345984622613,
+      0.15989121845853863,
+      0.12039573710800996
+    ],
+    "train_accuracy": [
+      64.17910447761194,
+      79.55223880597015,
+      86.56716417910448,
+      89.25373134328358,
+      90.74626865671642,
+      91.19402985074628,
+      92.08955223880596,
+      94.77611940298507,
+      94.02985074626865,
+      95.67164179104478
+    ],
+    "val_loss": [
+      0.8760470687047295,
+      0.5669970027778459,
+      0.47418590835903,
+      0.5500071515207705,
+      0.5198502075413,
+      0.4189776130344557,
+      0.6601544605649036,
+      0.44279899338017337,
+      0.4861901037071062,
+      0.6076051211875418
+    ],
+    "val_accuracy": [
+      67.3913043478261,
+      78.26086956521739,
+      79.1304347826087,
+      80.8695652173913,
+      79.56521739130434,
+      84.78260869565217,
+      76.95652173913044,
+      85.21739130434783,
+      82.6086956521739,
+      81.30434782608695
+    ]
+  },
+  "artifacts": [
+    "model/",
+    "class_mapping.json",
+    "training_results/accuracy_curve.png",
+    "training_results/loss_curve.png",
+    "training_results/training_history.csv",
+    "training_results/mlflow_run_summary.json"
+  ]
+}

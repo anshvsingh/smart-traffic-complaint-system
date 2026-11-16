@@ -8,7 +8,7 @@ Rules (from our STP §5.4–5.5): a case is **Pass** only if observed behaviour 
 |---|---|
 | Test cases written | 47 (TC01–TC47) in `test-cases.md`; TC01–TC41 are automated in `testing/automated/` (45 Jest tests, some IDs have a/b variants) |
 | Automated suite executed | **45/45 passed** on 16 Nov 2026 (Run 1 below) |
-| Manual UI cases (TC42–TC47) | TC42–TC46 Pass (run in Chrome via `system/ui-e2e.cjs`); TC47 Firefox not run |
+| Manual UI cases (TC42–TC47) | TC42–TC46 Pass (automated in Chrome, now with Playwright: `system/e2e/`); TC47 Firefox not run |
 | System tests on the running stack | First run 102/104 (BUG-007, BUG-008 found). After fixes (Run 2): 104/104. Run 3 deployment smoke tests: Docker Compose and Kubernetes pass. **106/106** (see `TrafficCare_System_Test_Report`) |
 | Defects | BUG-001 … BUG-008: all verified fixed; none open |
 
@@ -26,6 +26,14 @@ Rules (from our STP §5.4–5.5): a case is **Pass** only if observed behaviour 
 ## Run log
 
 Copy each run's `testing/automated/latest-results.md` here (newest first). Record the commit you tested.
+
+### Run 4: 17 Nov 2026, browser suite ported to Playwright
+
+| Suite | Command | Result |
+|---|---|---|
+| Browser end-to-end (Playwright 1.64.1, Google Chrome) | `cd testing/system && npx playwright test` | **16/16 passed** (`system/results/ui-e2e-results.md`) |
+
+Runs 1–2 used the earlier Puppeteer script (`ui-e2e.cjs`), which this suite replaces step for step.
 
 ### Run 3: 17 Nov 2026, deployment smoke tests (Docker Desktop 29.8.2, Kubernetes)
 

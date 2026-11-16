@@ -1,0 +1,14 @@
+{
+  "name": "trafficcare-system-tests",
+  "private": true,
+  "description": "TrafficCare system tests: live API checks and Playwright browser end-to-end tests",
+  "scripts": {
+    "test:api": "node system-tests.mjs",
+    "test:outage": "node system-tests.mjs --outage",
+    "test:e2e": "playwright test",
+    "report": "playwright show-report playwright-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1"
+  }
+}

@@ -28,4 +28,5 @@ Backend: `await complaint.populate("user", "name email")` (and `progressUpdates.
 - **Fix:** commit `c4ca873` on branch `docs/update-srs-sad-stp-uml` (PR #20).
 - **Regression tests added:** `server/tests/adminWorkflow.test.js` (2 tests); they pass.
 - **System re-test, 17 Nov 2026:** `node testing/system/ui-e2e.cjs` step UI-08b **Pass**; the full browser suite passes 16/16. Live API 39/39, QA suite 45/45 and DL-outage 2/2 also re-run with no regressions.
+- Re-confirmed with the Playwright suite that replaced the Puppeteer script (`cd testing/system && npx playwright test`): UI-08b **Pass**, 16/16.
 - Evidence: before `../system/screenshots/before-fix/`, after `../system/screenshots/`.
