@@ -1,15 +1,42 @@
 flowchart LR
-  Citizen([Citizen]) --> Auth((Register / sign in))
-  Citizen --> Submit((Submit complaint))
-  Citizen --> Own((View own complaints))
-  Submit -. optional image .-> AI((AI image classification))
-  Admin([Administrator]) --> Auth
-  Admin --> Review((Review all complaints))
-  Admin --> Accounts((Manage department accounts))
-  Admin --> Assign((Assign complaint))
-  Admin --> Update((Set status / priority))
-  Admin --> Counts((View dashboard counts))
-  Dept([Department user]) --> Auth
-  Dept --> Assigned((View assigned complaints))
-  Dept --> Accept((Accept assignment))
-  Dept --> Progress((Post progress / complete work))
+  Citizen["«actor»<br/>Citizen"]
+  Dept["«actor»<br/>Department user"]
+  Admin["«actor»<br/>Administrator"]
+  DLS["«actor»<br/>DL service"]
+  subgraph TrafficCare["TrafficCare system boundary"]
+    direction TB
+    UC1([UC1 Register])
+    UC2([UC2 Sign in / out])
+    UC3([UC3 Submit complaint])
+    UC4([UC4 Attach photo])
+    UC5([UC5 Classify photo])
+    UC6([UC6 Track own complaints])
+    UC13([UC13 View assigned complaints])
+    UC14([UC14 Accept assignment])
+    UC15([UC15 Post progress / complete])
+    UC7([UC7 Review all complaints])
+    UC8([UC8 Set status / priority])
+    UC12([UC12 Resolve or reject])
+    UC9([UC9 Assign department])
+    UC10([UC10 Create department account])
+    UC11([UC11 View statistics])
+  end
+  Citizen --- UC1
+  Citizen --- UC2
+  Citizen --- UC3
+  Citizen --- UC6
+  UC4 -. "«extend»" .-> UC3
+  UC4 -. "«include»" .-> UC5
+  Dept --- UC2
+  Dept --- UC13
+  Dept --- UC14
+  Dept --- UC15
+  UC2 --- Admin
+  UC7 --- Admin
+  UC8 --- Admin
+  UC9 --- Admin
+  UC10 --- Admin
+  UC11 --- Admin
+  UC12 --- Admin
+  UC12 -. "«extend»" .-> UC8
+  UC5 --- DLS

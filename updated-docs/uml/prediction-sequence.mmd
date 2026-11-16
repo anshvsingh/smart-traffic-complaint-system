@@ -1,0 +1,26 @@
+sequenceDiagram
+  autonumber
+  participant BE as Backend
+  participant API as FastAPI /predict
+  participant PIL as Pillow
+  participant T as Transform
+  participant M as ResNet18
+  BE->>API: multipart file
+  API->>API: Check content type (jpeg/png)
+  API->>API: Read up to 10 MB + 1 byte
+  alt Wrong type / empty
+    API-->>BE: 400
+  else Too large
+    API-->>BE: 413
+  else OK
+    API->>PIL: open and convert to RGB
+    alt Corrupted
+      API-->>BE: 400
+    else Valid
+      API->>T: Resize 224, ToTensor, Normalize
+      T->>M: forward (no_grad)
+      M-->>API: logits
+      API->>API: softmax, arg-max, map to display name
+      API-->>BE: 200 {success, prediction}
+    end
+  end

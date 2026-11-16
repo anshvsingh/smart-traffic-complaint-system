@@ -1,25 +1,34 @@
 sequenceDiagram
-  actor Citizen
-  participant UI as React Client
-  participant API as Express API
-  participant Auth as JWT Middleware
-  participant DL as FastAPI / ResNet18
+  autonumber
+  actor C as Citizen
+  participant UI as React client
+  participant API as ComplaintRoutes
+  participant MW as protect
+  participant M as Multer
+  participant DL as DL service
   participant DB as MongoDB
-  Citizen->>UI: Enter complaint and optional image
-  UI->>API: POST /api/complaints (multipart + JWT)
-  API->>Auth: Verify token and load user
-  Auth-->>API: Authorized citizen
-  API->>API: Validate fields / image
-  opt Image attached
-    API->>DL: POST /predict
-    alt Prediction succeeds
-      DL-->>API: category, confidence, probabilities
-    else Prediction fails or times out
-      DL-->>API: error / timeout
-      API->>API: Set prediction status Failed
+  C->>UI: Fill form and attach photo
+  UI->>API: POST /api/complaints (multipart, Bearer JWT)
+  API->>MW: Verify token, load user
+  MW-->>API: req.user
+  API->>M: Save image as uuid.jpg/png
+  alt Wrong type or > 10 MB
+    M-->>UI: 400 image error
+  else Stored
+    API->>API: Validate fields and category
+    alt Invalid
+      API->>API: Delete stored image
+      API-->>UI: 400 validation message
+    else Valid
+      API->>DL: POST /predict (30 s timeout)
+      alt Success
+        DL-->>API: category, confidence, probabilities
+      else Failure or timeout
+        API->>API: aiPrediction.status = Failed
+      end
+      API->>DB: Complaint.create
+      DB-->>API: complaint
+      API-->>UI: 201 complaint
+      UI-->>C: Show confirmation, status Submitted
     end
   end
-  API->>DB: Create complaint
-  DB-->>API: Persisted complaint
-  API-->>UI: 201 + complaint
-  UI-->>Citizen: Confirmation and tracking state

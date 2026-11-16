@@ -1,0 +1,71 @@
+classDiagram
+  direction TB
+  class App {
+    <<module app.js>>
+    +cors(origin)
+    +json()
+    +static("/uploads", nosniff)
+    +notFoundHandler()
+    +errorHandler()
+  }
+  class AuthMiddleware {
+    <<module>>
+    +protect(req, res, next)
+    +requireAdmin(req, res, next)
+    +requireDepartment(req, res, next)
+  }
+  class AuthRoutes {
+    <<router /api/auth>>
+    +POST register()
+    +POST login()
+  }
+  class ComplaintRoutes {
+    <<router /api/complaints>>
+    -upload : Multer
+    +POST create()
+    +GET listOwn()
+    +GET getOwn(id)
+    -removeUploadedFile(file)
+  }
+  class AdminRoutes {
+    <<router /api/admin>>
+    +POST createDepartment()
+    +GET listAll()
+    +PATCH assign(id)
+    +PATCH update(id)
+    +GET dashboard()
+  }
+  class DepartmentRoutes {
+    <<router /api/department>>
+    +GET listAssigned()
+    +PATCH accept(id)
+    +PATCH progress(id)
+  }
+  class DLClient {
+    <<inside ComplaintRoutes>>
+    +predict(image) AIPrediction
+  }
+  class UserModel {
+    <<Mongoose model>>
+  }
+  class ComplaintModel {
+    <<Mongoose model>>
+  }
+  class SeedDepartments {
+    +seedDepartments()
+  }
+  App --> AuthRoutes
+  App --> ComplaintRoutes
+  App --> AdminRoutes
+  App --> DepartmentRoutes
+  ComplaintRoutes ..> AuthMiddleware : protect
+  AdminRoutes ..> AuthMiddleware : protect + requireAdmin
+  DepartmentRoutes ..> AuthMiddleware : protect + requireDepartment
+  ComplaintRoutes --> DLClient
+  AuthRoutes --> UserModel
+  AuthMiddleware --> UserModel
+  AdminRoutes --> UserModel
+  AdminRoutes --> ComplaintModel
+  ComplaintRoutes --> ComplaintModel
+  DepartmentRoutes --> ComplaintModel
+  SeedDepartments --> UserModel

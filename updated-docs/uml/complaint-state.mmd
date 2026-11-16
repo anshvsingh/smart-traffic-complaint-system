@@ -1,12 +1,17 @@
 stateDiagram-v2
-  [*] --> Submitted
-  Submitted --> UnderReview: administrator reviews
-  UnderReview --> Assigned: administrator assigns
-  Submitted --> Assigned: administrator assigns directly
-  Assigned --> Accepted: department accepts
-  Accepted --> InProgress: department posts progress
-  InProgress --> WorkCompleted: department completes work
-  WorkCompleted --> Resolved: administrator resolves
-  Submitted --> Rejected: administrator rejects
-  UnderReview --> Rejected: administrator rejects
-  Assigned --> Assigned: administrator reassigns
+  [*] --> Submitted : citizen submits
+  Submitted --> UnderReview : admin reviews
+  Submitted --> AssignedToDepartment : admin assigns
+  UnderReview --> AssignedToDepartment : admin assigns
+  AssignedToDepartment --> AssignedToDepartment : admin reassigns
+  AssignedToDepartment --> AcceptedByDepartment : department accepts
+  AcceptedByDepartment --> WorkInProgress : department posts progress
+  WorkInProgress --> WorkInProgress : more progress
+  AcceptedByDepartment --> WorkCompleted : department completes
+  WorkInProgress --> WorkCompleted : department completes
+  WorkCompleted --> Resolved : admin verifies
+  WorkCompleted --> AssignedToDepartment : admin reassigns (rework)
+  Submitted --> Rejected : admin rejects
+  UnderReview --> Rejected : admin rejects
+  Resolved --> [*]
+  Rejected --> [*]

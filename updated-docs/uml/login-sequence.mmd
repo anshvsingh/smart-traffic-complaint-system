@@ -1,0 +1,23 @@
+sequenceDiagram
+  autonumber
+  actor U as User
+  participant UI as React client
+  participant API as AuthRoutes
+  participant DB as MongoDB
+  U->>UI: Enter e-mail and password
+  UI->>API: POST /api/auth/login
+  API->>API: Type-check inputs
+  alt Invalid input
+    API-->>UI: 400 Email and password are required
+  else Valid input
+    API->>DB: findOne(email lower-case) + password
+    DB-->>API: user or null
+    alt User missing or bcrypt mismatch
+      API-->>UI: 401 Invalid email or password
+    else Match
+      API->>API: jwt.sign({role}, secret, sub=id, 1h)
+      API-->>UI: 200 {token, user}
+      UI->>UI: Save token and user in localStorage
+      UI-->>U: Show dashboard for user.role
+    end
+  end

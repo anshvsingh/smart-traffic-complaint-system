@@ -1,0 +1,19 @@
+sequenceDiagram
+  autonumber
+  actor A as Administrator
+  participant UI as Admin dashboard
+  participant API as AdminRoutes
+  participant DB as MongoDB
+  A->>UI: Choose department, click Assign
+  UI->>API: PATCH /api/admin/complaints/:id/assign {department}
+  API->>API: protect + requireAdmin, validate id and department
+  API->>DB: User.findOne(role=department, department)
+  alt No department account
+    API-->>UI: 404 No account found
+  else Found
+    API->>DB: Complaint.findById(id)
+    API->>API: assignedDepartment, departmentStatus=Assigned, status=Assigned to Department, push progress
+    API->>DB: complaint.save()
+    API-->>UI: 200 complaint
+    UI-->>A: Card shows new department and status
+  end

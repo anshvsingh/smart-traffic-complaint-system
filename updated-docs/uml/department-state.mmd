@@ -1,0 +1,12 @@
+stateDiagram-v2
+  [*] --> NotAssigned
+  NotAssigned --> Assigned : admin assigns
+  Assigned --> Assigned : admin reassigns
+  Assigned --> Accepted : accept [departmentStatus = Assigned]
+  Accepted --> WorkInProgress : progress
+  WorkInProgress --> WorkInProgress : progress
+  Accepted --> WorkCompleted : progress(Work Completed)
+  WorkInProgress --> WorkCompleted : progress(Work Completed)
+  WorkCompleted --> Assigned : admin reassigns
+  NotAssigned --> WorkCompleted : admin sets Resolved
+  WorkCompleted --> [*]

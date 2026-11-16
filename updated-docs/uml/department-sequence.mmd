@@ -1,0 +1,23 @@
+sequenceDiagram
+  autonumber
+  actor D as Department user
+  actor A as Administrator
+  participant API as Backend API
+  participant DB as MongoDB
+  D->>API: PATCH /department/complaints/:id/accept
+  API->>DB: findOne(id, assignedDepartment = mine)
+  alt departmentStatus is Assigned
+    API->>DB: save Accepted / Accepted by Department + progress
+    API-->>D: 200
+  else other state
+    API-->>D: 400
+  end
+  D->>API: PATCH …/progress {message}
+  API->>DB: save Work in Progress + progress
+  API-->>D: 200
+  D->>API: PATCH …/progress {message, status: Work Completed}
+  API->>DB: save Work Completed + progress
+  API-->>D: 200
+  A->>API: PATCH /admin/complaints/:id {status: Resolved}
+  API->>DB: save Resolved, departmentStatus Work Completed + progress
+  API-->>A: 200
