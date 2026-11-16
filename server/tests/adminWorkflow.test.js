@@ -220,6 +220,36 @@ describe("PATCH /api/admin/complaints/:id/assign", () => {
   });
 });
 
+describe("Admin update responses keep the reporter (BUG-008)", () => {
+  test("assignment response includes the reporter's name and e-mail", async () => {
+    const complaint = await createComplaint();
+
+    const response = await assign(complaint._id, {
+      department: "Roads & Maintenance",
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body.complaint.user.name).toBe("Citizen");
+    expect(response.body.complaint.user.email).toBe("citizen@example.com");
+    expect(response.body.complaint.user.password).toBeUndefined();
+    expect(response.body.complaint.progressUpdates[0].updatedBy.name).toBe("Admin");
+  });
+
+  test("status and priority update response includes the reporter", async () => {
+    const complaint = await createComplaint();
+
+    const response = await request(app)
+      .patch(`/api/admin/complaints/${complaint._id}`)
+      .set("Authorization", `Bearer ${adminToken}`)
+      .send({ status: "Under Review", priority: "High" });
+
+    expect(response.status).toBe(200);
+    expect(response.body.complaint.user.name).toBe("Citizen");
+    expect(response.body.complaint.user.email).toBe("citizen@example.com");
+    expect(response.body.complaint.user.password).toBeUndefined();
+  });
+});
+
 describe("Administrator resolution", () => {
   test("setting Resolved also marks the department work completed", async () => {
     const complaint = await createComplaint({

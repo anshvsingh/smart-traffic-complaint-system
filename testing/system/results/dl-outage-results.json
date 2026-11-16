@@ -1,0 +1,27 @@
+{
+  "suite": "dl-outage",
+  "date": "2026-11-16T18:47:32.136Z",
+  "api": "http://localhost:5050/api",
+  "dl": "http://localhost:8010",
+  "passed": 2,
+  "total": 2,
+  "perf": null,
+  "results": [
+    {
+      "id": "SYS-40",
+      "stp": "TC-SYS-03",
+      "title": "DL service is stopped",
+      "status": "Pass",
+      "observed": "DL service unreachable",
+      "ms": 2
+    },
+    {
+      "id": "SYS-41",
+      "stp": "TC-AI-02, NFR-REL-01",
+      "title": "Complaint with photo is still accepted while the DL service is down",
+      "status": "Pass",
+      "observed": "201 in 15 ms; AI Failed; image stored",
+      "ms": 15
+    }
+  ]
+}

@@ -940,6 +940,7 @@ span.swap {
   grid-template-areas:
     "top top"
     "body media"
+    "track track"
     "foot foot";
   gap: 14px 32px;
   position: relative;
@@ -1077,6 +1078,86 @@ span.swap {
   color: var(--muted);
 }
 
+/* Assigned department and progress history on the citizen card. */
+.complaint-tracking {
+  grid-area: track;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.tracking-department {
+  margin: 0;
+}
+
+.tracking-department span {
+  color: var(--muted);
+}
+
+.tracking-history h4 {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.tracking-history ol {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 14px;
+  border-left: 2px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tracking-history li {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "role time"
+    "msg msg";
+  gap: 2px 12px;
+}
+
+.tracking-history li::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--line-strong);
+}
+
+.tracking-history li:first-child::before {
+  border-color: var(--lavender);
+  background: var(--lavender);
+}
+
+.tracking-role {
+  grid-area: role;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.tracking-history time {
+  grid-area: time;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.tracking-history p {
+  grid-area: msg;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
 .complaint-card-footer {
   grid-area: foot;
   display: flex;
@@ -1139,6 +1220,7 @@ span.swap {
       "top"
       "body"
       "media"
+      "track"
       "foot";
   }
 

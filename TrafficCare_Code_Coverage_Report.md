@@ -5,9 +5,9 @@
 | Item | Value |
 |---|---|
 | Document | Code and Branch Coverage Report |
-| Version | 2.0 |
-| Date | 16 November 2026 |
-| Code measured | Branch `docs/update-srs-sad-stp-uml` (application code identical to `main` at commit `4afc3ff`; only tests and test configuration added) |
+| Version | 2.1 |
+| Date | 17 November 2026 |
+| Code measured | Branch `docs/update-srs-sad-stp-uml` (application code = `main` at `4afc3ff` plus the BUG-007/BUG-008 fixes in commit `c4ca873`) |
 | Related documents | TrafficCare_STP (test plan), TrafficCare_Unit_Testing_Report.pdf |
 
 ### Revision history
@@ -16,30 +16,31 @@
 |---|---|---|
 | 1.0 | 16 Nov 2026 | First measurement: 60 tests, 55.4 % statements, 46.4 % branches |
 | 2.0 | 16 Nov 2026 | 81 new tests for the department workflow, admin management, image upload/AI path, admin and department dashboards and DL error paths. 141 tests, 83.0 % statements, 78.6 % branches |
+| 2.1 | 17 Nov 2026 | Re-measured after fixing BUG-007 and BUG-008 (5 regression tests added): 146 tests, 83.2 % statements, 78.8 % branches |
 
 ---
 
 ## 1. Summary
 
-All **141 automated tests pass**: 93 backend, 34 frontend and 14 DL API. Coverage was measured for **statements** (code coverage) and **branches** (every `if`/`else`, `? :`, `&&`/`||` outcome).
+All **146 automated tests pass**: 95 backend, 37 frontend and 14 DL API. Coverage was measured for **statements** (code coverage) and **branches** (every `if`/`else`, `? :`, `&&`/`||` outcome).
 
 | Module | Tests | Statements | Branches | Functions | Lines |
 |---|---|---|---|---|---|
-| Backend (`server/`) | 93 / 93 passed | 79.5 % (302/380) | 83.7 % (149/178) | 85.7 % (30/35) | 79.7 % |
-| Frontend (`client/src/`) | 34 / 34 passed | 84.1 % (306/364) | 75.2 % (212/282) | 88.5 % (77/87) | 85.0 % |
+| Backend (`server/`) | 95 / 95 passed | 79.7 % (306/384) | 83.7 % (149/178) | 86.1 % (31/36) | 79.9 % |
+| Frontend (`client/src/`) | 37 / 37 passed | 84.3 % (312/370) | 75.7 % (221/292) | 88.8 % (79/89) | 85.5 % |
 | DL inference API (`dl/src/api.py`) | 14 / 14 passed | 95.8 % (69/72) | 81.3 % (13/16) | none reported | 95.8 % |
-| **Overall** | **141 / 141 passed** | **83.0 % (677/816)** | **78.6 % (374/476)** | | |
+| **Overall** | **146 / 146 passed** | **83.2 % (687/826)** | **78.8 % (383/486)** | | |
 
 ![Coverage before and after the new tests](testing/coverage-report/coverage-summary.png)
 
 ### 1.1 Improvement from version 1.0
 
-| Module | Tests (v1.0 → v2.0) | Statements (v1.0 → v2.0) | Branches (v1.0 → v2.0) |
+| Module | Tests (v1.0 → v2.1) | Statements (v1.0 → v2.1) | Branches (v1.0 → v2.1) |
 |---|---|---|---|
-| Backend | 41 → 93 | 51.6 % → 79.5 % | 43.3 % → 83.7 % |
-| Frontend | 13 → 34 | 53.0 % → 84.1 % | 47.5 % → 75.2 % |
+| Backend | 41 → 95 | 51.6 % → 79.7 % | 43.3 % → 83.7 % |
+| Frontend | 13 → 37 | 53.0 % → 84.3 % | 47.5 % → 75.7 % |
 | DL API | 6 → 14 | 87.5 % → 95.8 % | 62.5 % → 81.3 % |
-| **Overall** | **60 → 141** | **55.4 % → 83.0 %** | **46.4 % → 78.6 %** |
+| **Overall** | **60 → 146** | **55.4 % → 83.2 %** | **46.4 % → 78.8 %** |
 
 **Assessment.** Every module is now above 70 % for both statements and branches. All workflow code is covered: authentication, complaints with images and AI, administration, the department workflow and all three dashboards. The remaining uncovered code is mostly server start-up (which only runs against a real database), defensive `500` handlers for database failures, and the citizen dashboard's error states (§6).
 
@@ -89,7 +90,7 @@ Interactive HTML reports with line-by-line highlighting are in `testing/coverage
 
 ---
 
-## 3. Tests Added in Version 2.0
+## 3. Tests Added in Versions 2.0 and 2.1
 
 | File | Tests | What it covers | STP cases |
 |---|---|---|---|
@@ -99,7 +100,9 @@ Interactive HTML reports with line-by-line highlighting are in `testing/coverage
 | `client/src/test/DepartmentDashboard.test.jsx` | 11 | Loading, statistics, empty and error states with retry; accept; progress validation; progress and completion requests; failure messages; details modal with history; logout | TC-UI-01, TC-DEP |
 | `client/src/test/AdminDashboardActions.test.jsx` | 10 | Reporter and AI analysis display; assign (no selection, success, server error); status and priority updates with statistics refresh; update errors; 401 logout; load error; logout | TC-UI-01, TC-ADM |
 | `dl/tests/test_api_errors.py` | 8 | `load_model()`: missing file, missing keys, wrong classes, valid checkpoint; `GET /`; PNG input; all three class probabilities; model failure → 500 without leaking the error | TC-DL-01…06 |
-| **Total new** | **81** | | |
+| `server/tests/adminWorkflow.test.js` (v2.1 additions) | 2 | BUG-008 regression: assign and status/priority responses include the reporter and progress authors | TC-ADM-01 |
+| `client/src/test/DashboardTracking.test.jsx` | 3 | BUG-007 regression: "Handled by" department, progress history newest first with roles and times, "Not yet assigned" with no empty history | UI-03 |
+| **Total new** | **86** | | |
 
 The DL service is mocked in the backend tests by replacing `fetch`. Uploaded test files are removed after each test.
 
@@ -116,18 +119,18 @@ The DL service is mocked in the backend tests by replacing `fetch`. Uploaded tes
 | `middleware/authMiddleware.js` | 90.6 % (29/32) | 90.9 % (20/22) | 100 % | 19, 60–62 |
 | `models/Complaint.js` | 100 % (3/3) | none | none | none |
 | `models/User.js` | 90.0 % (9/10) | 50.0 % (1/2) | 100 % | 45 |
-| `routes/adminRoutes.js` | 88.9 % (80/90) | 95.6 % (43/45) | 100 % | 88–90, 115–117, 199–201, 288–290, 327–329 |
+| `routes/adminRoutes.js` | 89.4 % (84/94) | 95.6 % (43/45) | 100 % | `catch` blocks only (500 responses) |
 | `routes/authRoutes.js` | 73.7 % (28/38) | 75.0 % (21/28) | 100 % | 58–78, 115–117, 144–146 |
 | `routes/complaintRoutes.js` | 94.0 % (78/83) | 90.9 % (40/44) | 90.0 % | 195–197, 255–257, 283 |
 | `routes/departmentRoutes.js` | 89.1 % (49/55) | 100 % (23/23) | 100 % | 27–28, 84–85, 172–173 |
-| **Total** | **79.5 %** | **83.7 %** | **85.7 %** | |
+| **Total** | **79.7 %** | **83.7 %** | **86.1 %** | |
 
 **What remains uncovered:**
 
 - **Route `catch` blocks** (`adminRoutes` 88–90, 115–117, …; `departmentRoutes` 27–28, …; `complaintRoutes` 195–197, 255–257): these return `500` when MongoDB itself fails. Each is three lines and has the same shape as the one tested in `complaintImage.test.js`.
 - **`authRoutes.js` 58–78:** the duplicate-key race and schema-validation fallbacks in registration, which normal input cannot reach because earlier checks catch it first.
 - **`app.js` 67–69:** the generic 500 handler for errors that are not malformed JSON.
-- **`index.js`, `config/db.js`, `seedDepartments.js`:** start-up code that connects to the real database. Unit tests import `app.js` directly, by design. These files are covered by the system and deployment checks (STP TC-AUTH-11, TC-SYS-01, TC-SYS-04). Without these three files, backend statement coverage is 89.1 % (302/339).
+- **`index.js`, `config/db.js`, `seedDepartments.js`:** start-up code that connects to the real database. Unit tests import `app.js` directly, by design. These files are covered by the system and deployment checks (STP TC-AUTH-11, TC-SYS-01, TC-SYS-04). Without these three files, backend statement coverage is 89.2 % (306/343).
 
 ---
 
@@ -138,9 +141,9 @@ The DL service is mocked in the backend tests by replacing `fetch`. Uploaded tes
 | `AdminDashboard.jsx` | 95.9 % (94/98) | 82.3 % (79/96) | 96.3 % | 97.8 % |
 | `DepartmentDashboard.jsx` | 93.5 % (72/77) | 76.8 % (53/69) | 92.0 % | 94.3 % |
 | `App.jsx` | 83.3 % (60/72) | 86.0 % (43/50) | 78.6 % | 82.6 % |
-| `Dashboard.jsx` (citizen) | 69.8 % (74/106) | 54.0 % (34/63) | 88.2 % | 71.0 % |
+| `Dashboard.jsx` (citizen) | 71.4 % (80/112) | 58.9 % (43/73) | 89.5 % | 73.3 % |
 | `Aura.jsx` | 54.5 % (6/11) | 75.0 % (3/4) | 50.0 % | 55.6 % |
-| **Total** | **84.1 %** | **75.2 %** | **88.5 %** | **85.0 %** |
+| **Total** | **84.3 %** | **75.7 %** | **88.8 %** | **85.5 %** |
 
 **What remains uncovered:** the citizen dashboard's submission-error and empty-list states, some fallback text branches (for example "Not provided" when a field is missing), and the mouse handlers of the decorative `Aura` animation.
 
@@ -173,4 +176,4 @@ The offline research scripts in `dl/src` (964 statements) and the `qml/` module 
 
 ## 8. Conclusion
 
-With 81 new tests, all 141 automated tests pass. Coverage has risen from 55.4 % to **83.0 % of statements** and from 46.4 % to **78.6 % of branches**. The department workflow, which previously had no tests on either the server or the client, now has 100 % branch coverage on the server and 77 % in the client. The image-upload and AI-fallback path is fully exercised with the DL service mocked. The code that remains uncovered is limited to start-up, database-failure handlers, device selection, and a few citizen dashboard states, each listed above.
+With 86 new tests, all 146 automated tests pass. Coverage has risen from 55.4 % to **83.2 % of statements** and from 46.4 % to **78.8 % of branches**. The department workflow, which previously had no tests on either the server or the client, now has 100 % branch coverage on the server and 77 % in the client. The image-upload and AI-fallback path is fully exercised with the DL service mocked. The code that remains uncovered is limited to start-up, database-failure handlers, device selection, and a few citizen dashboard states, each listed above.
