@@ -97,3 +97,15 @@ DL_DATA_DIR=dl/datasets/cprd_imagefolder DL_OUTPUT_DIR=dl/runs/cprd \
 `export_patches.py --no-verify` skips a feature re-computation check that can differ in the 5th decimal with newer scikit-image versions; the images are identical. The test set is the same 300 patches as in `dl/results/comparison`; the train/validation boundary (670/230) can differ slightly from the committed comparison (723/177) because scikit-learn versions shuffle grouped folds differently.
 
 The recorded run (best validation accuracy 85.2 %) and its screenshots are in `dl/results/mlflow/`.
+
+### 2.3 All models in one MLflow experiment
+
+The ML, DL and QML comparison results (committed in `qml/results/metrics/` and `dl/results/comparison/`) can be loaded into MLflow so every model can be compared in the UI:
+
+```bash
+cd dl
+python src/log_results_to_mlflow.py
+mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5001
+```
+
+This creates the experiment **`TrafficCare-Model-Comparison`** with 11 runs (Logistic Regression, SVM, Random Forest, ResNet18, EfficientNet-B0, MobileNetV3-Large, VQC, QSVM, QNN and two hybrid ResNet18 + quantum models), each with hyperparameters, test metrics, per-class F1, timings, per-epoch history where available, the confusion matrix and the source results file. It also adds the production ResNet18's training run to `Smart-Traffic-DL-Training`. Nothing is retrained: every run is tagged `logged_from = saved results file (not retrained)`, and re-running the script replaces the runs it logged before. In the UI, open the experiment and select the chart view to compare all models.
