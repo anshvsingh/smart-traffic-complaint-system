@@ -31,3 +31,5 @@ A real training run tracked with MLflow on 17 November 2026 (`dl/src/train.py`, 
 The MLflow database (`dl/mlflow.db`) and artifact store (`dl/mlflow_artifacts/`) stay local and are git-ignored. To view the runs: `cd dl && mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5001`.
 
 This run demonstrates experiment tracking on data anyone can download. It does not replace the production model (`dl/models/best_model.pth`, trained on the DVC dataset). How to reproduce: `dl/docs/03_dvc_and_mlflow.md` §2.2.
+
+All other models (3 ML, 3 DL, 5 QML/hybrid) can be added to MLflow from their saved results with `python dl/src/log_results_to_mlflow.py`; see `dl/docs/03_dvc_and_mlflow.md` §2.3.
