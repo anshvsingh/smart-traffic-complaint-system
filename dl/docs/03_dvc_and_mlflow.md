@@ -4,8 +4,10 @@
 
 | Tracked file | Size | Purpose |
 |---|---|---|
-| `dl/datasets/raw.dvc` | 71 MB, 5,998 images | Training / Validation / Testing road images (Cracks, Normal, Pothole) |
+| `dl/datasets/raw.dvc` | 71 MB, 6,000 images | Training / Validation / Testing road images (Cracks, Normal, Pothole) |
 | `dl/models/best_model.pth.dvc` | 45 MB | Trained ResNet18 served by `dl/src/api.py` (md5 `8c2c7a72…`) |
+
+**Dataset version history.** The first DVC record (3 November 2026, 5,998 files, md5 `f04b4041…`) was never pushed to a remote, and its exact copy was lost. The dataset was restored on 17 November 2026 from the team's copy: Training 4,445, Validation 445, Testing 1,110 images (370 per class), the same counts as `dl/results/dataset_inspection.csv`. This is 6,000 files, md5 `751478c3…`, now pushed to the Google Drive remote. It differs from the first record by 2 files that could not be identified. The restored copy also contains 4 exact-duplicate image pairs (3 inside Training, 1 shared between Training and Validation), which `dl/src/check_duplicates.py` reports.
 
 Git stores only these small `.dvc` pointer files. The data itself lives in a **DVC remote** on Google Drive.
 
